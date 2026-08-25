@@ -1,0 +1,306 @@
+{
+  "method": "AAMAS26_POPULATION_MASS_ANALOGUE",
+  "interpretation": "AAMAS26 population/oracle analogue; not the official neural baseline",
+  "finite_horizon_interpretation": "(h,s) is the public time-augmented state; this is an environment-specific finite-horizon adaptation, not a claim about the official stationary critic",
+  "remaining_structural_differences": [
+    "continuous density replaced by population mass",
+    "road-not-taken construction",
+    "equally pooled source handling",
+    "finite-horizon adaptation"
+  ],
+  "horizon": 20,
+  "gamma": 0.95,
+  "state_grid_size": 1001,
+  "runtime_seconds": 25.660479300189763,
+  "aamas": {
+    "certified_upper_fraction": 1.0,
+    "certified_undercoverage_fraction": 0.0,
+    "ambiguous_fraction": 0.0,
+    "upper_excess": {
+      "mean": 0.39227333283721005,
+      "median": 0.41693066442855153,
+      "p10": 0.13416230634853593,
+      "p90": 0.6055336946747671,
+      "minimum": 0.044134954901516865,
+      "maximum": 0.6707067858759235,
+      "mean_absolute_deviation_from_reference": 0.39227333283721005
+    }
+  },
+  "joint": {
+    "certified_upper_fraction": 1.0,
+    "certified_undercoverage_fraction": 0.0,
+    "ambiguous_fraction": 0.0,
+    "upper_excess": {
+      "mean": 0.9198445242227784,
+      "median": 0.9772966097836777,
+      "p10": 0.31904775202130004,
+      "p90": 1.419298986642687,
+      "minimum": 0.10997503895665739,
+      "maximum": 1.5725129660382358,
+      "mean_absolute_deviation_from_reference": 0.9198445242227784
+    }
+  },
+  "comparison": {
+    "joint_tighter_fraction_all": 0.0,
+    "aamas_tighter_fraction_all": 1.0,
+    "equal_fraction_all": 0.0,
+    "mean_aamas_minus_joint": -0.5275711913855685,
+    "both_certified_fraction": 1.0,
+    "joint_tighter_fraction_both_certified": 0.0,
+    "aamas_tighter_fraction_both_certified": 1.0,
+    "aamas_mean_upper_excess_both_certified": 0.39227333283721005,
+    "joint_mean_upper_excess_both_certified": 0.9198445242227784
+  },
+  "initial_state_interval": {
+    "lower": -0.8,
+    "upper": 0.8,
+    "grid_count": 801,
+    "oracle_mean_value_h1": 11.357275421240233,
+    "aamas_mean_potential_h1": 11.984504608839009,
+    "joint_mean_potential_h1": 12.83028155182915,
+    "aamas_mean_upper_excess_h1": 0.6272291875987752,
+    "joint_mean_upper_excess_h1": 1.4730061305889164
+  },
+  "road_diagnostics": {
+    "primitive_support_min": 12,
+    "primitive_support_mean": 12.0,
+    "primitive_support_max": 12,
+    "merged_action_support_min": 7,
+    "merged_action_support_mean": 8.998001998001998,
+    "merged_action_support_max": 9,
+    "road_candidate_count_min": 6,
+    "road_candidate_count_mean": 7.360275341401133,
+    "road_candidate_count_max": 8,
+    "behavior_mass_min": 0.08333333333333333,
+    "behavior_mass_max": 0.5,
+    "behavior_weight_min": 0.2734232128831583,
+    "behavior_weight_mean": 0.47314102656644813,
+    "behavior_weight_max": 0.8571428571428572,
+    "empty_road_support_count": 0
+  },
+  "per_stage": [
+    {
+      "stage": 1,
+      "aamas_mean_upper_excess": 0.6336969291656613,
+      "joint_mean_upper_excess": 1.4872786552563222,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 2,
+      "aamas_mean_upper_excess": 0.6155735308173401,
+      "joint_mean_upper_excess": 1.4446506557809957,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 3,
+      "aamas_mean_upper_excess": 0.5964962693907712,
+      "joint_mean_upper_excess": 1.3997790773786267,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 4,
+      "aamas_mean_upper_excess": 0.5764149415560669,
+      "joint_mean_upper_excess": 1.3525458369378356,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 5,
+      "aamas_mean_upper_excess": 0.5552767016891562,
+      "joint_mean_upper_excess": 1.302826636433029,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 6,
+      "aamas_mean_upper_excess": 0.5330259227835201,
+      "joint_mean_upper_excess": 1.2504906358032044,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 7,
+      "aamas_mean_upper_excess": 0.5096040500097831,
+      "joint_mean_upper_excess": 1.1954001085834633,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 8,
+      "aamas_mean_upper_excess": 0.4849494464890739,
+      "joint_mean_upper_excess": 1.1374100793352349,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 9,
+      "aamas_mean_upper_excess": 0.4589972307462481,
+      "joint_mean_upper_excess": 1.0763679417736716,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 10,
+      "aamas_mean_upper_excess": 0.43167910471889587,
+      "joint_mean_upper_excess": 1.0121130559644738,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 11,
+      "aamas_mean_upper_excess": 0.4029231728870908,
+      "joint_mean_upper_excess": 0.9444763245918963,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 12,
+      "aamas_mean_upper_excess": 0.3726537489771133,
+      "joint_mean_upper_excess": 0.873279742428966,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 13,
+      "aamas_mean_upper_excess": 0.3407911094683759,
+      "joint_mean_upper_excess": 0.7983358802465084,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 14,
+      "aamas_mean_upper_excess": 0.30725118198193135,
+      "joint_mean_upper_excess": 0.7194473006418051,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 15,
+      "aamas_mean_upper_excess": 0.2719447130172015,
+      "joint_mean_upper_excess": 0.6364053730695722,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 16,
+      "aamas_mean_upper_excess": 0.23477392632752833,
+      "joint_mean_upper_excess": 0.5489865071012914,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 17,
+      "aamas_mean_upper_excess": 0.19561605310503535,
+      "joint_mean_upper_excess": 0.45693439126886587,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 18,
+      "aamas_mean_upper_excess": 0.1542441993645304,
+      "joint_mean_upper_excess": 0.35986751394834443,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 19,
+      "aamas_mean_upper_excess": 0.10990255766794291,
+      "joint_mean_upper_excess": 0.2567877601154415,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    {
+      "stage": 20,
+      "aamas_mean_upper_excess": 0.05965186658093361,
+      "joint_mean_upper_excess": 0.14350700779602107,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    }
+  ],
+  "special_stages": {
+    "1": {
+      "stage": 1,
+      "aamas_mean_upper_excess": 0.6336969291656613,
+      "joint_mean_upper_excess": 1.4872786552563222,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    "10": {
+      "stage": 10,
+      "aamas_mean_upper_excess": 0.43167910471889587,
+      "joint_mean_upper_excess": 1.0121130559644738,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    },
+    "20": {
+      "stage": 20,
+      "aamas_mean_upper_excess": 0.05965186658093361,
+      "joint_mean_upper_excess": 0.14350700779602107,
+      "aamas_certified_upper_fraction": 1.0,
+      "joint_certified_upper_fraction": 1.0,
+      "joint_tighter_fraction_all": 0.0,
+      "joint_tighter_fraction_both_certified": 0.0
+    }
+  },
+  "implementation_flags": {
+    "finite_recursion": true,
+    "terminal_zero": true,
+    "no_empty_road_support": true,
+    "uses_neural_network": false,
+    "uses_hidden_operator_input": false,
+    "uses_joint_coupling": false,
+    "uses_tuned_road_scale": false,
+    "AAMAS26_CONTINUOUS_DENSITY_REPLACED_BY_POPULATION_MASS": true,
+    "AAMAS26_K25_MONTE_CARLO_ERROR_REMOVED": true,
+    "AAMAS26_NEURAL_APPROXIMATION_ERROR_REMOVED": true,
+    "uses_online_learning": false,
+    "uses_finite_sample": false
+  }
+}

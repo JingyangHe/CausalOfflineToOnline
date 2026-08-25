@@ -1,0 +1,6 @@
+[submodule "external/li_aamas2026"]
+	path = external/li_aamas2026
+	url = https://github.com/mateojuliani/confounding_robust_cont_control.git
+[submodule "external/Li_icml2025/Automatic-Reward-Shaping-From-Confounded-Offline-Data"]
+	path = external/Li_icml2025/Automatic-Reward-Shaping-From-Confounded-Offline-Data
+	url = https://github.com/CausalAILab/Automatic-Reward-Shaping-From-Confounded-Offline-Data.git
