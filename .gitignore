@@ -21,3 +21,7 @@ htmlcov/
 # IDE files
 .vscode/
 .idea/
+
+# Hopper model checkpoints and local smoke outputs
+artifacts/hopper_behavior_policies/
+artifacts/_smoke/
