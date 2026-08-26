@@ -1,0 +1,51 @@
+{
+  "env_id": "Hopper-v5",
+  "seed": 0,
+  "kappa": 0.2,
+  "actuator_direction": [
+    0.5773502691896258,
+    -0.5773502691896258,
+    0.5773502691896258
+  ],
+  "total_steps": 1000000,
+  "checkpoint_steps": [
+    200000,
+    500000,
+    1000000
+  ],
+  "source_mapping": {
+    "source_1": {
+      "checkpoint_step": 200000,
+      "model_file": "source_1_step_200000.zip"
+    },
+    "source_2": {
+      "checkpoint_step": 500000,
+      "model_file": "source_2_step_500000.zip"
+    },
+    "source_3": {
+      "checkpoint_step": 1000000,
+      "model_file": "source_3_step_1000000.zip"
+    }
+  },
+  "public_observation_dimension": 12,
+  "behavior_observation_dimension": 13,
+  "action_dimension": 3,
+  "hidden_u_distribution": {
+    "values": [
+      -1,
+      1
+    ],
+    "probabilities": [
+      0.5,
+      0.5
+    ]
+  },
+  "stable_baselines3_version": "2.9.0",
+  "gymnasium_version": "1.3.0",
+  "python_version": "3.11.16",
+  "git_commit_at_training_start": "b4518d31716682aa1ce7e3d9e07de9e9fb33d05c",
+  "recommended_later_data_collection_mode": {
+    "deterministic": false
+  },
+  "action_semantics": "stored action must be commanded_action"
+}
