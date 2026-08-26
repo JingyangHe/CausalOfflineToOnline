@@ -156,5 +156,78 @@ class ConfoundedHopperWrapper(gym.Wrapper):
             result_info,
         )
 
+    def capture_audit_state(self) -> dict[str, Any]:
+        """Capture simulator state for paired audit steps only."""
+        if not self.audit_info:
+            raise RuntimeError("simulator snapshots require audit_info=True")
+        base = self.env.unwrapped
+        if not hasattr(base, "model") or not hasattr(base, "data"):
+            raise RuntimeError("the wrapped environment has no MuJoCo simulator state")
+        try:
+            import mujoco
+        except ImportError as exc:  # pragma: no cover - server dependency
+            raise RuntimeError("mujoco is required for simulator snapshots") from exc
+
+        state_spec = mujoco.mjtState.mjSTATE_FULLPHYSICS
+        simulator_state = np.empty(
+            mujoco.mj_stateSize(base.model, state_spec), dtype=np.float64
+        )
+        mujoco.mj_getState(base.model, base.data, simulator_state, state_spec)
+        wrapper_elapsed_steps: list[int | None] = []
+        current: Any = self.env
+        while isinstance(current, gym.Wrapper):
+            value = getattr(current, "_elapsed_steps", None)
+            wrapper_elapsed_steps.append(None if value is None else int(value))
+            current = current.env
+        return {
+            "simulator_state": simulator_state,
+            "state_spec": int(state_spec),
+            "elapsed_steps": int(self.elapsed_steps),
+            "wrapper_elapsed_steps": tuple(wrapper_elapsed_steps),
+        }
+
+    def audit_step_from_state(
+        self,
+        snapshot: dict[str, Any],
+        commanded_action: np.ndarray,
+        hidden_u: int,
+    ) -> tuple[np.ndarray, float, bool, bool, dict[str, Any]]:
+        """Restore one audit snapshot and step with a forced transition confounder."""
+        if not self.audit_info:
+            raise RuntimeError("paired simulator steps require audit_info=True")
+        if hidden_u not in (-1, 1):
+            raise ValueError("hidden_u must be -1 or +1")
+        try:
+            import mujoco
+        except ImportError as exc:  # pragma: no cover - server dependency
+            raise RuntimeError("mujoco is required for simulator snapshots") from exc
+
+        base = self.env.unwrapped
+        state_spec = mujoco.mjtState.mjSTATE_FULLPHYSICS
+        if int(snapshot["state_spec"]) != int(state_spec):
+            raise ValueError("snapshot uses an unsupported MuJoCo state specification")
+        simulator_state = np.asarray(snapshot["simulator_state"], dtype=np.float64)
+        expected = mujoco.mj_stateSize(base.model, state_spec)
+        if simulator_state.shape != (expected,) or not np.all(np.isfinite(simulator_state)):
+            raise ValueError("snapshot contains an invalid simulator state")
+        mujoco.mj_setState(base.model, base.data, simulator_state, state_spec)
+        mujoco.mj_forward(base.model, base.data)
+
+        elapsed_values = tuple(snapshot["wrapper_elapsed_steps"])
+        current: Any = self.env
+        index = 0
+        while isinstance(current, gym.Wrapper):
+            if index >= len(elapsed_values):
+                raise ValueError("snapshot does not match the environment wrapper stack")
+            if elapsed_values[index] is not None:
+                current._elapsed_steps = int(elapsed_values[index])
+            current = current.env
+            index += 1
+        if index != len(elapsed_values):
+            raise ValueError("snapshot does not match the environment wrapper stack")
+        self.elapsed_steps = int(snapshot["elapsed_steps"])
+        self._hidden_u = int(hidden_u)
+        return self.step(commanded_action)
+
     def close(self) -> None:
         self.env.close()
