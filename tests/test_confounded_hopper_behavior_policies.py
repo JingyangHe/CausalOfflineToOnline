@@ -8,7 +8,7 @@ import numpy as np
 from gymnasium import spaces
 
 from confounded_hopper import ACTUATOR_DIRECTION, ConfoundedHopperWrapper
-from train_hopper_behavior_policies import ExactCheckpointCallback
+from train_hopper_behavior_policies import ExactCheckpointCallback, _validate_schedule
 
 
 class TinyContinuousEnv(gym.Env):
@@ -177,3 +177,7 @@ def test_checkpoint_callback_saves_only_once_at_exact_requested_steps(tmp_path):
         "source_2_step_1000.zip",
         "source_3_step_2000.zip",
     ]
+
+
+def test_single_final_checkpoint_schedule_is_supported():
+    _validate_schedule(500_000, (500_000,))

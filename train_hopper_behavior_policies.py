@@ -1,4 +1,4 @@
-"""Train one SAC history and save three Confounded Hopper behavior policies."""
+"""Train one SAC history and save exact Confounded Hopper checkpoints."""
 
 from __future__ import annotations
 
@@ -47,8 +47,8 @@ class ExactCheckpointCallback:
 def _validate_schedule(total_steps: int, checkpoint_steps: tuple[int, ...]) -> None:
     if total_steps <= 0:
         raise ValueError("total_steps must be positive")
-    if len(checkpoint_steps) != 3:
-        raise ValueError("exactly three checkpoint steps are required")
+    if not checkpoint_steps:
+        raise ValueError("at least one checkpoint step is required")
     if any(step <= 0 for step in checkpoint_steps):
         raise ValueError("checkpoint steps must be positive")
     if tuple(sorted(set(checkpoint_steps))) != checkpoint_steps:

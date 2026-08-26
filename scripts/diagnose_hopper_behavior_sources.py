@@ -59,9 +59,9 @@ def compensation_diagnostics(
         raise ValueError("conditioned action arrays have incompatible shapes")
     vector = vector / np.linalg.norm(vector)
     difference = plus - minus
+    difference_norm = np.linalg.norm(difference, axis=1)
     projection = difference @ vector
     orthogonal_norm = np.linalg.norm(difference - projection[:, None] * vector, axis=1)
-    difference_norm = np.linalg.norm(difference, axis=1)
     nonzero = difference_norm > 1e-12
     cosine = (-difference[nonzero] @ vector) / difference_norm[nonzero]
     applied_plus = np.clip(plus + kappa * vector, -1.0, 1.0)
@@ -200,7 +200,7 @@ def _hash(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _load_inputs(checkpoint_dir: Path, device: str) -> tuple[dict[str, Any], dict[str, Any], dict[str, Path]]:
+def _load_inputs(checkpoint_dir: Path) -> tuple[dict[str, Any], dict[str, Path]]:
     manifest_path = checkpoint_dir / "manifest.json"
     if not manifest_path.is_file():
         raise FileNotFoundError(f"missing Phase 6A manifest: {manifest_path}")
@@ -228,11 +228,7 @@ def _load_inputs(checkpoint_dir: Path, device: str) -> tuple[dict[str, Any], dic
         paths[source] = checkpoint_dir / mapping.get("model_file", "")
         if not paths[source].is_file():
             raise FileNotFoundError(f"missing fixed checkpoint: {paths[source]}")
-    try:
-        from stable_baselines3 import SAC
-    except ImportError as exc:
-        raise RuntimeError("stable_baselines3 is required for checkpoint audit") from exc
-    return manifest, {source: SAC.load(str(path), device=device) for source, path in paths.items()}, paths
+    return manifest, paths
 
 
 def _environment(kappa: float) -> ConfoundedHopperWrapper:
@@ -388,12 +384,12 @@ def run_paired_outcome_audit(
     return report, arrays
 
 
-def _u_balance(hidden: dict[str, np.ndarray]) -> dict[str, Any]:
+def _u_balance(hidden: dict[str, np.ndarray], labels: list[str]) -> dict[str, Any]:
     report = {}
-    for source_id in (1, 2, 3):
+    for source_id, label in enumerate(labels, 1):
         values = hidden["hidden_u"][hidden["source_id"] == source_id]
         minus, plus = int(np.sum(values == -1)), int(np.sum(values == 1))
-        report[f"source_{source_id}"] = {
+        report[label] = {
             "minus_count": minus, "plus_count": plus, "empirical_mean": float(np.mean(values)),
             "minus_proportion": minus / values.size, "plus_proportion": plus / values.size,
         }
@@ -503,36 +499,53 @@ def _conclusions(quality: dict[str, Any], directional: dict[str, Any]) -> tuple[
     return conclusion, evidence
 
 
-def run(arguments: argparse.Namespace) -> dict[str, Any]:
-    checkpoint_dir, output_dir = Path(arguments.checkpoint_dir), Path(arguments.output_dir)
-    manifest, models, paths = _load_inputs(checkpoint_dir, arguments.device)
-    before_hashes = {source: _hash(path) for source, path in paths.items()}
-    kappa = float(manifest["kappa"])
+def run_source_group_audit(
+    checkpoint_paths: list[Path],
+    checkpoint_labels: list[str],
+    *,
+    kappa: float,
+    eval_episodes: int,
+    pilot_transitions_per_policy: int,
+    paired_audit_samples: int,
+    seed: int,
+    device: str,
+) -> tuple[dict[str, Any], dict[str, np.ndarray], dict[str, np.ndarray], dict[str, np.ndarray]]:
+    """Run the reusable Phase 6B core diagnostics for exactly three labeled policies."""
+    if len(checkpoint_paths) != 3 or len(checkpoint_labels) != 3:
+        raise ValueError("a source-group audit requires exactly three checkpoints and labels")
+    if len(set(checkpoint_labels)) != 3:
+        raise ValueError("checkpoint labels must be unique")
+    paths = {label: Path(path) for label, path in zip(checkpoint_labels, checkpoint_paths)}
+    if any(not path.is_file() for path in paths.values()):
+        missing = [str(path) for path in paths.values() if not path.is_file()]
+        raise FileNotFoundError(f"missing source-group checkpoints: {missing}")
+    try:
+        from stable_baselines3 import SAC
+    except ImportError as exc:
+        raise RuntimeError("stable_baselines3 is required for checkpoint audit") from exc
+    models = {label: SAC.load(str(path), device=device) for label, path in paths.items()}
+    before_hashes = {label: _hash(path) for label, path in paths.items()}
     quality, audit_arrays = {}, {}
-    for source, model in models.items():
-        quality[source], arrays = _evaluate(model, kappa, arguments.eval_episodes, arguments.seed)
-        audit_arrays.update({f"evaluation_{source}_{key}": value for key, value in arrays.items()})
-        print(f"evaluated {source}: {arguments.eval_episodes} episodes")
+    for label, model in models.items():
+        quality[label], arrays = _evaluate(model, kappa, eval_episodes, seed)
+        audit_arrays.update({f"evaluation_{label}_{key}": value for key, value in arrays.items()})
+        print(f"evaluated {label}: {eval_episodes} episodes")
 
     public, hidden, paired_samples = _collect_pilot(
-        models, kappa, arguments.pilot_transitions_per_source,
-        arguments.paired_audit_samples, arguments.seed,
+        models, kappa, pilot_transitions_per_policy, paired_audit_samples, seed,
     )
-    print(
-        "collected audit pilot:",
-        f"{arguments.pilot_transitions_per_source} transitions/source",
-    )
+    print("collected audit pilot:", f"{pilot_transitions_per_policy} transitions/source")
     selected = public["observation"][deterministic_indices(public["observation"].shape[0], 4096)]
     directional, action_report = {}, {}
-    for source, model in models.items():
+    for label, model in models.items():
         signs = np.ones((selected.shape[0], 1), dtype=selected.dtype)
         minus_observation = np.concatenate((selected, -signs), axis=1)
         plus_observation = np.concatenate((selected, signs), axis=1)
         minus, _ = model.predict(minus_observation, deterministic=True)
         plus, _ = model.predict(plus_observation, deterministic=True)
-        directional[source], arrays = compensation_diagnostics(minus, plus, ACTUATOR_DIRECTION, kappa)
-        audit_arrays.update({f"u_{source}_{key}": value for key, value in arrays.items()})
-        action_report[source] = {
+        directional[label], arrays = compensation_diagnostics(minus, plus, ACTUATOR_DIRECTION, kappa)
+        audit_arrays.update({f"u_{label}_{key}": value for key, value in arrays.items()})
+        action_report[label] = {
             "u_minus": clipping_diagnostics(minus, -1, ACTUATOR_DIRECTION, kappa),
             "u_plus": clipping_diagnostics(plus, 1, ACTUATOR_DIRECTION, kappa),
         }
@@ -546,31 +559,62 @@ def run(arguments: argparse.Namespace) -> dict[str, Any]:
     paired_environment = _environment(kappa)
     try:
         paired_report, paired_arrays = run_paired_outcome_audit(
-            paired_environment, paired_samples, arguments.seed
+            paired_environment, paired_samples, seed
         )
     finally:
         paired_environment.close()
     audit_arrays.update({f"paired_{key}": value for key, value in paired_arrays.items()})
-    print(f"completed paired U audit: {arguments.paired_audit_samples} snapshots")
+    print(f"completed paired U audit: {paired_audit_samples} snapshots")
+    paired_report["sample_source_counts"] = {
+        label: int(sum(sample["source_id"] == index for sample in paired_samples))
+        for index, label in enumerate(checkpoint_labels, 1)
+    }
+    after_hashes = {label: _hash(path) for label, path in paths.items()}
+    if before_hashes != after_hashes:
+        raise RuntimeError("a checkpoint was modified during source-group audit")
+    summary = {
+        "checkpoint_labels": checkpoint_labels,
+        "checkpoint_paths": {label: str(path) for label, path in paths.items()},
+        "checkpoint_sha256": before_hashes,
+        "checkpoint_files_unchanged": True,
+        "policy_quality": quality,
+        "u_directional_compensation": directional,
+        "action_and_clipping": action_report,
+        "pilot_u_balance": _u_balance(hidden, checkpoint_labels),
+        "state_coverage_and_action_complementarity": coverage,
+        "paired_u_outcome_audit": paired_report,
+        "public_data_leakage_free": True,
+    }
+    json.dumps(summary, allow_nan=False)
+    return summary, audit_arrays, public, hidden
+
+
+def run(arguments: argparse.Namespace) -> dict[str, Any]:
+    checkpoint_dir, output_dir = Path(arguments.checkpoint_dir), Path(arguments.output_dir)
+    manifest, paths = _load_inputs(checkpoint_dir)
+    core, audit_arrays, public, hidden = run_source_group_audit(
+        list(paths.values()), list(paths), kappa=float(manifest["kappa"]),
+        eval_episodes=arguments.eval_episodes,
+        pilot_transitions_per_policy=arguments.pilot_transitions_per_source,
+        paired_audit_samples=arguments.paired_audit_samples,
+        seed=arguments.seed, device=arguments.device,
+    )
+    quality = core["policy_quality"]
+    directional = core["u_directional_compensation"]
+    coverage = core["state_coverage_and_action_complementarity"]
+    paired_report = core["paired_u_outcome_audit"]
+    action_report = core["action_and_clipping"]
     source3_unique = _source3_unique(public, hidden)
     aggressive, evidence = _conclusions(quality, directional)
-    paired_report["sample_source_counts"] = {
-        source: int(sum(sample["source_id"] == index for sample in paired_samples))
-        for index, source in enumerate(SOURCE_STEPS, 1)
+    phase6b_core = {
+        key: value for key, value in core.items()
+        if key not in ("checkpoint_labels", "checkpoint_paths", "public_data_leakage_free")
     }
-    after_hashes = {source: _hash(path) for source, path in paths.items()}
-    if before_hashes != after_hashes:
-        raise RuntimeError("a fixed Phase 6A checkpoint was modified during audit")
 
     summary = {
         "phase": "6B", "seed": arguments.seed,
-        "source_mapping": SOURCE_STEPS, "checkpoint_sha256": before_hashes,
-        "checkpoint_files_unchanged": True,
-        "policy_quality": quality, "u_directional_compensation": directional,
-        "action_and_clipping": action_report, "pilot_u_balance": _u_balance(hidden),
-        "state_coverage_and_action_complementarity": coverage,
+        "source_mapping": SOURCE_STEPS, **phase6b_core,
         "source_3_unique_information": source3_unique,
-        "paired_u_outcome_audit": paired_report,
         "source_3_degradation_conclusion": aggressive,
         "source_3_degradation_evidence": evidence,
         "source_readiness_recommendation": "TRAIN_ADDITIONAL_BEHAVIOR_SEEDS_BEFORE_FORMAL_DATA",
