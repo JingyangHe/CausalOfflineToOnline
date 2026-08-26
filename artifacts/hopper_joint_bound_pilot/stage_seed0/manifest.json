@@ -1,0 +1,122 @@
+{
+  "phase": "7C",
+  "method_name": "LOCAL_EMPIRICAL_JOINT_BOUND_PILOT",
+  "our_git_commit": "aa247fd1634cef98dd353d65135cbb5055b9a8f4",
+  "data_paths": {
+    "train_public": "artifacts/hopper_method_pilot/stage_seed0/train_public.npz",
+    "audit_public": "artifacts/hopper_method_pilot/stage_seed0/audit_public.npz",
+    "phase7a_manifest": "artifacts/hopper_method_pilot/stage_seed0/manifest.json"
+  },
+  "data_sha256": {
+    "train_public": "e06c488a56fee886c296a11d9d079ff3e38d6b81e13b4d28a7a2d60c19bcee12",
+    "audit_public": "2531d3f58194d161fbb5805314f4c4e85ecd4aa667434174cf46874c980ae7db",
+    "phase7a_manifest": "ca279294cb457b9bec5d3c0bb545ef52da3db93c87c1465e33937ac64249f0a2"
+  },
+  "aamas_continuation_path": "artifacts/aamas_hopper_pilot/stage_seed0/seed_0",
+  "aamas_continuation_sha256": {
+    "aamas_checkpoint": "bb2a2bbd233148f1a46f96c111b6e8492e2d223bd55ffb35f909bfc4ac60aff7",
+    "normalization": "b50583102369ea20897f250db7d1a3a496e573bcc57eb83530f2344df41d9e7a"
+  },
+  "continuation_type": "frozen_aamas_state_potential",
+  "continuation_is_final_joint_recursion": false,
+  "gamma": 0.99,
+  "z_normalization": {
+    "mean": 13.724249612326942,
+    "std": 9.559399089504867,
+    "statistics_source": "train_public_only"
+  },
+  "state_normalization": {
+    "mean": [
+      1.3275325391950707,
+      0.033651318436716794,
+      -0.2415523560946224,
+      -0.3309189088355275,
+      0.10923291644707732,
+      2.253701723240047,
+      -0.07116714186424417,
+      0.011085297175335521,
+      -0.2034912460244005,
+      -0.07716244426958081,
+      0.08939895749091341,
+      0.6477492916721022
+    ],
+    "std": [
+      0.18846610012567033,
+      0.055941027483300286,
+      0.2779416705080604,
+      0.25001290220114375,
+      0.5998944420742716,
+      0.7533630570882086,
+      1.4344914397821578,
+      0.8657525757697658,
+      2.207538767889216,
+      2.4654265747490296,
+      5.99995499791928,
+      0.26518253117386
+    ],
+    "statistics_source": "train_public_only"
+  },
+  "k_neighbors": 8,
+  "train_query_count": 128,
+  "audit_query_count": 64,
+  "actions_per_query": 6,
+  "rho_grid": [
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "primary_rho_lambda": 1.0,
+  "exact_lp_solver": "scipy.optimize.linprog(method='highs')",
+  "neural_architecture": [
+    22,
+    128,
+    128,
+    2
+  ],
+  "optimizer": {
+    "name": "Adam",
+    "learning_rate": 0.001,
+    "steps": 3000,
+    "problem_batch_size": 8,
+    "gradient_clipping_norm": 10.0
+  },
+  "penalties": {
+    "mean_squared_violation": 100.0,
+    "maximum_violation": 10.0,
+    "parameter_l2": 1e-05
+  },
+  "source_mapping": {
+    "source_1": {
+      "checkpoint_step": 200000,
+      "checkpoint_file_path": "artifacts/hopper_behavior_policies/seed_0/source_1_step_200000.zip",
+      "checkpoint_sha256": "ee7558952a40c0fddcacbf46e3dff78078e7f77e545a5548daf995437336ccfb"
+    },
+    "source_2": {
+      "checkpoint_step": 500000,
+      "checkpoint_file_path": "artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip",
+      "checkpoint_sha256": "e8391e396fd2688b766e58d33f697b31c31e0a20d4d0d0b0bcd15c89aaffa2f7"
+    },
+    "source_3": {
+      "checkpoint_step": 1000000,
+      "checkpoint_file_path": "artifacts/hopper_behavior_policies/seed_0/source_3_step_1000000.zip",
+      "checkpoint_sha256": "c47c659f759746c958566e165259deacb153df29ea68336c0505a57780878cf0"
+    }
+  },
+  "reward_normalization_source": "AAMAS train-only checkpoint",
+  "device": "cuda",
+  "seed": 0,
+  "python_version": "3.12.14",
+  "determinism_warnings": [],
+  "hidden_data_accessed": false,
+  "audit_used_for_training": false,
+  "audit_used_for_checkpoint_selection": false,
+  "continuous_state_conditioning_is_approximate": true,
+  "rho_pathwise_certificate_available": false,
+  "full_hopper_causal_coverage_claimed": false,
+  "online_ready_potential": false,
+  "global_response_range_clipping_used": false,
+  "online_sac_run": false,
+  "RHO_SENSITIVITY_ONLY_NO_SELECTION": true
+}

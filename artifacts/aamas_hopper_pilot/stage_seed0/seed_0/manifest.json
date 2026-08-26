@@ -1,0 +1,95 @@
+{
+  "phase": "7B",
+  "method_name": "AAMAS26_PAPER_FAITHFUL_HOPPER_ADAPTER",
+  "method_description": "Official AAMAS26 offline causal core with a small Hopper public-data and horizon adapter",
+  "external_repository_path": "/home/causal/he/CausalOfflineToOnline/external/li_aamas2026",
+  "external_commit": "840604ba5d593279c96ed673349a019af260b1ee",
+  "external_git_clean": true,
+  "our_git_commit": "112e085a51039104811b2b2b351c749c42509ed7",
+  "dataset_paths": {
+    "train_public": "artifacts/hopper_method_pilot/stage_seed0/train_public.npz",
+    "audit_public": "artifacts/hopper_method_pilot/stage_seed0/audit_public.npz",
+    "phase7a_manifest": "artifacts/hopper_method_pilot/stage_seed0/manifest.json"
+  },
+  "dataset_sha256": {
+    "train_public": "e06c488a56fee886c296a11d9d079ff3e38d6b81e13b4d28a7a2d60c19bcee12",
+    "audit_public": "2531d3f58194d161fbb5805314f4c4e85ecd4aa667434174cf46874c980ae7db",
+    "phase7a_manifest": "ca279294cb457b9bec5d3c0bb545ef52da3db93c87c1465e33937ac64249f0a2"
+  },
+  "train_row_count": 48000,
+  "audit_row_count": 12000,
+  "pooled_source_handling": "three public train sources pooled row-wise",
+  "source_id_used_by_model": false,
+  "public_observation_schema": "12D Hopper physical observation plus time_to_go",
+  "gamma": 0.99,
+  "reward_mode": "b_norm",
+  "reward_normalization": {
+    "reward_mean": 3.254199266433716,
+    "reward_std": 0.7488253116607666,
+    "normalized_b": 3.5131194591522217,
+    "calculation_rule": "(r - train_mean) / (train_sample_std + 1e-7); b_norm=max(train_normalized_reward)",
+    "statistics_source": "train_public_only"
+  },
+  "candidate_action_count": 25,
+  "action_separation": 0.1,
+  "training_epochs": {
+    "model_pretraining": 50,
+    "state_value": 200
+  },
+  "batch_size": 1028,
+  "tau": 0.005,
+  "target_update_interval_batches": 3,
+  "network_architecture": {
+    "behavior": {
+      "class": "GaussianNN",
+      "distribution": "TanhNormal",
+      "hidden_dim": 128,
+      "hidden_layers": 3
+    },
+    "state_difference": {
+      "class": "RegressionNN",
+      "hidden_dim": 256,
+      "hidden_layers": 3
+    },
+    "reward": {
+      "class": "RegressionNN",
+      "hidden_dim": 256,
+      "hidden_layers": 3
+    },
+    "critic": {
+      "class": "Critic",
+      "twin": true,
+      "hidden_dim": 128,
+      "hidden_layers": 4
+    },
+    "max_h": 998
+  },
+  "learning_rates": {
+    "behavior": 0.0001,
+    "state_difference": 1e-05,
+    "critic": 0.0001,
+    "reward": 0.0001
+  },
+  "behavior_width_correction": {
+    "released_code_behavior_hidden_dim": 1,
+    "paper_faithful_behavior_hidden_dim": 128,
+    "correction_applied": true
+  },
+  "dependency_versions": {
+    "torch": "2.8.0+cu129",
+    "torchrl": "0.10.0",
+    "tensordict": "0.10.0",
+    "minari": "0.5.3",
+    "numpy": "1.26.4"
+  },
+  "python_version": "3.12.14",
+  "device": "cuda",
+  "seed": 0,
+  "determinism_warnings": [],
+  "no_hidden_data_access": true,
+  "online_sac_included": false,
+  "certified_upper_bound": false,
+  "reward_model_used_by_b_norm_target": false,
+  "collector_truncated_used_by_model": false,
+  "legacy_step_argument": "all-zero placeholder; official method leaves it unused and time_to_go remains in observation"
+}
