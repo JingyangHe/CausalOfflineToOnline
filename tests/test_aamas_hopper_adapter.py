@@ -152,15 +152,17 @@ def test_external_repository_commit_and_clean_gate(tmp_path):
     subprocess.run(("git", "init", "-q"), cwd=repository, check=True)
     subprocess.run(("git", "config", "user.email", "test@example.com"), cwd=repository, check=True)
     subprocess.run(("git", "config", "user.name", "Test"), cwd=repository, check=True)
-    tracked = repository / "official.py"
+    tracked = repository / "fin_train_value_state_new_continuous.py"
     tracked.write_text("fixed = True\n", encoding="utf-8")
-    subprocess.run(("git", "add", "official.py"), cwd=repository, check=True)
+    subprocess.run(("git", "add", tracked.name), cwd=repository, check=True)
     subprocess.run(("git", "commit", "-q", "-m", "fixed"), cwd=repository, check=True)
     commit = subprocess.run(
         ("git", "rev-parse", "HEAD"), cwd=repository,
         capture_output=True, text=True, check=True,
     ).stdout.strip()
     assert adapter.validate_external_repo(repository, commit)["clean"] is True
+    assert adapter._import_official_module(repository).fixed is True
+    assert not (repository / "__pycache__").exists()
     tracked.write_text("fixed = False\n", encoding="utf-8")
     with pytest.raises(RuntimeError, match="not clean"):
         adapter.validate_external_repo(repository, commit)

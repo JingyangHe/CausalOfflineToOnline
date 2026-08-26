@@ -210,12 +210,15 @@ def _import_official_module(repository: Path) -> Any:
     spec = importlib.util.spec_from_file_location(module_name, path)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"cannot import official AAMAS module: {path}")
+    previous_bytecode_setting = sys.dont_write_bytecode
     sys.path.insert(0, str(path.parent))
+    sys.dont_write_bytecode = True
     try:
         module = importlib.util.module_from_spec(spec)
         sys.modules[module_name] = module
         spec.loader.exec_module(module)
     finally:
+        sys.dont_write_bytecode = previous_bytecode_setting
         sys.path.remove(str(path.parent))
     return module
 
