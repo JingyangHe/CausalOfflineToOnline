@@ -27,3 +27,4 @@ artifacts/hopper_behavior_policies/
 artifacts/_smoke/
 artifacts/hopper_method_pilot/
 artifacts/aamas_hopper_pilot/
+artifacts/hopper_joint_bound_pilot/

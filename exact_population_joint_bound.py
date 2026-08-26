@@ -1,6 +1,6 @@
 """Exact population one-step joint bounds for a fixed oracle continuation."""
 
-from itertools import product
+from itertools import combinations, product
 
 import numpy as np
 from scipy.optimize import linprog
@@ -116,6 +116,12 @@ def _all_marginal_error(problem: dict, weights: np.ndarray) -> float:
     return float(max(errors, default=0.0))
 
 
+def _action_distance(left: np.ndarray | float, right: np.ndarray | float) -> float:
+    """Euclidean action distance shared by scalar and continuous-control LPs."""
+    return float(np.linalg.norm(np.asarray(left, dtype=np.float64)
+                                - np.asarray(right, dtype=np.float64)))
+
+
 def enumerate_feasible_tuples(
     source_atoms: list[dict],
     rho_coefficient_value: float,
@@ -126,12 +132,12 @@ def enumerate_feasible_tuples(
     feasible = []
     for atom_tuple in candidates:
         compatible = True
-        for left, right in ((0, 1), (0, 2), (1, 2)):
+        for left, right in combinations(range(len(source_atoms)), 2):
             left_atom, right_atom = atom_tuple[left], atom_tuple[right]
             outcome_gap = abs(source_atoms[left]["outcomes"][left_atom]
                               - source_atoms[right]["outcomes"][right_atom])
-            action_gap = abs(source_atoms[left]["actions"][left_atom]
-                             - source_atoms[right]["actions"][right_atom])
+            action_gap = _action_distance(source_atoms[left]["actions"][left_atom],
+                                          source_atoms[right]["actions"][right_atom])
             if outcome_gap > rho_coefficient_value * action_gap + feasibility_tolerance:
                 compatible = False
                 break
@@ -140,33 +146,63 @@ def enumerate_feasible_tuples(
     return np.asarray(feasible, dtype=np.int64).reshape(-1, len(source_atoms))
 
 
+def prepare_empirical_coupling_problem(
+    source_atoms: list[dict], rho_coefficient_value: float,
+    feasibility_tolerance: float = 1e-12,
+) -> dict:
+    """Build the shared marginal LP for generic weighted continuous-action atoms.
+
+    This is the latent-free core used by the Hopper pilot.  The legacy oracle
+    wrapper below adds its true-coupling audit without changing this LP.
+    """
+    if len(source_atoms) < 2:
+        raise ValueError("source_atoms must contain at least two sources")
+    normalized_atoms = []
+    for atoms in source_atoms:
+        actions = np.asarray(atoms["actions"], dtype=np.float64)
+        outcomes = np.asarray(atoms["outcomes"], dtype=np.float64).reshape(-1)
+        probabilities = np.asarray(atoms["probabilities"], dtype=np.float64).reshape(-1)
+        if actions.ndim not in (1, 2) or len(actions) != len(outcomes) or len(actions) != len(probabilities):
+            raise ValueError("atom actions, outcomes, and probabilities have incompatible shapes")
+        if len(actions) == 0 or not np.all(np.isfinite(actions)) or not np.all(np.isfinite(outcomes)):
+            raise ValueError("atoms must be nonempty and finite")
+        if np.any(probabilities < 0.0) or not np.isclose(probabilities.sum(), 1.0, atol=1e-12):
+            raise ValueError("atom probabilities must be nonnegative and sum to one")
+        normalized_atoms.append({**atoms, "actions": actions, "outcomes": outcomes,
+                                 "probabilities": probabilities})
+
+    feasible_tuples = enumerate_feasible_tuples(
+        normalized_atoms, rho_coefficient_value, feasibility_tolerance
+    )
+    if not len(feasible_tuples):
+        raise RuntimeError("joint problem has no feasible tuples")
+    rows, probabilities = [], []
+    for source_index, atoms in enumerate(normalized_atoms):
+        retained_count = len(atoms["actions"]) if source_index == 0 else len(atoms["actions"]) - 1
+        for atom_index in range(retained_count):
+            rows.append((feasible_tuples[:, source_index] == atom_index).astype(float))
+            probabilities.append(atoms["probabilities"][atom_index])
+    return {
+        "source_atoms": normalized_atoms,
+        "feasible_tuples": feasible_tuples,
+        "A_eq": np.asarray(rows, dtype=np.float64),
+        "b_eq": np.asarray(probabilities, dtype=np.float64),
+        "rho_coefficient": float(rho_coefficient_value),
+        "h": normalized_atoms[0].get("h", "unknown"),
+        "state": normalized_atoms[0].get("state", "unknown"),
+    }
+
+
 def prepare_joint_problem(
     source_atoms: list[dict], rho_coefficient_value: float, feasibility_tolerance: float = 1e-12
 ) -> dict:
     """Enumerate compatible tuples and construct reduced marginal equalities."""
     if len(source_atoms) != 3:
         raise ValueError("source_atoms must contain exactly three sources")
-    feasible_tuples = enumerate_feasible_tuples(
+    problem = prepare_empirical_coupling_problem(
         source_atoms, rho_coefficient_value, feasibility_tolerance
     )
-    if not len(feasible_tuples):
-        raise RuntimeError("joint problem has no feasible tuples")
-
-    rows, probabilities = [], []
-    for source_index, atoms in enumerate(source_atoms):
-        retained_count = len(atoms["actions"]) if source_index == 0 else len(atoms["actions"]) - 1
-        for atom_index in range(retained_count):
-            rows.append((feasible_tuples[:, source_index] == atom_index).astype(float))
-            probabilities.append(atoms["probabilities"][atom_index])
-    problem = {
-        "source_atoms": source_atoms,
-        "feasible_tuples": feasible_tuples,
-        "A_eq": np.asarray(rows, dtype=np.float64),
-        "b_eq": np.asarray(probabilities, dtype=np.float64),
-        "rho_coefficient": float(rho_coefficient_value),
-        "h": source_atoms[0].get("h", "unknown"),
-        "state": source_atoms[0].get("state", "unknown"),
-    }
+    feasible_tuples = problem["feasible_tuples"]
 
     true_weights = np.zeros(len(feasible_tuples), dtype=np.float64)
     tuple_to_index = {tuple(atom_tuple): index for index, atom_tuple in enumerate(feasible_tuples)}
@@ -189,36 +225,19 @@ def compute_separate_intervals(
     rho_coefficient_value: float,
 ) -> dict:
     """Compute the separate-rho intervals and their source-wise intersection."""
-    source_lower, source_upper = [], []
-    for atoms in source_atoms:
-        radii = rho_coefficient_value * np.abs(target_action - atoms["actions"])
-        source_lower.append(np.sum(
-            atoms["probabilities"] * np.maximum(B_minus, atoms["outcomes"] - radii)))
-        source_upper.append(np.sum(
-            atoms["probabilities"] * np.minimum(B_plus, atoms["outcomes"] + radii)))
-    lower = np.asarray(source_lower)
-    upper = np.asarray(source_upper)
-    return {
-        "source_lower": lower,
-        "source_upper": upper,
-        "separate_lower": float(np.max(lower)),
-        "separate_upper": float(np.min(upper)),
-        "name": "separate_rho_intersection",
-    }
+    result = compute_empirical_separate_interval(
+        source_atoms, np.asarray([target_action]), rho_coefficient_value, B_minus, B_plus
+    )
+    result["name"] = "separate_rho_intersection"
+    return result
 
 
 def _tuple_envelopes(
     problem: dict, target_action: float, B_minus: float, B_plus: float
 ) -> tuple[np.ndarray, np.ndarray]:
-    lowers, uppers = [], []
-    for source_index, atoms in enumerate(problem["source_atoms"]):
-        indices = problem["feasible_tuples"][:, source_index]
-        radii = problem["rho_coefficient"] * np.abs(target_action - atoms["actions"][indices])
-        lowers.append(atoms["outcomes"][indices] - radii)
-        uppers.append(atoms["outcomes"][indices] + radii)
-    tuple_lower = np.maximum(B_minus, np.max(lowers, axis=0))
-    tuple_upper = np.minimum(B_plus, np.min(uppers, axis=0))
-    return tuple_lower, tuple_upper
+    return empirical_tuple_envelopes(
+        problem, np.asarray([target_action]), B_minus=B_minus, B_plus=B_plus
+    )
 
 
 def _solve_lp(problem: dict, objective: np.ndarray, label: str):
@@ -232,6 +251,74 @@ def _solve_lp(problem: dict, objective: np.ndarray, label: str):
             f"solver message={result.message}"
         )
     return result
+
+
+def compute_empirical_separate_interval(
+    source_atoms: list[dict], target_action: np.ndarray, rho_coefficient_value: float,
+    B_minus: float | None = None, B_plus: float | None = None,
+) -> dict:
+    """Unclipped Separate intersection for generic empirical atoms."""
+    source_lower, source_upper = [], []
+    for atoms in source_atoms:
+        actions = np.asarray(atoms["actions"], dtype=np.float64)
+        if actions.ndim == 1:
+            actions = actions[:, None]
+        target = np.asarray(target_action, dtype=np.float64).reshape(1, -1)
+        radii = float(rho_coefficient_value) * np.linalg.norm(actions - target, axis=1)
+        weights = np.asarray(atoms["probabilities"], dtype=np.float64)
+        outcomes = np.asarray(atoms["outcomes"], dtype=np.float64)
+        lower_values, upper_values = outcomes - radii, outcomes + radii
+        if B_minus is not None:
+            lower_values = np.maximum(float(B_minus), lower_values)
+        if B_plus is not None:
+            upper_values = np.minimum(float(B_plus), upper_values)
+        source_lower.append(float(weights @ lower_values))
+        source_upper.append(float(weights @ upper_values))
+    lower, upper = np.asarray(source_lower), np.asarray(source_upper)
+    return {"source_lower": lower, "source_upper": upper,
+            "separate_lower": float(np.max(lower)),
+            "separate_upper": float(np.min(upper))}
+
+
+def empirical_tuple_envelopes(
+    prepared_problem: dict, target_action: np.ndarray,
+    B_minus: float | None = None, B_plus: float | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Return unclipped lower/upper envelopes for generic feasible tuples."""
+    lowers, uppers = [], []
+    target = np.asarray(target_action, dtype=np.float64).reshape(1, -1)
+    for source_index, atoms in enumerate(prepared_problem["source_atoms"]):
+        indices = prepared_problem["feasible_tuples"][:, source_index]
+        actions = np.asarray(atoms["actions"], dtype=np.float64)[indices]
+        if actions.ndim == 1:
+            actions = actions[:, None]
+        radii = prepared_problem["rho_coefficient"] * np.linalg.norm(actions - target, axis=1)
+        outcomes = np.asarray(atoms["outcomes"], dtype=np.float64)[indices]
+        lowers.append(outcomes - radii)
+        uppers.append(outcomes + radii)
+    lower, upper = np.max(lowers, axis=0), np.min(uppers, axis=0)
+    if B_minus is not None:
+        lower = np.maximum(float(B_minus), lower)
+    if B_plus is not None:
+        upper = np.minimum(float(B_plus), upper)
+    return lower, upper
+
+
+def solve_empirical_joint_interval(prepared_problem: dict, target_action: np.ndarray) -> dict:
+    """Solve the exact unclipped empirical Joint interval with existing LP audits."""
+    tuple_lower, tuple_upper = empirical_tuple_envelopes(prepared_problem, target_action)
+    lower = _solve_lp(prepared_problem, tuple_lower, "lower")
+    upper = _solve_lp(prepared_problem, -tuple_upper, "upper")
+    lower_error = _all_marginal_error(prepared_problem, lower.x)
+    upper_error = _all_marginal_error(prepared_problem, upper.x)
+    if max(lower_error, upper_error) >= 1e-8:
+        raise RuntimeError(f"LP marginal audit failed: {max(lower_error, upper_error)}")
+    return {
+        "joint_lower": float(lower.fun), "joint_upper": float(-upper.fun),
+        "lower_coupling": lower.x, "upper_coupling": upper.x,
+        "lower_solver_status": int(lower.status), "upper_solver_status": int(upper.status),
+        "max_lower_marginal_error": lower_error, "max_upper_marginal_error": upper_error,
+    }
 
 
 def solve_joint_interval(
