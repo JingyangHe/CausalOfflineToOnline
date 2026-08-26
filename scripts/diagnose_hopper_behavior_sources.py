@@ -359,8 +359,9 @@ def _collect_pilot(
 
 
 def run_paired_outcome_audit(
-    environment: Any, samples: list[dict[str, Any]]
+    environment: Any, samples: list[dict[str, Any]], initialization_seed: int
 ) -> tuple[dict[str, Any], dict[str, np.ndarray]]:
+    environment.reset(seed=initialization_seed)
     deltas = {"next_state": [], "reward": [], "applied_action": []}
     disagreements = 0
     for sample in samples:
@@ -544,7 +545,9 @@ def run(arguments: argparse.Namespace) -> dict[str, Any]:
         audit_arrays.update({f"coverage_{name}_{key}": value for key, value in arrays.items()})
     paired_environment = _environment(kappa)
     try:
-        paired_report, paired_arrays = run_paired_outcome_audit(paired_environment, paired_samples)
+        paired_report, paired_arrays = run_paired_outcome_audit(
+            paired_environment, paired_samples, arguments.seed
+        )
     finally:
         paired_environment.close()
     audit_arrays.update({f"paired_{key}": value for key, value in paired_arrays.items()})

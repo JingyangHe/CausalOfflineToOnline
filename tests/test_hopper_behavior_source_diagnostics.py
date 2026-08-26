@@ -167,8 +167,15 @@ def test_paired_audit_reuses_identical_snapshot_and_command():
     class FakeAuditEnvironment:
         def __init__(self):
             self.calls = []
+            self.was_reset = False
+
+        def reset(self, seed=None):
+            self.was_reset = True
+            return np.zeros(2), {}
 
         def audit_step_from_state(self, snapshot, command, hidden_u):
+            if not self.was_reset:
+                raise RuntimeError("step before reset")
             self.calls.append((snapshot, np.asarray(command).copy(), hidden_u))
             applied = np.asarray(command) + 0.1 * hidden_u
             public = np.array((snapshot["state"] + applied[0], 0.5))
@@ -180,8 +187,9 @@ def test_paired_audit_reuses_identical_snapshot_and_command():
     snapshot = {"state": 2.0}
     command = np.array((0.2, -0.1, 0.3))
     report, arrays = run_paired_outcome_audit(
-        environment, [{"snapshot": snapshot, "commanded_action": command}]
+        environment, [{"snapshot": snapshot, "commanded_action": command}], 2026
     )
+    assert environment.was_reset
     assert environment.calls[0][0] is snapshot and environment.calls[1][0] is snapshot
     np.testing.assert_array_equal(environment.calls[0][1], environment.calls[1][1])
     assert [call[2] for call in environment.calls] == [-1, 1]
