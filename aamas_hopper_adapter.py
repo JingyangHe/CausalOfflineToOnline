@@ -313,12 +313,26 @@ def evaluate_aamas_models(
         potential = agent.critic((states - mean) / (std + 1e-7)).detach().cpu().numpy().reshape(-1)
 
     source_id = public["source_id"]
-    nll_summary = lambda values: {
-        "mean": float(np.mean(values)), "median": float(np.median(values)),
-        "p90": float(np.percentile(values, 90)),
-        "nonfinite_count": int(np.sum(~np.isfinite(values))),
-    }
+    def nll_summary(values: np.ndarray) -> dict[str, Any]:
+        finite = values[np.isfinite(values)]
+        return {
+            "mean": float(np.mean(finite)) if finite.size else "NOT_AVAILABLE",
+            "median": float(np.median(finite)) if finite.size else "NOT_AVAILABLE",
+            "p90": float(np.percentile(finite, 90)) if finite.size else "NOT_AVAILABLE",
+            "nonfinite_count": int(np.sum(~np.isfinite(values))),
+        }
+
+    if not np.all(np.isfinite(delta_error)) or not np.all(np.isfinite(reward_error)):
+        raise RuntimeError("state-difference or reward audit error is nonfinite")
     mse = lambda values: float(np.mean(np.square(values))) if values.size else "NOT_AVAILABLE"
+    def source_potential(values: np.ndarray) -> dict[str, Any]:
+        finite = values[np.isfinite(values)]
+        return {
+            "mean": float(np.mean(finite)) if finite.size else "NOT_AVAILABLE",
+            "std": float(np.std(finite)) if finite.size else "NOT_AVAILABLE",
+            "median": float(np.median(finite)) if finite.size else "NOT_AVAILABLE",
+            "nonfinite_count": int(values.size - finite.size),
+        }
     report: dict[str, Any] = {
         "behavior_model": {
             "pooled": nll_summary(nll),
@@ -343,11 +357,8 @@ def evaluate_aamas_models(
         "potential": {
             "pooled": _distribution(potential),
             "per_source": {
-                f"source_{i}": {
-                    "mean": float(np.mean(potential[source_id == i])),
-                    "std": float(np.std(potential[source_id == i])),
-                    "median": float(np.median(potential[source_id == i])),
-                } for i in (1, 2, 3)
+                f"source_{i}": source_potential(potential[source_id == i])
+                for i in (1, 2, 3)
             },
         },
     }
