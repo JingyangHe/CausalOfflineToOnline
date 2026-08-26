@@ -7,6 +7,7 @@ import importlib
 import importlib.metadata
 import importlib.util
 import json
+import os
 from pathlib import Path
 import platform
 import random
@@ -74,7 +75,7 @@ def runtime_requirement_error(
     return f"MISSING_DEPENDENCIES: {', '.join(missing)}" if missing else None
 
 
-def seed_everything(seed: int, torch: Any) -> list[str]:
+def seed_everything(seed: int, torch: Any, cuda_training: bool = False) -> list[str]:
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -88,6 +89,10 @@ def seed_everything(seed: int, torch: Any) -> list[str]:
             torch.backends.cudnn.benchmark = False
     except (AttributeError, RuntimeError) as exc:
         warnings.append(f"complete CUDA determinism could not be enabled: {exc}")
+    if cuda_training and os.environ.get("CUBLAS_WORKSPACE_CONFIG") not in {":4096:8", ":16:8"}:
+        warnings.append(
+            "CUBLAS_WORKSPACE_CONFIG is unset; CUDA matrix operations may not be bitwise reproducible"
+        )
     return warnings
 
 
@@ -236,13 +241,13 @@ def run(arguments: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
     if requirement_error:
         raise RuntimeError(requirement_error)
     torch = importlib.import_module("torch")
-    warnings = seed_everything(arguments.seed, torch)
     if arguments.device == "auto":
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     else:
         device = torch.device(arguments.device)
     if device.type == "cuda" and not torch.cuda.is_available():
         raise RuntimeError("CUDA was requested but is unavailable")
+    warnings = seed_everything(arguments.seed, torch, cuda_training=device.type == "cuda")
 
     data_dir, output_dir = Path(arguments.data_dir), Path(arguments.output_dir)
     train_path, audit_path = data_dir / "train_public.npz", data_dir / "audit_public.npz"

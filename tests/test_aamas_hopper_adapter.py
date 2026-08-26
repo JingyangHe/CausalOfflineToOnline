@@ -12,6 +12,7 @@ from scripts.train_aamas_hopper_potential import (
     _architecture,
     parse_arguments,
     runtime_requirement_error,
+    seed_everything,
 )
 
 
@@ -184,7 +185,31 @@ def test_public_loader_never_opens_hidden_sidecar(tmp_path, monkeypatch):
     assert loaded["rewards"].shape == data["rewards"].shape
 
 
-def test_runtime_checks_python_and_lists_missing_dependencies():
+def test_runtime_checks_python_and_lists_missing_dependencies(monkeypatch):
     assert "Python >= 3.12" in runtime_requirement_error((3, 11, 9), lambda _: object())
     missing = runtime_requirement_error((3, 12, 0), lambda _: None)
     assert missing == "MISSING_DEPENDENCIES: torch, torchrl, tensordict, minari"
+
+    class FakeCuda:
+        @staticmethod
+        def is_available():
+            return False
+
+    class FakeDeterministicTorch:
+        cuda = FakeCuda()
+        backends = type("FakeBackends", (), {})()
+
+        @staticmethod
+        def manual_seed(seed):
+            assert seed == 7
+
+        @staticmethod
+        def use_deterministic_algorithms(enabled, warn_only=False):
+            assert enabled is True
+            assert warn_only is True
+
+    monkeypatch.delenv("CUBLAS_WORKSPACE_CONFIG", raising=False)
+    warnings = seed_everything(7, FakeDeterministicTorch(), cuda_training=True)
+    assert any("CUBLAS_WORKSPACE_CONFIG" in warning for warning in warnings)
+    monkeypatch.setenv("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+    assert seed_everything(7, FakeDeterministicTorch(), cuda_training=True) == []
