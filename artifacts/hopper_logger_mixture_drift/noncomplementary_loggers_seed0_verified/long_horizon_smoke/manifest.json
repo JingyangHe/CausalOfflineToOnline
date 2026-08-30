@@ -1,0 +1,83 @@
+{
+  "stage": "Phase 8A-NC-LH",
+  "git_commit": "b5a0a819016ff5f8505961d69fc43054e284d8ba",
+  "environment": "Hopper-v5",
+  "phase8a_input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified",
+  "phase8anc_input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified",
+  "phase8ar_input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review",
+  "phase8ac_input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30",
+  "output_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/long_horizon_smoke",
+  "analyzed_anchor_count": 24,
+  "kappas": [
+    0.0,
+    0.3
+  ],
+  "horizons": [
+    1,
+    5
+  ],
+  "rollout_replicates": 4,
+  "bootstrap_repetitions": 100,
+  "seed": 0,
+  "num_workers": 1,
+  "gamma": 0.99,
+  "gamma_source": "explicit_cli",
+  "source2_checkpoint_path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip",
+  "source2_checkpoint_sha256": "e8391e396fd2688b766e58d33f697b31c31e0a20d4d0d0b0bcd15c89aaffa2f7",
+  "action_keys": [
+    "minus",
+    "base",
+    "plus"
+  ],
+  "primary_mixtures": {
+    "logger1_heavy": [
+      0.8,
+      0.1,
+      0.1
+    ],
+    "logger12_balanced": [
+      0.45,
+      0.45,
+      0.1
+    ],
+    "logger2_heavy": [
+      0.1,
+      0.8,
+      0.1
+    ]
+  },
+  "numerical_tolerance": {
+    "atol": 1e-07,
+    "rtol": 1e-07
+  },
+  "policy_replay_tolerance": {
+    "atol": 1e-05,
+    "rtol": 1e-07,
+    "scope": "Source-2 FP32 neural-policy replay only"
+  },
+  "estimand": "fixed-policy finite-horizon intervention value",
+  "python_version": "3.12.14",
+  "numpy_version": "1.26.4",
+  "matplotlib_version": "3.11.1",
+  "device": "cpu",
+  "input_hashes": {
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip": "e8391e396fd2688b766e58d33f697b31c31e0a20d4d0d0b0bcd15c89aaffa2f7",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/anchors.npz": "fd9c7aa054edbfe4eb2866ff5cf372056ca8144d90f0991db928ce30f88e77e0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p00/do_oracle_raw.npz": "b36bc91ac9b9b525d09bf6c9a3bc58f73c4a90ff01ebe434a7bb8f3fde178771",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p10/do_oracle_raw.npz": "8e91a28273bed521477e2c827bd550f16d4ef55868a6d7148240cec4f3a251bb",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p20/do_oracle_raw.npz": "754fc8cb09e7db8dc43b277ac8506ebef586f89e4ce1eefdbb30cf645f7d0a1d",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p30/do_oracle_raw.npz": "9b0bb848a7fbf2018b659223e4abab922b7aa035ce2ef17197486997a28b43e8",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/manifest.json": "feb6ca071ce7e165a631c0a08d73147b935ee9c3943daf8fed11ccfa8c610bc8",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/anchor_action_metrics.npz": "67d98a885406191b6ca864df2865bc21bc6a8e886d71edcb43cd5948da54c42b",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30/anchor_clipping_table.npz": "197a6d875ac0e6d288c58f2bce4960b82ecb847e609372c5a0897e6bdcd20033",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30/hard_checks.json": "86564db54d5f95c091b9e892cd7943eeb6ce9e0bae1aebb7a7ac2e50720bfd41",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30/manifest.json": "6bf826c2c8985ac1da6eeee9723eaf8af3c4f9fc167c0fddb36832d03207e93f",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/hard_checks.json": "35e7380837c5d610c0d0470af8766b3569d60dab40de4ecc0df0eabda25589e0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/manifest.json": "48ddb310046a832c23a72b5448d590939a3f6dc247c2bbbd249ecc773d3f4ab0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/summary.json": "6f4c7bdba5d0762cd55e75478b324c1f1bfd25f68dc2814873b737bccf739694",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/anchor_action_metrics.npz": "9a74f6d5594d60c41698450d272d8a54afc7ec49db5452a9e24fab95d594b8ab",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/hard_checks.json": "6b54e3c00b52f7df420561865e702949d2c1897af05feb07bebade3eebf2ea90",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/manifest.json": "334c94fd8259d170bef8b45dfa99627c7a17b29cef1f3c8464ae0edd788f928e",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/summary.json": "cbfc9bbc1e728142f387153592197be048bfea4bfe291328ad9ca8c32363e1dc"
+  }
+}
