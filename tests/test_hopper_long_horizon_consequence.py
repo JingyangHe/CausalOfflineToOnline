@@ -143,6 +143,10 @@ def test_source2_checkpoint_roundtrip(tmp_path):
     }
     (tmp_path / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     assert resolve_source2_checkpoint(tmp_path)[0] == checkpoint.resolve()
+    (tmp_path / ".git").mkdir()
+    manifest["source2_checkpoint_path"] = checkpoint.name
+    (tmp_path / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    assert resolve_source2_checkpoint(tmp_path)[0] == checkpoint.resolve()
 
 
 def test_public_continuation_matches_anchor_base_action():

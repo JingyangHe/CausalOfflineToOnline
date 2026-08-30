@@ -63,7 +63,12 @@ def resolve_source2_checkpoint(phase8a_root: Path) -> tuple[Path, dict[str, Any]
         raise ContinuationPolicyError("Phase 8A Source-2 checkpoint mapping is incomplete")
     checkpoint = Path(recorded)
     if not checkpoint.is_absolute():
-        checkpoint = (root / checkpoint).resolve()
+        repository = next((parent for parent in (root, *root.parents)
+                           if (parent / ".git").exists()), None)
+        if repository is None:
+            raise ContinuationPolicyError(
+                "relative Source-2 checkpoint path requires an identifiable repository root")
+        checkpoint = (repository / checkpoint).resolve()
     if checkpoint.name != filename or not checkpoint.is_file():
         raise FileNotFoundError(f"recorded Source-2 checkpoint is unavailable: {checkpoint}")
     actual_hash = sha256(checkpoint)
