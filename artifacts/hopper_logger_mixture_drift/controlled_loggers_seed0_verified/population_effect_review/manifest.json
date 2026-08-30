@@ -1,0 +1,33 @@
+{
+  "stage": "Phase 8A-R",
+  "input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified",
+  "output_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review",
+  "read_only_inputs": true,
+  "expected_anchor_count": 2048,
+  "analyzed_anchor_count": 2048,
+  "kappas": [
+    0.0,
+    0.1,
+    0.2,
+    0.3
+  ],
+  "primary_mixtures": [
+    "logger1_heavy",
+    "logger12_midpoint",
+    "logger2_heavy"
+  ],
+  "secondary_mixtures": [
+    "balanced",
+    "logger3_heavy"
+  ],
+  "bootstrap_repetitions": 2000,
+  "seed": 0,
+  "numerical_tolerance": {
+    "atol": 1e-07,
+    "rtol": 1e-07
+  },
+  "git_commit": "a5cf1e304d7e6460705ed6761b9867532dcf95e4",
+  "python_version": "3.12.14",
+  "numpy_version": "1.26.4",
+  "matplotlib_version": "3.11.1"
+}
