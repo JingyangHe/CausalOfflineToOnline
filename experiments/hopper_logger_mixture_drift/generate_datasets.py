@@ -215,11 +215,21 @@ def generate_do_oracle(
             mask = (raw["anchor_id"] == anchor_id) & (raw["action_key"] == action_key)
             if int(np.sum(mask)) != 2 or set(raw["u_env"][mask].tolist()) != {-1, 1}:
                 raise RuntimeError("do oracle does not contain the exact two-point environment latent law")
+            # Public observations are stored as float32, but population targets
+            # are accumulated in float64.  Accumulate the oracle in the same
+            # precision so the exact independent-latent identity is not made
+            # dependent on float32 reduction rounding for large Hopper states.
+            next_observations = np.asarray(
+                raw["next_observation"][mask], dtype=np.float64
+            )
+            delta_observations = np.asarray(
+                raw["delta_observation"][mask], dtype=np.float64
+            )
             summary_rows.append({
                 "anchor_id": anchor_id, "action_key": action_key, "kappa_env": kappa_env,
                 "do_mean_reward": float(np.mean(raw["reward"][mask])),
-                "do_mean_next_observation": np.mean(raw["next_observation"][mask], axis=0),
-                "do_mean_delta_observation": np.mean(raw["delta_observation"][mask], axis=0),
+                "do_mean_next_observation": np.mean(next_observations, axis=0),
+                "do_mean_delta_observation": np.mean(delta_observations, axis=0),
                 "do_termination_probability": float(np.mean(raw["terminated"][mask])),
                 "do_truncation_probability": float(np.mean(raw["truncated"][mask])),
             })

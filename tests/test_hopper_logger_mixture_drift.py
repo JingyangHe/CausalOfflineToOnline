@@ -153,6 +153,13 @@ def test_independent_population_equals_do_oracle():
     assert _population_equals_do(tables["independent_latents"])
 
 
+def test_do_oracle_accumulates_public_observations_in_float64():
+    anchors = _anchors(); simulator = FakeOneStepSimulator(anchors)
+    _, do_summary = generate_do_oracle(anchors, 0.2, 0.2, simulator)
+    assert do_summary["do_mean_next_observation"].dtype == np.float64
+    assert do_summary["do_mean_delta_observation"].dtype == np.float64
+
+
 def test_confounded_kappa_zero_equals_do_oracle():
     *_, tables = _bundle(0.0)
     assert _population_equals_do(tables["confounded"])
