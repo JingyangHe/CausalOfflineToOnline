@@ -180,6 +180,21 @@ def test_anchor_restore_consistency():
     assert np.array_equal(first["simulator_state"], second["simulator_state"])
     assert first["elapsed_steps"] == second["elapsed_steps"]
 
+    class FakeEnvironment:
+        def __init__(self):
+            self.reset_seeds = []
+
+        def reset(self, seed=None):
+            self.reset_seeds.append(seed)
+            return np.zeros(12), {}
+
+    environment = FakeEnvironment()
+    raw = {"anchor_id": np.asarray([0]), "action_key": np.asarray(["base"]),
+           "u_env": np.asarray([1])}
+    LongHorizonRolloutEngine(
+        anchors, {0.0: raw}, None, environment_factory=lambda _: environment)
+    assert environment.reset_seeds == [0]
+
 
 def test_first_step_matches_do_oracle():
     engine = object.__new__(LongHorizonRolloutEngine)

@@ -180,6 +180,9 @@ class LongHorizonRolloutEngine:
         self.policy = policy
         self.atol, self.rtol = float(atol), float(rtol)
         self.environment = environment_factory(next(iter(raw_by_kappa)))
+        # Unlock Gymnasium's OrderEnforcing wrapper once. Every audited branch
+        # immediately overwrites this reset state by restoring its full anchor.
+        self.environment.reset(seed=0)
         self.lookups: dict[float, dict[tuple[int, str, int], int]] = {}
         for kappa, raw in raw_by_kappa.items():
             lookup: dict[tuple[int, str, int], int] = {}
