@@ -1,0 +1,236 @@
+{
+  "checks": {
+    "do_oracle_raw_summary_agreement": true,
+    "do_oracle_logger_mixture_condition_independent": true,
+    "primary_mixtures_preserve_state_action_mass": true,
+    "confounded_u_posteriors_match_analytic": true,
+    "independent_u_posterior_is_half": true,
+    "logger12_balanced_remains_confounded": true,
+    "all_sources_equal_remains_confounded": true,
+    "kappa_zero_population_equals_do": true,
+    "independent_population_equals_do": true,
+    "base_action_is_mixture_invariant_and_equals_do": true,
+    "reward_heavy_drift_identity": true,
+    "delta_heavy_drift_identity": true,
+    "balanced_reward_bias_identity": true,
+    "balanced_delta_bias_identity": true
+  },
+  "posterior": {
+    "confounded": {
+      "passed": true,
+      "maximum_absolute_difference": 1.1102230246251565e-16,
+      "details": {
+        "logger1_heavy": {
+          "minus": {
+            "analytic": 0.12222222222222223,
+            "empirical_mean": 0.12222222222222223,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.8777777777777778,
+            "empirical_mean": 0.8777777777777781,
+            "maximum_absolute_difference": 0.0
+          }
+        },
+        "logger12_balanced": {
+          "minus": {
+            "analytic": 0.2,
+            "empirical_mean": 0.20000000000000004,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.7999999999999999,
+            "empirical_mean": 0.8000000000000002,
+            "maximum_absolute_difference": 1.1102230246251565e-16
+          }
+        },
+        "logger2_heavy": {
+          "minus": {
+            "analytic": 0.2777777777777778,
+            "empirical_mean": 0.27777777777777773,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.7222222222222221,
+            "empirical_mean": 0.722222222222222,
+            "maximum_absolute_difference": 1.1102230246251565e-16
+          }
+        },
+        "all_sources_equal": {
+          "minus": {
+            "analytic": 0.2,
+            "empirical_mean": 0.20000000000000004,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.8,
+            "empirical_mean": 0.8000000000000002,
+            "maximum_absolute_difference": 0.0
+          }
+        }
+      }
+    },
+    "independent_latents": {
+      "passed": true,
+      "maximum_absolute_difference": 0.0,
+      "details": {
+        "logger1_heavy": {
+          "minus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          }
+        },
+        "logger12_balanced": {
+          "minus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          }
+        },
+        "logger2_heavy": {
+          "minus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          }
+        },
+        "all_sources_equal": {
+          "minus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "base": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          },
+          "plus": {
+            "analytic": 0.5,
+            "empirical_mean": 0.5,
+            "maximum_absolute_difference": 0.0
+          }
+        }
+      }
+    }
+  },
+  "state_action_mass": {
+    "confounded": {
+      "passed": true,
+      "conditional_action_mass": [
+        0.45,
+        0.1,
+        0.45
+      ],
+      "maximum_primary_difference": 5.551115123125783e-17
+    },
+    "independent_latents": {
+      "passed": true,
+      "conditional_action_mass": [
+        0.45,
+        0.1,
+        0.45
+      ],
+      "maximum_primary_difference": 5.551115123125783e-17
+    }
+  },
+  "mechanism_identity_maximum_absolute_residual": {
+    "reward_heavy_identity_residual": 1.7763568394002505e-15,
+    "delta_heavy_identity_residual": 1.7763568394002505e-15,
+    "balanced_reward_identity_residual": 1.7763568394002505e-15,
+    "balanced_delta_identity_residual": 1.7763568394002505e-15
+  },
+  "support_marginals": {
+    "confounded": {
+      "logger_0_action_minus": 0.5000000000000001,
+      "logger_0_action_base": 0.0,
+      "logger_0_action_plus": 0.5000000000000001,
+      "logger_0_u_env_-1": 0.5000000000000001,
+      "logger_0_u_env_1": 0.5000000000000001,
+      "logger_1_action_minus": 0.4999999999999999,
+      "logger_1_action_base": 0.0,
+      "logger_1_action_plus": 0.4999999999999999,
+      "logger_1_u_env_-1": 0.4999999999999999,
+      "logger_1_u_env_1": 0.4999999999999999,
+      "logger_2_action_minus": 0.0,
+      "logger_2_action_base": 1.0,
+      "logger_2_action_plus": 0.0,
+      "logger_2_u_env_-1": 0.5,
+      "logger_2_u_env_1": 0.5
+    },
+    "independent_latents": {
+      "logger_0_action_minus": 0.5000000000000001,
+      "logger_0_action_base": 0.0,
+      "logger_0_action_plus": 0.5000000000000001,
+      "logger_0_u_env_-1": 0.5000000000000001,
+      "logger_0_u_env_1": 0.5000000000000001,
+      "logger_1_action_minus": 0.4999999999999999,
+      "logger_1_action_base": 0.0,
+      "logger_1_action_plus": 0.4999999999999999,
+      "logger_1_u_env_-1": 0.4999999999999999,
+      "logger_1_u_env_1": 0.4999999999999999,
+      "logger_2_action_minus": 0.0,
+      "logger_2_action_base": 1.0,
+      "logger_2_action_plus": 0.0,
+      "logger_2_u_env_-1": 0.5,
+      "logger_2_u_env_1": 0.5
+    }
+  },
+  "independent_latent_weighted_correlation": {
+    "logger1_heavy": 0.0,
+    "logger12_balanced": 0.0,
+    "logger2_heavy": 0.0,
+    "all_sources_equal": 0.0
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "stage": "Phase 8A-NC",
+  "git_commit": "943f05240ba88d94bfbad5adb7308096dbe4a978",
+  "phase8a_input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified",
+  "phase8ar_input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review",
+  "phase8ac_input_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30",
+  "phase8a_input_hashes": {
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/anchors.npz": "fd9c7aa054edbfe4eb2866ff5cf372056ca8144d90f0991db928ce30f88e77e0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p00/do_oracle_raw.npz": "b36bc91ac9b9b525d09bf6c9a3bc58f73c4a90ff01ebe434a7bb8f3fde178771",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p00/do_oracle_summary.npz": "2a4b08502e37ce56272e7079589c764eb2d6fc00d93ec4317cfd05240c21383b",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p10/do_oracle_raw.npz": "8e91a28273bed521477e2c827bd550f16d4ef55868a6d7148240cec4f3a251bb",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p10/do_oracle_summary.npz": "c7234d31f023b31a1f14f56b68235dab87b54b79e0c3b53e4a22a8100688a9a5",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p20/do_oracle_raw.npz": "754fc8cb09e7db8dc43b277ac8506ebef586f89e4ce1eefdbb30cf645f7d0a1d",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p20/do_oracle_summary.npz": "72b85b0354caaad70cb8a2456b95af1fe8cda5f0eb1d2211d396c3af3e435e40",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p30/do_oracle_raw.npz": "9b0bb848a7fbf2018b659223e4abab922b7aa035ce2ef17197486997a28b43e8",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p30/do_oracle_summary.npz": "d1359da0c8b826bc504a3ad483a9ffaaae67a85bec0f8b486c81d518f42bdbe3",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/manifest.json": "feb6ca071ce7e165a631c0a08d73147b935ee9c3943daf8fed11ccfa8c610bc8",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/anchor_action_metrics.npz": "67d98a885406191b6ca864df2865bc21bc6a8e886d71edcb43cd5948da54c42b",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30/anchor_clipping_table.npz": "197a6d875ac0e6d288c58f2bce4960b82ecb847e609372c5a0897e6bdcd20033",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30/hard_checks.json": "86564db54d5f95c091b9e892cd7943eeb6ce9e0bae1aebb7a7ac2e50720bfd41",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/clipping_sensitivity_kappa_0p30/manifest.json": "55ae44537a99cdcc14d84d454285a957b29f17fec42ee4fa315ef39c3d65438b",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/hard_checks.json": "35e7380837c5d610c0d0470af8766b3569d60dab40de4ecc0df0eabda25589e0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/population_effect_review/manifest.json": "48ddb310046a832c23a72b5448d590939a3f6dc247c2bbbd249ecc773d3f4ab0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/summary.json": "6f4c7bdba5d0762cd55e75478b324c1f1bfd25f68dc2814873b737bccf739694"
+  },
+  "phase8ac_clean_mask_sha256": "197a6d875ac0e6d288c58f2bce4960b82ecb847e609372c5a0897e6bdcd20033",
+  "environment": "Hopper-v5",
+  "available_anchor_count": 2048,
+  "analyzed_anchor_count": 2048,
+  "kappas": [
+    0.0,
+    0.1,
+    0.2,
+    0.3
+  ],
+  "logger_names": [
+    "strong_same_direction",
+    "weak_same_direction",
+    "base_control"
+  ],
+  "logger_probability_tables": {
+    "0": {
+      "-1": {
+        "minus": 0.9,
+        "plus": 0.1
+      },
+      "1": {
+        "minus": 0.1,
+        "plus": 0.9
+      }
+    },
+    "1": {
+      "-1": {
+        "minus": 0.7,
+        "plus": 0.3
+      },
+      "1": {
+        "minus": 0.3,
+        "plus": 0.7
+      }
+    },
+    "2": {
+      "-1": {
+        "base": 1.0
+      },
+      "1": {
+        "base": 1.0
+      }
+    }
+  },
+  "logger_parameters_selected_without_outcome_search": true,
+  "primary_mixtures": {
+    "logger1_heavy": [
+      0.8,
+      0.1,
+      0.1
+    ],
+    "logger12_balanced": [
+      0.45,
+      0.45,
+      0.1
+    ],
+    "logger2_heavy": [
+      0.1,
+      0.8,
+      0.1
+    ]
+  },
+  "secondary_mixtures": {
+    "all_sources_equal": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ]
+  },
+  "action_keys": [
+    "minus",
+    "base",
+    "plus"
+  ],
+  "conditions": {
+    "confounded": "u_env = u_behavior",
+    "independent_latents": "u_env independent of u_behavior"
+  },
+  "do_oracle_reuse": "exact Phase 8A do_oracle_raw lookup; no simulation",
+  "public_fields": [
+    "row_id",
+    "anchor_id",
+    "observation",
+    "commanded_action",
+    "reward",
+    "next_observation",
+    "terminated",
+    "truncated",
+    "logger_id",
+    "condition",
+    "kappa_env"
+  ],
+  "hidden_only_fields": [
+    "action_key",
+    "action_probability_given_u",
+    "applied_action",
+    "applied_action_clipped",
+    "base_mass",
+    "u_behavior",
+    "u_env"
+  ],
+  "numerical_tolerance": {
+    "atol": 1e-07,
+    "rtol": 1e-07
+  },
+  "random_latent_or_action_sampling": false,
+  "mujoco_rerun": false,
+  "bootstrap_repetitions": 2000,
+  "bootstrap_seed": 0,
+  "python_version": "3.12.14",
+  "numpy_version": "1.26.4",
+  "matplotlib_version": "3.11.1"
+}
