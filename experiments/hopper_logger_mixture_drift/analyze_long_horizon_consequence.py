@@ -33,6 +33,8 @@ from .analyze_phase8a_population_effect import (
 )
 from .fixed_public_continuation import (
     FixedPublicContinuationPolicy,
+    POLICY_REPLAY_ATOL,
+    POLICY_REPLAY_RTOL,
     resolve_gamma,
     resolve_source2_checkpoint,
     verify_continuation_matches_base_actions,
@@ -822,7 +824,8 @@ def run_long_horizon_audit(
     model = SAC.load(checkpoint, device=device)
     continuation = FixedPublicContinuationPolicy(model)
     continuation_audit = verify_continuation_matches_base_actions(
-        continuation, anchors_all["public_observation"], anchors_all["base_action"], atol, rtol)
+        continuation, anchors_all["public_observation"], anchors_all["base_action"],
+        POLICY_REPLAY_ATOL, POLICY_REPLAY_RTOL)
     roundtrip = checkpoint_roundtrip(model, SAC.load, anchors_all["public_observation"][:num_anchors],
                                      device, atol, rtol)
     if not roundtrip["passed"]:
@@ -951,6 +954,8 @@ def run_long_horizon_audit(
             "public_observation_dimension": 12, "behavior_input_dimension": 13,
             "actual_u_used": False, "logger_id_used": False,
             "maximum_anchor_base_action_difference": continuation_audit["maximum_absolute_difference"],
+            "policy_replay_atol": POLICY_REPLAY_ATOL,
+            "policy_replay_rtol": POLICY_REPLAY_RTOL,
         },
         "eligibility": {
             "per_horizon": {str(h): int(eligibility[:, hi].sum())
@@ -988,6 +993,10 @@ def run_long_horizon_audit(
         "source2_checkpoint_sha256": checkpoint_hash, "action_keys": ACTION_KEYS,
         "primary_mixtures": PRIMARY_MIXTURES,
         "numerical_tolerance": {"atol": atol, "rtol": rtol},
+        "policy_replay_tolerance": {
+            "atol": POLICY_REPLAY_ATOL, "rtol": POLICY_REPLAY_RTOL,
+            "scope": "Source-2 FP32 neural-policy replay only",
+        },
         "estimand": "fixed-policy finite-horizon intervention value",
         "python_version": platform.python_version(), "numpy_version": np.__version__,
         "matplotlib_version": plt.matplotlib.__version__, "device": device,

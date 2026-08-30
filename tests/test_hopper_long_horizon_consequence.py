@@ -29,6 +29,8 @@ from experiments.hopper_logger_mixture_drift.anchor_pool import (
 from experiments.hopper_logger_mixture_drift.fixed_public_continuation import (
     ContinuationPolicyError,
     FixedPublicContinuationPolicy,
+    POLICY_REPLAY_ATOL,
+    POLICY_REPLAY_RTOL,
     resolve_gamma,
     resolve_source2_checkpoint,
     verify_continuation_matches_base_actions,
@@ -152,8 +154,16 @@ def test_source2_checkpoint_roundtrip(tmp_path):
 def test_public_continuation_matches_anchor_base_action():
     policy = FixedPublicContinuationPolicy(FakeModel())
     observations = np.ones((4, 12), dtype=np.float32)
+    expected = policy.batch_actions(observations)
     verify_continuation_matches_base_actions(
-        policy, observations, policy.batch_actions(observations), 1e-7, 1e-7)
+        policy, observations, expected, 1e-7, 1e-7)
+    replay_shift = np.full_like(expected, 4.2e-6)
+    verify_continuation_matches_base_actions(
+        policy, observations, expected + replay_shift,
+        POLICY_REPLAY_ATOL, POLICY_REPLAY_RTOL)
+    with pytest.raises(ContinuationPolicyError, match="max_abs_difference"):
+        verify_continuation_matches_base_actions(
+            policy, observations, expected + replay_shift, 1e-7, 1e-7)
 
 
 def test_public_continuation_does_not_use_actual_u():

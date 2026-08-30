@@ -12,6 +12,10 @@ from .anchor_pool import sha256
 from .controlled_loggers import base_actions_from_source2, policy_observations
 
 
+POLICY_REPLAY_ATOL = 1e-5
+POLICY_REPLAY_RTOL = 1e-7
+
+
 class ContinuationPolicyError(RuntimeError):
     """Raised when the fixed Source-2 policy cannot be resolved exactly."""
 
@@ -124,7 +128,11 @@ def verify_continuation_matches_base_actions(
     difference = np.abs(predicted - stored)
     passed = bool(np.allclose(predicted, stored, atol=atol, rtol=rtol))
     if not passed:
-        raise ContinuationPolicyError("public continuation does not reproduce anchor base actions")
+        raise ContinuationPolicyError(
+            "public continuation does not reproduce anchor base actions: "
+            f"max_abs_difference={float(np.max(difference)):.9g}, "
+            f"atol={atol:.9g}, rtol={rtol:.9g}")
     return {"passed": True, "maximum_absolute_difference": float(np.max(difference)),
+            "atol": float(atol), "rtol": float(rtol),
             "rows": int(len(predicted)), "actual_u_used": False,
             "logger_id_used": False}
