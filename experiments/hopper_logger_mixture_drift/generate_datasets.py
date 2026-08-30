@@ -244,13 +244,30 @@ def deterministic_repeat_check(
     first = simulator.step(anchor_index, command, u_env, kappa_env)
     second = simulator.step(anchor_index, command, u_env, kappa_env)
     array_fields = ("applied_action", "next_observation", "next_qpos", "next_qvel")
-    scalar_fields = ("reward", "terminated", "truncated")
-    passed = all(np.allclose(first[field], second[field], atol=atol, rtol=rtol)
-                 for field in array_fields)
-    passed = passed and all(first[field] == second[field] for field in scalar_fields)
-    return {"passed": bool(passed), "atol": atol, "rtol": rtol,
-            "maximum_next_observation_difference": float(np.max(np.abs(
-                first["next_observation"] - second["next_observation"]))) }
+    maximum_differences = {
+        field: float(np.max(np.abs(
+            np.asarray(first[field], dtype=np.float64)
+            - np.asarray(second[field], dtype=np.float64)
+        )))
+        for field in array_fields
+    }
+    reward_difference = float(abs(float(first["reward"]) - float(second["reward"])))
+    numeric_passed = all(
+        np.allclose(first[field], second[field], atol=atol, rtol=rtol)
+        for field in array_fields
+    ) and bool(np.isclose(first["reward"], second["reward"], atol=atol, rtol=rtol))
+    terminated_match = bool(first["terminated"] == second["terminated"])
+    truncated_match = bool(first["truncated"] == second["truncated"])
+    passed = numeric_passed and terminated_match and truncated_match
+    return {
+        "passed": bool(passed), "atol": atol, "rtol": rtol,
+        "maximum_applied_action_difference": maximum_differences["applied_action"],
+        "maximum_next_observation_difference": maximum_differences["next_observation"],
+        "maximum_next_qpos_difference": maximum_differences["next_qpos"],
+        "maximum_next_qvel_difference": maximum_differences["next_qvel"],
+        "absolute_reward_difference": reward_difference,
+        "terminated_match": terminated_match, "truncated_match": truncated_match,
+    }
 
 
 def all_arrays_finite(*bundles: dict[str, np.ndarray]) -> bool:

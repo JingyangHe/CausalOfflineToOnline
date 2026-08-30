@@ -74,6 +74,19 @@ def _fake_loader(path, device="cpu"):
     return FakeSource2()
 
 
+class TinyRewardJitterSimulator(FakeOneStepSimulator):
+    def __init__(self, anchors, jitter):
+        super().__init__(anchors)
+        self.jitter = float(jitter)
+        self.calls = 0
+
+    def step(self, anchor_index, commanded_action, u_env, kappa_env):
+        result = super().step(anchor_index, commanded_action, u_env, kappa_env)
+        result["reward"] += self.jitter * self.calls
+        self.calls += 1
+        return result
+
+
 def _anchors(count=3):
     elapsed = np.asarray((0, 20, 40), dtype=np.int64)[:count]
     observation = np.zeros((count, 12), dtype=np.float32)
@@ -138,6 +151,18 @@ def test_anchor_restore_is_deterministic():
     anchors = _anchors(); simulator = FakeOneStepSimulator(anchors)
     result = deterministic_repeat_check(simulator, 0, np.zeros(3), 1, 0.2)
     assert result["passed"]
+
+
+def test_deterministic_repeat_uses_recorded_numeric_tolerance_for_reward():
+    anchors = _anchors()
+    within = deterministic_repeat_check(
+        TinyRewardJitterSimulator(anchors, 5e-8), 0, np.zeros(3), 1, 0.2
+    )
+    outside = deterministic_repeat_check(
+        TinyRewardJitterSimulator(anchors, 5e-6), 0, np.zeros(3), 1, 0.2
+    )
+    assert within["passed"] and within["absolute_reward_difference"] > 0.0
+    assert not outside["passed"]
 
 
 def test_kappa_zero_removes_u_env_effect():
