@@ -1,0 +1,86 @@
+{
+  "all_hard_checks_passed": true,
+  "model_seeds": [
+    0,
+    1,
+    2
+  ],
+  "one_step_only": true,
+  "online_transfer_claimed": false,
+  "primary_table": [
+    {
+      "lambda": 0.0,
+      "neural_calibration_mae": 0.024041155822688766,
+      "neural_do_rank_error": 0.3475783475783476,
+      "neural_gap_error": 0.0057794382280502874,
+      "neural_gap_signed_error": 0.0008334944238212702,
+      "neural_obs_rank_error": 0.3554131054131054,
+      "neural_oracle_hit_rate": 0.6524216524216524,
+      "neural_regret": 0.0013752590228171054,
+      "obs_do_rank_error": 0.01282051282051282,
+      "obs_gap_error": 0.001186411391788093,
+      "obs_gap_signed_error": 0.0011721231550036995,
+      "obs_regret": 3.3996583848858673e-06,
+      "observational_oracle_hit_rate": 0.9871794871794872,
+      "random_action_regret": 0.002905727905586376,
+      "random_oracle_hit_rate": 0.3333333333333333
+    },
+    {
+      "lambda": 0.05,
+      "neural_calibration_mae": 0.03341074488427323,
+      "neural_do_rank_error": 0.9316239316239316,
+      "neural_gap_error": 0.024053826753105686,
+      "neural_gap_signed_error": -0.0185876790172359,
+      "neural_obs_rank_error": 0.03561253561253561,
+      "neural_oracle_hit_rate": 0.06837606837606836,
+      "neural_regret": 0.005483613531266896,
+      "obs_do_rank_error": 0.9487179487179487,
+      "obs_gap_error": 0.029513089666112814,
+      "obs_gap_signed_error": -0.02325095376807319,
+      "obs_regret": 0.00565900016805787,
+      "observational_oracle_hit_rate": 0.05128205128205132,
+      "random_action_regret": 0.002905727905586376,
+      "random_oracle_hit_rate": 0.3333333333333333
+    },
+    {
+      "lambda": 0.1,
+      "neural_calibration_mae": 0.04519003330187708,
+      "neural_do_rank_error": 0.9408831908831908,
+      "neural_gap_error": 0.03642122904249886,
+      "neural_gap_signed_error": -0.02842836212463792,
+      "neural_obs_rank_error": 0.01566951566951567,
+      "neural_oracle_hit_rate": 0.059116809116809166,
+      "neural_regret": 0.00559711683774055,
+      "obs_do_rank_error": 0.9487179487179487,
+      "obs_gap_error": 0.06009001274303587,
+      "obs_gap_signed_error": -0.04767403069115007,
+      "obs_regret": 0.00565900016805787,
+      "observational_oracle_hit_rate": 0.05128205128205132,
+      "random_action_regret": 0.002905727905586376,
+      "random_oracle_hit_rate": 0.3333333333333333
+    },
+    {
+      "lambda": 0.2,
+      "neural_calibration_mae": 0.06875919872117976,
+      "neural_do_rank_error": 0.9444444444444444,
+      "neural_gap_error": 0.0604256263138732,
+      "neural_gap_signed_error": -0.0480616770242521,
+      "neural_obs_rank_error": 0.005698005698005698,
+      "neural_oracle_hit_rate": 0.05555555555555558,
+      "neural_regret": 0.005635673399401648,
+      "obs_do_rank_error": 0.9487179487179487,
+      "obs_gap_error": 0.12124385889688219,
+      "obs_gap_signed_error": -0.09652018453730409,
+      "obs_regret": 0.00565900016805787,
+      "observational_oracle_hit_rate": 0.05128205128205132,
+      "random_action_regret": 0.002905727905586376,
+      "random_oracle_hit_rate": 0.3333333333333333
+    }
+  ],
+  "stage": "Phase 8B-RS Ranking-Calibration-Regret Audit",
+  "test_anchor_count": 78,
+  "tie_tolerance": {
+    "atol": 1e-07,
+    "rtol": 1e-07
+  }
+}

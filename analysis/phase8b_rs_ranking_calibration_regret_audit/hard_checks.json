@@ -1,0 +1,17 @@
+{
+  "all_passed": true,
+  "checks": {
+    "all_144_prediction_files_present": true,
+    "all_arrays_finite": true,
+    "all_top_sets_nonempty": true,
+    "bias_identity_within_floating_precision": true,
+    "existing_top_tolerance_used": true,
+    "input_hard_checks_passed": true,
+    "input_hashes_unchanged": true,
+    "max_bias_identity_residual": 0.0,
+    "old_artifacts_unchanged": true,
+    "only_78_test_anchors_used": true,
+    "prediction_population_targets_match_oracle": true
+  },
+  "failed": []
+}
