@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import multiprocessing as mp
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -38,6 +39,7 @@ from experiments.hopper_logger_mixture_drift.fixed_public_continuation import (
 from experiments.hopper_logger_mixture_drift.long_horizon_consequence import (
     BRANCH_FIELDS,
     LongHorizonRolloutEngine,
+    PROCESS_START_METHOD,
     combine_initial_u_branches,
     decision_regret,
     exact_horizon5_sequences,
@@ -224,6 +226,7 @@ def test_common_random_numbers_across_actions_and_branches():
     values = generate_future_u_sequences(np.asarray([9]), 4, 10, 0)
     assigned = np.broadcast_to(values[:, :, None, None, None, :], (1, 4, 3, 2, 4, 10))
     assert np.array_equal(assigned[:, :, 0, 0, 0], assigned[:, :, 2, 1, 3])
+    assert mp.get_context(PROCESS_START_METHOD).get_start_method() == "spawn"
 
 
 def test_horizon1_matches_phase8anc():

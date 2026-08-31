@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from itertools import product
+import multiprocessing as mp
 from pathlib import Path
 from typing import Any, Callable
 
@@ -30,6 +31,7 @@ BRANCH_FIELDS = (
     "restricted_time_to_termination", "future_clipping_rate",
     "future_clipping_coordinate_rate",
 )
+PROCESS_START_METHOD = "spawn"
 
 
 class LongHorizonAuditError(RuntimeError):
@@ -466,7 +468,8 @@ def execute_rollouts(
             _WORKER.clear()
     else:
         with ProcessPoolExecutor(max_workers=num_workers, initializer=_worker_initialize,
-                                 initargs=(config,)) as executor:
+                                 initargs=(config,),
+                                 mp_context=mp.get_context(PROCESS_START_METHOD)) as executor:
             futures = [executor.submit(_rollout_anchor_worker, position)
                        for position in range(num_anchors)]
             for future in as_completed(futures):
