@@ -119,6 +119,24 @@ def test_output_shapes():
     x = torch.zeros((5, 15))
     assert tuple(phase.RewardMeanModel()(x).shape) == (5, 1)
     assert tuple(phase.DeltaMeanModel()(x).shape) == (5, 11)
+    assert tuple(phase.RewardMeanModel(64)(x).shape) == (5, 1)
+    assert tuple(phase.DeltaMeanModel(64)(x).shape) == (5, 11)
+
+
+def test_capacity_diagnostic_parameter_counts():
+    assert phase.expected_parameter_count(1, 64) == 9409
+    assert phase.expected_parameter_count(11, 64) == 10059
+    assert phase.expected_parameter_count(1, 256) == 135937
+    assert phase.expected_parameter_count(11, 256) == 138507
+    torch_or_skip()
+    assert phase.parameter_count(phase.RewardMeanModel(64)) == 9409
+    assert phase.parameter_count(phase.DeltaMeanModel(64)) == 10059
+
+
+def test_capacity_choices_are_locked():
+    assert phase.SUPPORTED_HIDDEN_WIDTHS == (64, 256)
+    with pytest.raises(ValueError):
+        phase.expected_parameter_count(1, 128)
 
 
 def test_normalization_shared_across_mixtures():
@@ -148,6 +166,15 @@ def test_checkpoint_roundtrip(tmp_path):
     loaded, metadata = phase.load_checkpoint(path, "reward", "cpu")
     assert phase.state_hash(model) == phase.state_hash(loaded)
     assert metadata["target"] == "reward"
+
+
+def test_small_checkpoint_roundtrip(tmp_path):
+    torch_or_skip()
+    model = phase.RewardMeanModel(64); path = tmp_path / "small_model.pt"
+    phase.save_checkpoint(path, model, {"target": "reward", "hidden_width": 64})
+    loaded, metadata = phase.load_checkpoint(path, "reward", "cpu")
+    assert phase.state_hash(model) == phase.state_hash(loaded)
+    assert metadata["hidden_width"] == 64
 
 
 def test_kappa_zero_population_invariance():

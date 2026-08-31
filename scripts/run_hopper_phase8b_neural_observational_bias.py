@@ -11,10 +11,12 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from experiments.hopper_logger_mixture_drift.neural_observational_bias import (  # noqa: E402
+    DEFAULT_HIDDEN_WIDTH,
     CONDITIONS,
     EXPECTED_KAPPAS,
     NeuralObservationalBiasError,
     PRIMARY_MIXTURE_NAMES,
+    SUPPORTED_HIDDEN_WIDTHS,
     run_neural_observational_bias,
 )
 
@@ -34,6 +36,8 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=512)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument("--split-seed", type=int, default=0)
+    parser.add_argument("--hidden-width", type=int, choices=SUPPORTED_HIDDEN_WIDTHS,
+                        default=DEFAULT_HIDDEN_WIDTH)
     return parser.parse_args()
 
 
@@ -45,7 +49,8 @@ def main() -> int:
             num_anchors=args.num_anchors, kappas=tuple(args.kappas),
             conditions=tuple(args.conditions), mixtures=tuple(args.mixtures),
             model_seeds=tuple(args.model_seeds), updates=args.updates,
-            batch_size=args.batch_size, device=args.device, split_seed=args.split_seed)
+            batch_size=args.batch_size, device=args.device, split_seed=args.split_seed,
+            hidden_width=args.hidden_width)
     except Exception as exc:
         print("PHASE8B_NC_NEURAL_OBSERVATIONAL_BIAS_BLOCKED")
         print(f"BLOCKING ERROR: {exc}")

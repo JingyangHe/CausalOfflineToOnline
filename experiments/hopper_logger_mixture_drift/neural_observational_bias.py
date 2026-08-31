@@ -43,6 +43,9 @@ MODEL_INPUT_FIELDS = ("observation", "commanded_action")
 MODEL_INPUT_DIMENSION = 15
 PHYSICAL_DELTA_DIMENSION = 11
 PRIMARY_MIXTURE_NAMES = tuple(PRIMARY_MIXTURES)
+DEFAULT_HIDDEN_WIDTH = 256
+CAPACITY_DIAGNOSTIC_HIDDEN_WIDTH = 64
+SUPPORTED_HIDDEN_WIDTHS = (CAPACITY_DIAGNOSTIC_HIDDEN_WIDTH, DEFAULT_HIDDEN_WIDTH)
 LEAKAGE_FLAGS = {
     "LOGGER_ID_IN_MODEL_INPUT": False,
     "HIDDEN_U_IN_MODEL_INPUT": False,
@@ -236,22 +239,36 @@ def apply_normalization(values: np.ndarray, stats: Normalization) -> np.ndarray:
     return (np.asarray(values, dtype=np.float64) - stats.mean) / stats.std
 
 
-def RewardMeanModel():
-    return _make_model(1)
+def RewardMeanModel(hidden_width: int = DEFAULT_HIDDEN_WIDTH):
+    return _make_model(1, hidden_width)
 
 
-def DeltaMeanModel():
-    return _make_model(11)
+def DeltaMeanModel(hidden_width: int = DEFAULT_HIDDEN_WIDTH):
+    return _make_model(11, hidden_width)
 
 
-def _make_model(output_dimension: int):
+def _make_model(output_dimension: int, hidden_width: int):
+    if hidden_width not in SUPPORTED_HIDDEN_WIDTHS:
+        raise ValueError(f"hidden_width must be one of {SUPPORTED_HIDDEN_WIDTHS}")
     torch = _torch()
     return torch.nn.Sequential(
-        torch.nn.Linear(15, 256), torch.nn.ReLU(),
-        torch.nn.Linear(256, 256), torch.nn.ReLU(),
-        torch.nn.Linear(256, 256), torch.nn.ReLU(),
-        torch.nn.Linear(256, output_dimension),
+        torch.nn.Linear(15, hidden_width), torch.nn.ReLU(),
+        torch.nn.Linear(hidden_width, hidden_width), torch.nn.ReLU(),
+        torch.nn.Linear(hidden_width, hidden_width), torch.nn.ReLU(),
+        torch.nn.Linear(hidden_width, output_dimension),
     )
+
+
+def parameter_count(model: Any) -> int:
+    return int(sum(value.numel() for value in model.parameters()))
+
+
+def expected_parameter_count(output_dimension: int, hidden_width: int) -> int:
+    if hidden_width not in SUPPORTED_HIDDEN_WIDTHS:
+        raise ValueError(f"hidden_width must be one of {SUPPORTED_HIDDEN_WIDTHS}")
+    return int((15 + 1) * hidden_width
+               + 2 * (hidden_width + 1) * hidden_width
+               + (hidden_width + 1) * output_dimension)
 
 
 def state_hash(model: Any) -> str:
@@ -262,11 +279,14 @@ def state_hash(model: Any) -> str:
     return digest.hexdigest()
 
 
-def make_initial_state(target: str, seed: int) -> tuple[dict[str, Any], str]:
+def make_initial_state(
+    target: str, seed: int, hidden_width: int = DEFAULT_HIDDEN_WIDTH,
+) -> tuple[dict[str, Any], str]:
     """Create one CPU initial state that all three mixture models will load."""
     torch = _torch()
     torch.manual_seed(seed)
-    model = RewardMeanModel() if target == "reward" else DeltaMeanModel()
+    model = (RewardMeanModel(hidden_width) if target == "reward"
+             else DeltaMeanModel(hidden_width))
     state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
     return state, state_hash(model)
 
@@ -297,13 +317,15 @@ def train_model(
     train: GroupedTargets, validation: GroupedTargets, target: str,
     input_stats: Normalization, output_stats: Normalization, schedule: np.ndarray,
     seed: int, device: str, initial_state: Mapping[str, Any] | None = None,
+    hidden_width: int = DEFAULT_HIDDEN_WIDTH,
 ) -> tuple[Any, dict[str, Any]]:
     """Train without accepting or reading any oracle, logger, U, or applied-action fields."""
     torch = _torch()
     torch.manual_seed(seed)
     if device == "cuda":
         torch.cuda.manual_seed_all(seed)
-    model = RewardMeanModel() if target == "reward" else DeltaMeanModel()
+    model = (RewardMeanModel(hidden_width) if target == "reward"
+             else DeltaMeanModel(hidden_width))
     if initial_state is not None:
         model.load_state_dict(dict(initial_state))
     model.to(device)
@@ -355,13 +377,18 @@ def save_checkpoint(path: Path, model: Any, metadata: Mapping[str, Any]) -> None
     torch.save({"state_dict": model.state_dict(), "metadata": dict(metadata)}, path)
 
 
-def load_checkpoint(path: Path, target: str, device: str) -> tuple[Any, dict[str, Any]]:
+def load_checkpoint(
+    path: Path, target: str, device: str, hidden_width: int | None = None,
+) -> tuple[Any, dict[str, Any]]:
     torch = _torch()
     payload = torch.load(path, map_location=device, weights_only=False)
-    model = RewardMeanModel() if target == "reward" else DeltaMeanModel()
+    metadata = dict(payload["metadata"])
+    width = int(metadata.get("hidden_width", DEFAULT_HIDDEN_WIDTH)
+                if hidden_width is None else hidden_width)
+    model = RewardMeanModel(width) if target == "reward" else DeltaMeanModel(width)
     model.load_state_dict(payload["state_dict"])
     model.to(device).eval()
-    return model, dict(payload["metadata"])
+    return model, metadata
 
 
 def require_verified_inputs(phase8anc_root: Path, phase8a_root: Path,
@@ -799,6 +826,11 @@ condition, mixture, target, and model seed.  Each network received only the publ
 12-D observation and commanded 3-D action.  Population row weights were used only
 to form grouped observational targets and their grouped training mass.
 
+The hidden width was {summary['hidden_width']}.  Reward and delta models contained
+{summary['reward_parameter_count']} and {summary['delta_parameter_count']} trainable
+parameters, respectively.  Capacity comparisons are valid only against runs using
+the same anchors, split, seeds, schedules, optimizer, and update count.
+
 All {len(summary['hard_checks'])} implementation hard checks passed.  Evaluation
 uses only held-out anchor IDs.  Anchor bootstrap variation and between-model-seed
 variation are reported separately; seed×anchor rows are not treated as independent.
@@ -825,6 +857,7 @@ def run_neural_observational_bias(
     mixtures: tuple[str, ...] = PRIMARY_MIXTURE_NAMES,
     model_seeds: tuple[int, ...] = (0, 1, 2, 3, 4), updates: int = 3000,
     batch_size: int = 512, device: str = "auto", split_seed: int = 0,
+    hidden_width: int = DEFAULT_HIDDEN_WIDTH,
 ) -> dict[str, Any]:
     """Run Phase 8B-NC while keeping all preceding artifacts read-only."""
     if any(LEAKAGE_FLAGS.values()):
@@ -840,6 +873,8 @@ def run_neural_observational_bias(
         raise ValueError("exactly the three primary mixtures are required")
     if not model_seeds or min(num_anchors, updates, batch_size) <= 0:
         raise ValueError("anchors, updates, batch size, and model seeds must be nonempty")
+    if hidden_width not in SUPPORTED_HIDDEN_WIDTHS:
+        raise ValueError(f"hidden_width must be one of {SUPPORTED_HIDDEN_WIDTHS}")
     inputs, all_anchor_ids, strict_all = require_verified_inputs(
         phase8anc_root, phase8a_root, phase8ac_root)
     if num_anchors > len(all_anchor_ids):
@@ -981,6 +1016,7 @@ def run_neural_observational_bias(
     initial_hash_check = True
     schedule_hash_check = True
     checkpoint_roundtrip = True
+    capacity_check = True
     prediction_shape = True
     all_finite = True
     test_ids = np.asarray(splits["test"], dtype=np.int64)
@@ -1006,12 +1042,14 @@ def run_neural_observational_bias(
                 initial_by_target: dict[str, list[str]] = {"reward": [], "delta": []}
                 schedule_by_target: dict[str, list[str]] = {"reward": [], "delta": []}
                 for target in ("reward", "delta"):
-                    shared_initial_state, shared_initial_hash = make_initial_state(target, model_seed)
+                    shared_initial_state, shared_initial_hash = make_initial_state(
+                        target, model_seed, hidden_width)
                     initial_path = (output / "models" / "initial_states" / KAPPA_NAMES[kappa]
                                     / condition / f"seed_{model_seed}_{target}.pt")
                     initial_path.parent.mkdir(parents=True, exist_ok=True)
                     _torch().save({"state_dict": shared_initial_state,
-                                   "sha256": shared_initial_hash}, initial_path)
+                                   "sha256": shared_initial_hash,
+                                   "hidden_width": hidden_width}, initial_path)
                     family_schedule = batch_schedule(
                         len(grouped[(kappa, condition, mixtures[0])].subset(splits["train"]).x),
                         updates, batch_size,
@@ -1027,17 +1065,24 @@ def run_neural_observational_bias(
                         test = dataset.subset(splits["test"])
                         model, history = train_model(
                             train, validation, target, input_stats, output_stats[(kappa,target)],
-                            family_schedule, model_seed, resolved_device, shared_initial_state)
+                            family_schedule, model_seed, resolved_device, shared_initial_state,
+                            hidden_width=hidden_width)
+                        expected_count = expected_parameter_count(
+                            1 if target == "reward" else 11, hidden_width)
+                        capacity_check &= parameter_count(model) == expected_count
                         initial_by_target[target].append(history["initial_state_hash"])
                         schedule_by_target[target].append(history["schedule_hash"])
                         model_path = (output / "models" / KAPPA_NAMES[kappa] / condition /
                                       mixture / f"seed_{model_seed}_{target}.pt")
                         metadata = {**history, "kappa": kappa, "condition": condition,
                                     "mixture": mixture, "model_seed": model_seed,
-                                    "target": target, "model_input_fields": MODEL_INPUT_FIELDS}
+                                    "target": target, "model_input_fields": MODEL_INPUT_FIELDS,
+                                    "hidden_width": hidden_width,
+                                    "parameter_count": parameter_count(model)}
                         save_checkpoint(model_path, model, metadata)
                         values = predict(model, test.x, input_stats, output_stats[(kappa,target)], resolved_device)
-                        reloaded, _ = load_checkpoint(model_path, target, resolved_device)
+                        reloaded, _ = load_checkpoint(
+                            model_path, target, resolved_device, hidden_width)
                         repeated = predict(reloaded, test.x[:32], input_stats,
                                            output_stats[(kappa,target)], resolved_device)
                         checkpoint_roundtrip &= np.allclose(values[:32], repeated, atol=1e-7, rtol=1e-6)
@@ -1161,6 +1206,7 @@ def run_neural_observational_bias(
         "checkpoint_save_reload_succeeds": bool(checkpoint_roundtrip),
         "reload_predictions_match": bool(checkpoint_roundtrip),
         "prediction_shapes_correct": bool(prediction_shape),
+        "model_capacity_matches_manifest": bool(capacity_check),
         "no_nan_or_inf": bool(all_finite),
         "kappa_zero_population_targets_mixture_invariant": bool(kappa_zero_invariant),
         "independent_population_targets_mixture_invariant": bool(independent_invariant),
@@ -1188,13 +1234,19 @@ def run_neural_observational_bias(
         "model_seeds": model_seeds, "updates": updates, "batch_size": batch_size,
         "device": resolved_device, "model_input_fields": MODEL_INPUT_FIELDS,
         "model_input_dimension": 15, "reward_output_dimension": 1,
-        "delta_output_dimension": 11, "architecture": "15-256-256-256-output ReLU",
+        "delta_output_dimension": 11, "hidden_width": hidden_width,
+        "architecture": f"15-{hidden_width}-{hidden_width}-{hidden_width}-output ReLU",
+        "reward_parameter_count": expected_parameter_count(1, hidden_width),
+        "delta_parameter_count": expected_parameter_count(11, hidden_width),
         "optimizer": "Adam", "learning_rate": 0.001, "leakage_flags": LEAKAGE_FLAGS,
         "python_version": platform.python_version(), "numpy_version": np.__version__,
     }
     summary = {
         "stage": "Phase 8B-NC", "analyzed_anchor_count": num_anchors,
         "test_anchor_count": len(test_ids), "model_seed_count": len(model_seeds),
+        "hidden_width": hidden_width,
+        "reward_parameter_count": expected_parameter_count(1, hidden_width),
+        "delta_parameter_count": expected_parameter_count(11, hidden_width),
         "hard_checks": hard_checks, "all_hard_checks_passed": True,
         "aggregate_metrics": aggregate_rows, "scientific_verdict": "MANUAL_DECISION_REQUIRED",
         "statistical_units": {"bootstrap": "anchor_id", "model_variation": "model_seed",
