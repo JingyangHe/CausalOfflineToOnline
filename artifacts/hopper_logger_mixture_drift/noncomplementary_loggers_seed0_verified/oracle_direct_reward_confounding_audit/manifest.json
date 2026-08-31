@@ -1,0 +1,81 @@
+{
+  "analyzed_anchor_count": 512,
+  "bootstrap_repetitions": 2000,
+  "bootstrap_seed": 0,
+  "conditions": [
+    "confounded",
+    "independent_latents"
+  ],
+  "kappas": [
+    0.0,
+    0.3
+  ],
+  "lambda_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "learned_predictions_used": false,
+  "logger_probability_tables": {
+    "0": {
+      "-1": {
+        "minus": 0.9,
+        "plus": 0.1
+      },
+      "1": {
+        "minus": 0.1,
+        "plus": 0.9
+      }
+    },
+    "1": {
+      "-1": {
+        "minus": 0.7,
+        "plus": 0.3
+      },
+      "1": {
+        "minus": 0.3,
+        "plus": 0.7
+      }
+    },
+    "2": {
+      "-1": {
+        "base": 1.0
+      },
+      "1": {
+        "base": 1.0
+      }
+    }
+  },
+  "matplotlib_version": "3.7.2",
+  "neural_training": false,
+  "numerical_tolerance": {
+    "atol": 1e-07,
+    "rtol": 1e-07
+  },
+  "numpy_version": "1.24.3",
+  "phase8anc_root": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified",
+  "population_only": true,
+  "primary_mixtures": {
+    "logger12_balanced": [
+      0.45,
+      0.45,
+      0.1
+    ],
+    "logger1_heavy": [
+      0.8,
+      0.1,
+      0.1
+    ],
+    "logger2_heavy": [
+      0.1,
+      0.8,
+      0.1
+    ]
+  },
+  "python_version": "3.11.5",
+  "reward_definition": "original_reward + lambda_reward * u_env",
+  "reward_signal_root": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration",
+  "stage": "Phase 8B-RS-O",
+  "statistical_unit": "anchor_id"
+}

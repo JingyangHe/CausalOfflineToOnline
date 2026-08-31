@@ -1,0 +1,27 @@
+{
+  "all_passed": true,
+  "checks": {
+    "all_anchors_complete": true,
+    "all_arrays_finite": true,
+    "balanced_minus_direct_slope_minus_0p6": true,
+    "balanced_plus_direct_slope_plus_0p6": true,
+    "base_direct_slope_zero": true,
+    "direct_reward_uses_u_env_not_u_behavior": true,
+    "do_reward_mean_invariant_to_lambda": true,
+    "heavy_base_slope_zero": true,
+    "heavy_minus_slope_minus_14_over_45": true,
+    "heavy_plus_slope_plus_14_over_45": true,
+    "independent_latents_direct_bias_zero": true,
+    "independent_latents_total_bias_zero": true,
+    "input_artifacts_complete": true,
+    "input_sha256_unchanged": true,
+    "kappa_zero_physical_bias_zero": true,
+    "old_artifacts_unmodified": true,
+    "population_table_recomputation_matches": true,
+    "primary_state_action_distribution_invariant_to_lambda": true,
+    "public_artifact_hidden_leakage_empty": true,
+    "reward_aug_equals_original_plus_lambda_u_env": true,
+    "total_bias_equals_physical_plus_direct": true
+  },
+  "failed": []
+}
