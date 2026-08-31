@@ -1,0 +1,89 @@
+{
+  "analyzed_anchor_count": 512,
+  "architecture": "15-256-256-256-1 ReLU",
+  "available_anchor_count": 2048,
+  "batch_size": 512,
+  "conditions": [
+    "confounded",
+    "independent_latents"
+  ],
+  "device": "cuda",
+  "early_stopping": false,
+  "evaluation_checkpoint": "best_validation",
+  "final_checkpoint_saved": true,
+  "hidden_audit_fields": [
+    "row_id",
+    "original_reward",
+    "augmented_reward",
+    "reward_bonus",
+    "u_env",
+    "u_behavior",
+    "action_key",
+    "logger_id",
+    "kappa",
+    "lambda_reward"
+  ],
+  "hidden_width": 256,
+  "input_normalization": "reused Phase 8B-NC input statistics",
+  "kappas": [
+    0.0,
+    0.3
+  ],
+  "leakage_flags": {
+    "DO_ORACLE_USED_FOR_TRAINING": false,
+    "HIDDEN_U_IN_MODEL_INPUT": false,
+    "KAPPA_IN_MODEL_INPUT": false,
+    "LAMBDA_IN_MODEL_INPUT": false,
+    "LOGGER_ID_IN_MODEL_INPUT": false
+  },
+  "learning_rate": 0.001,
+  "matplotlib_version": "3.11.1",
+  "mixtures": [
+    "logger1_heavy",
+    "logger12_balanced",
+    "logger2_heavy"
+  ],
+  "model_input_dimension": 15,
+  "model_input_fields": [
+    "observation",
+    "commanded_action"
+  ],
+  "model_seeds": [
+    0,
+    1,
+    2
+  ],
+  "numpy_version": "1.26.4",
+  "optimizer": "Adam",
+  "output_normalization": "per-kappa lambda=0 balanced train, shared across lambda",
+  "parameter_count": 135937,
+  "phase8a_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified",
+  "phase8anc_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified",
+  "phase8b_baseline_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8b_neural_pilot",
+  "public_fields": [
+    "row_id",
+    "anchor_id",
+    "observation",
+    "commanded_action",
+    "reward",
+    "next_observation",
+    "terminated",
+    "truncated",
+    "logger_id",
+    "condition",
+    "kappa_env",
+    "lambda_reward"
+  ],
+  "python_version": "3.12.14",
+  "reward_definition": "original_reward + lambda_reward * u_env",
+  "reward_strength_grid_fixed_before_neural_results": true,
+  "reward_strengths": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "split_provenance": "reused Phase 8B-NC anchor assignments",
+  "stage": "Phase 8B-RS",
+  "updates": 1500
+}

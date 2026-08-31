@@ -1,0 +1,53 @@
+{
+  "all_passed": true,
+  "checks": {
+    "all_2048_source_anchors_available": true,
+    "all_derived_arrays_finite": true,
+    "all_population_arrays_finite": true,
+    "all_requested_pilot_anchors_available": true,
+    "augmented_reward_uses_u_env": true,
+    "base_direct_bias_zero": true,
+    "do_mean_invariant_to_lambda": true,
+    "independent_direct_bias_zero": true,
+    "kappa_point3_additive_bias_identity": true,
+    "kappa_zero_balanced_bias_identity": true,
+    "kappa_zero_heavy_drift_identity": true,
+    "lambda_zero_public_reward_matches_phase8anc": true,
+    "original_and_augmented_reward_not_both_public": true,
+    "primary_state_action_mass_unchanged": true,
+    "public_hidden_leakage_empty": true,
+    "reward_grid_exact": true,
+    "split_reused_or_fixed": true,
+    "verified_phase8a_oracle_required": true,
+    "verified_phase8anc_required": true
+  },
+  "failed": [],
+  "previous_phase8b_reward_fit_error": {
+    "kappa_0.0:confounded": 0.026094680585536753,
+    "kappa_0.0:independent_latents": 0.02435027135544465,
+    "kappa_0.1:confounded": 0.02470548805574726,
+    "kappa_0.1:independent_latents": 0.026021391483514806,
+    "kappa_0.2:confounded": 0.024072824325524256,
+    "kappa_0.2:independent_latents": 0.02515145743943417,
+    "kappa_0.3:confounded": 0.02455492245566168,
+    "kappa_0.3:independent_latents": 0.030720875747803744
+  },
+  "theoretical_direct_signal": {
+    "0.0": {
+      "balanced_bias_magnitude": 0.0,
+      "heavy_drift_magnitude": 0.0
+    },
+    "0.05": {
+      "balanced_bias_magnitude": 0.03,
+      "heavy_drift_magnitude": 0.015555555555555557
+    },
+    "0.1": {
+      "balanced_bias_magnitude": 0.06,
+      "heavy_drift_magnitude": 0.031111111111111114
+    },
+    "0.2": {
+      "balanced_bias_magnitude": 0.12,
+      "heavy_drift_magnitude": 0.06222222222222223
+    }
+  }
+}
