@@ -957,7 +957,7 @@ def _make_figures(output: Path, do_rows: Sequence[Mapping[str, Any]],
     plt.figure()
     for method in METHODS:
         values = [float(row["mae"]) for row in do_rows if row["method"] == method
-                  and row.get("action") == "base"]
+                  and row.get("action") == "base" and "mae" in row]
         if values:
             plt.scatter([method] * len(values), values, s=10)
     plt.xticks(rotation=70); plt.ylabel("base-action do MAE"); plt.tight_layout()
