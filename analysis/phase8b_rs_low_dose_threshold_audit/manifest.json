@@ -1,0 +1,130 @@
+{
+  "actions": [
+    "minus",
+    "base",
+    "plus"
+  ],
+  "all_hard_checks_passed": true,
+  "analyzed_anchor_count": 2048,
+  "balanced_confounded_positive_regret_threshold": {
+    "kappa_0": {
+      "censored_count": 170,
+      "censored_fraction": 0.0830078125,
+      "count": 2048,
+      "finite_count": 1878,
+      "finite_fraction": 0.9169921875,
+      "finite_max": 0.014648284657220087,
+      "finite_median": 0.005063236914655082,
+      "finite_min": 8.222062473824582e-06,
+      "finite_p05": 0.001207362741630543,
+      "finite_p10": 0.0022592932020744825,
+      "finite_p25": 0.0034960796144410207,
+      "finite_p75": 0.01026080151350861,
+      "finite_p90": 0.011338540610009792,
+      "finite_p95": 0.012089957536052206,
+      "max": "+inf",
+      "median": 0.005315965252896682,
+      "min": 8.222062473824582e-06,
+      "p05": 0.001377291442999917,
+      "p10": 0.002277290859682979,
+      "p25": 0.0036204592394106783,
+      "p75": 0.010650137030907558,
+      "p90": 0.012633003823293206,
+      "p95": "+inf",
+      "zero_count": 0,
+      "zero_fraction": 0.0
+    },
+    "kappa_0.3": {
+      "censored_count": 173,
+      "censored_fraction": 0.08447265625,
+      "count": 2048,
+      "finite_count": 1875,
+      "finite_fraction": 0.91552734375,
+      "finite_max": 0.027118836533828926,
+      "finite_median": 0.0094341490304443,
+      "finite_min": 0.0,
+      "finite_p05": 0.0018528196252135902,
+      "finite_p10": 0.00359906998967574,
+      "finite_p25": 0.006264774172083282,
+      "finite_p75": 0.01838677185449315,
+      "finite_p90": 0.02096703457926911,
+      "finite_p95": 0.022513994151822647,
+      "max": "+inf",
+      "median": 0.009907244856030378,
+      "min": 0.0,
+      "p05": 0.001945263038151494,
+      "p10": 0.004011217689655991,
+      "p25": 0.006478405031679439,
+      "p75": 0.01985081064464378,
+      "p90": 0.023687747948650067,
+      "p95": "+inf",
+      "zero_count": 32,
+      "zero_fraction": 0.015625
+    }
+  },
+  "clipping_source": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\controlled_loggers_seed0_verified\\population_effect_review\\clipping_sensitivity_kappa_0p30\\anchor_clipping_table.npz",
+  "conditions": [
+    "confounded",
+    "independent_latents"
+  ],
+  "existing_lambdas": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "kappas": [
+    0.0,
+    0.3
+  ],
+  "manual_freeze_required": true,
+  "mixtures": [
+    "logger1_heavy",
+    "logger12_balanced",
+    "logger2_heavy"
+  ],
+  "neural_training_performed": false,
+  "numerical_tolerance": {
+    "atol": 1e-07,
+    "rtol": 1e-07
+  },
+  "one_step_reward_ranking_only": true,
+  "oracle_crosscheck": {
+    "max_abs_do_reward_error": 0.0,
+    "max_abs_observational_reward_error": 1.7763568394002505e-15,
+    "max_abs_slope_error": 2.220446049250313e-16,
+    "rows_checked": 73728
+  },
+  "oracle_root": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\oracle_direct_reward_confounding_audit",
+  "output_files": [
+    "anchor_thresholds.npz",
+    "dose_response_population.csv",
+    "existing_grid_crosscheck.csv",
+    "figures",
+    "pairwise_crossings.csv",
+    "piecewise_decision_paths.csv",
+    "proposed_lambda_quantiles_trainval.json",
+    "threshold_summary.csv"
+  ],
+  "phase8a_root": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified",
+  "ranking_audit_root": "D:\\o2o2027\\analysis\\phase8b_rs_ranking_calibration_regret_audit",
+  "registered_low_dose_grid": [
+    0.0,
+    0.0005,
+    0.001,
+    0.002,
+    0.003,
+    0.005,
+    0.0075,
+    0.01,
+    0.015,
+    0.02,
+    0.03,
+    0.05
+  ],
+  "seed": 0,
+  "split_source": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration\\splits.json",
+  "stage": "Phase 8B-RS-T",
+  "test_anchor_count": 78,
+  "threshold_censoring": "+inf means no decision boundary on lambda >= 0"
+}

@@ -1,0 +1,23 @@
+{
+  "all_passed": true,
+  "checks": {
+    "all_affine_values_finite": true,
+    "all_required_figures_present": true,
+    "base_action_slope_zero": true,
+    "clipping_subsets_partition_anchors": true,
+    "confounded_balanced_slopes_exact": true,
+    "crossing_left_point_right_valid": true,
+    "direct_slopes_equal_across_kappa": true,
+    "do_reward_invariant_to_lambda": true,
+    "existing_grid_crosscheck_passed": true,
+    "independent_slopes_zero": true,
+    "independent_thresholds_zero_or_censored": true,
+    "input_hashes_unchanged": true,
+    "oracle_affine_crosscheck_passed": true,
+    "phase8a_anchor_count_2048": true,
+    "public_inputs_hidden_free": true,
+    "test_anchor_count_78": true,
+    "thresholds_nonnegative_or_censored": true
+  },
+  "failed": []
+}

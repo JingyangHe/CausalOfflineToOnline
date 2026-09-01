@@ -1,0 +1,37 @@
+{
+  "input_hashes_after": {
+    "D:\\o2o2027\\analysis\\phase8b_rs_ranking_calibration_regret_audit\\anchor_action_metrics.npz": "c11b13ccb58bff5ebc87509008d41aac9805dc9859857bbb13de940c799e1736",
+    "D:\\o2o2027\\analysis\\phase8b_rs_ranking_calibration_regret_audit\\hard_checks.json": "c0c319c65990c3354bd6f6d7a038da37e99952340db1eb8a1702dbcbf736762f",
+    "D:\\o2o2027\\analysis\\phase8b_rs_ranking_calibration_regret_audit\\summary.json": "40e6c969501c17d476c91318c818e6014c696067f4882355fe12805fcfea65e3",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\controlled_loggers_seed0_verified\\population_effect_review\\clipping_sensitivity_kappa_0p30\\anchor_clipping_table.npz": "197a6d875ac0e6d288c58f2bce4960b82ecb847e609372c5a0897e6bdcd20033",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\controlled_loggers_seed0_verified\\population_effect_review\\clipping_sensitivity_kappa_0p30\\hard_checks.json": "4dfc0671ea1253ea5d6c4c84ba1e9ce00d21015c644408311d6aaa596f578f45",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\controlled_loggers_seed0_verified\\population_effect_review\\clipping_sensitivity_kappa_0p30\\manifest.json": "74881c2450b1cb1127c4cff437801647113a162013aa7721c6093e8d6204d189",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\anchor_action_metrics.npz": "9a74f6d5594d60c41698450d272d8a54afc7ec49db5452a9e24fab95d594b8ab",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\hard_checks.json": "0c403cf63eb4b3b3e2cb494ef481e8ba0ef623527994e213651bca99e9af2f83",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\manifest.json": "f34d4e08cff381bb0f98c13a857d23df15b1cf2b3ce60f70852d8a75e06555d5",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\oracle_direct_reward_confounding_audit\\anchor_action_metrics.npz": "b2c31a68a1ea68d2419b08085eaec04ca93f078513b306ae86a56b24a3b4ad50",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\oracle_direct_reward_confounding_audit\\hard_checks.json": "db4b9b4c8e4b4dfbfb2b21d7642fa74d731f53ae451ba4ae97451bc3343ac968",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\oracle_direct_reward_confounding_audit\\manifest.json": "6f9d35ac56eb63ec80fb2ee00794a7da83a52a4a570bbaaf31c86b9415347b2c",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration\\hard_checks.json": "a0cc0a0e9512e153979c38b63209fb5c754d8283073bd9d37d653845ab195e8a",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration\\manifest.json": "6759e70c4b286446a3949fda5fbeb248f3b54f3fab261ad14873e82e4dc92782",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration\\splits.json": "044a5dce345f00c2e16df5e2c07b911c33e8e4090ba696f2099689c4af0546fa"
+  },
+  "input_hashes_before": {
+    "D:\\o2o2027\\analysis\\phase8b_rs_ranking_calibration_regret_audit\\anchor_action_metrics.npz": "c11b13ccb58bff5ebc87509008d41aac9805dc9859857bbb13de940c799e1736",
+    "D:\\o2o2027\\analysis\\phase8b_rs_ranking_calibration_regret_audit\\hard_checks.json": "c0c319c65990c3354bd6f6d7a038da37e99952340db1eb8a1702dbcbf736762f",
+    "D:\\o2o2027\\analysis\\phase8b_rs_ranking_calibration_regret_audit\\summary.json": "40e6c969501c17d476c91318c818e6014c696067f4882355fe12805fcfea65e3",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\controlled_loggers_seed0_verified\\population_effect_review\\clipping_sensitivity_kappa_0p30\\anchor_clipping_table.npz": "197a6d875ac0e6d288c58f2bce4960b82ecb847e609372c5a0897e6bdcd20033",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\controlled_loggers_seed0_verified\\population_effect_review\\clipping_sensitivity_kappa_0p30\\hard_checks.json": "4dfc0671ea1253ea5d6c4c84ba1e9ce00d21015c644408311d6aaa596f578f45",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\controlled_loggers_seed0_verified\\population_effect_review\\clipping_sensitivity_kappa_0p30\\manifest.json": "74881c2450b1cb1127c4cff437801647113a162013aa7721c6093e8d6204d189",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\anchor_action_metrics.npz": "9a74f6d5594d60c41698450d272d8a54afc7ec49db5452a9e24fab95d594b8ab",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\hard_checks.json": "0c403cf63eb4b3b3e2cb494ef481e8ba0ef623527994e213651bca99e9af2f83",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\manifest.json": "f34d4e08cff381bb0f98c13a857d23df15b1cf2b3ce60f70852d8a75e06555d5",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\oracle_direct_reward_confounding_audit\\anchor_action_metrics.npz": "b2c31a68a1ea68d2419b08085eaec04ca93f078513b306ae86a56b24a3b4ad50",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\oracle_direct_reward_confounding_audit\\hard_checks.json": "db4b9b4c8e4b4dfbfb2b21d7642fa74d731f53ae451ba4ae97451bc3343ac968",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\oracle_direct_reward_confounding_audit\\manifest.json": "6f9d35ac56eb63ec80fb2ee00794a7da83a52a4a570bbaaf31c86b9415347b2c",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration\\hard_checks.json": "a0cc0a0e9512e153979c38b63209fb5c754d8283073bd9d37d653845ab195e8a",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration\\manifest.json": "6759e70c4b286446a3949fda5fbeb248f3b54f3fab261ad14873e82e4dc92782",
+    "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8b_reward_signal_calibration\\splits.json": "044a5dce345f00c2e16df5e2c07b911c33e8e4090ba696f2099689c4af0546fa"
+  },
+  "unchanged": true
+}
