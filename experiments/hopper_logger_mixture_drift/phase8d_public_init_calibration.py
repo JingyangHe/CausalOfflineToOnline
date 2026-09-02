@@ -699,6 +699,24 @@ def _resolve_direct_root(phase8c: Path) -> Path:
     raise Phase8DPublicInitCalibrationError("Direct U->R public artifacts are unavailable")
 
 
+def _resolve_do_raw_root(dgp: Path, kappas: Sequence[float] = (0.0, 0.3)) -> Path:
+    """Resolve Phase 8A raw branches through the NC provenance, including moved repos."""
+    recorded_value = _read_json(dgp / "manifest.json").get("phase8a_input_root", "")
+    recorded = Path(str(recorded_value)) if recorded_value else None
+    candidates = [dgp]
+    if recorded is not None:
+        candidates.extend((recorded, dgp.parent / recorded.name))
+    candidates.append(dgp.parent / "controlled_loggers_seed0_verified")
+    for candidate in candidates:
+        if candidate.is_dir() and all(
+                (candidate / kappa_name(float(kappa)) / "do_oracle_raw.npz").is_file()
+                for kappa in kappas):
+            return candidate.resolve()
+    expected = dgp.parent / "controlled_loggers_seed0_verified"
+    raise Phase8DPublicInitCalibrationError(
+        f"Phase 8A raw do branches are unavailable; expected provenance root: {expected}")
+
+
 def validate_phase8d_inputs(phase8c_root: Path, failure_root: Path,
                             oracle_root: Path) -> dict[str, Any]:
     phase8c, failure, oracle = map(lambda p: Path(p).resolve(),
@@ -1122,6 +1140,7 @@ def run_phase8d_public_init_calibration(
             or not seeds or len(set(seeds)) != len(seeds) or calibration_replicates <= 0
             or num_anchors <= 0 or num_anchors > 2048):
         raise ValueError("Phase 8D settings are invalid")
+    do_raw_root = _resolve_do_raw_root(dgp, kappas)
     if budgets != tuple(sorted(set(budgets))) or not budgets or budgets[0] != 0:
         raise ValueError("calibration budgets must be sorted unique and start at zero")
     frozen, frozen_record = load_frozen_lambda_grid(phase8c / "frozen_lambda_grid.json")
@@ -1175,7 +1194,7 @@ def run_phase8d_public_init_calibration(
                     _fd_model_path(failure, kappa, dose, seed,
                                    "oracle_initialized_joint")))
     for kappa in kappas:
-        input_paths.append(dgp / kappa_name(kappa) / "do_oracle_raw.npz")
+        input_paths.append(do_raw_root / kappa_name(kappa) / "do_oracle_raw.npz")
     absent = [path for path in input_paths if not path.is_file()]
     if absent:
         raise Phase8DPublicInitCalibrationError(f"required read-only input is missing: {absent[0]}")
@@ -1202,7 +1221,7 @@ def run_phase8d_public_init_calibration(
     all_finite = True
 
     for kappa in kappas:
-        do_raw = load_npz(dgp / kappa_name(kappa) / "do_oracle_raw.npz")
+        do_raw = load_npz(do_raw_root / kappa_name(kappa) / "do_oracle_raw.npz")
         for condition in conditions:
             for dose in doses:
                 public_path = direct_index[(kappa, dose, condition)]
