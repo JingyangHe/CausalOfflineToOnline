@@ -1,0 +1,31 @@
+{
+  "all_passed": true,
+  "checks": {
+    "all_arrays_and_metrics_finite": true,
+    "behavior_initialization_row_normalized": true,
+    "budget_zero_equals_candidate_prior": true,
+    "calibration_action_assignment_independent_of_u": true,
+    "calibration_artifacts_hide_u": true,
+    "calibration_budgets_nested": true,
+    "candidate_prior_hierarchically_normalized": true,
+    "checkpoint_roundtrip": true,
+    "do_oracle_not_used_in_offline_candidate_training": true,
+    "final_test_not_used_for_posterior_weights": true,
+    "four_anchor_splits_disjoint": true,
+    "hidden_u_not_used_in_public_initialization": true,
+    "input_hashes_unchanged": true,
+    "no_temperature_parameter": true,
+    "old_artifacts_unchanged": true,
+    "oof_residual_excludes_own_anchor": true,
+    "phase8c_failure_decomposition_reproduced": true,
+    "predictive_density_exactly_marginalizes_z": true,
+    "residual_split_deterministic": true,
+    "soft_responsibilities_row_normalized": true,
+    "source_only_enters_behavior": true,
+    "staged_parameter_freezing_effective": true,
+    "test_not_used_for_initialization_training_calibration_or_weighting": true,
+    "total_updates_match_phase8c": true,
+    "weighted_two_means_global_optimum": true
+  },
+  "failed": []
+}
