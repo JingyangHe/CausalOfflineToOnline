@@ -1,0 +1,43 @@
+{
+  "analysis_files": [
+    "analysis-report.md",
+    "composition-contrasts.csv",
+    "composition-summary.csv",
+    "condition-gap-summary.csv",
+    "confounding-interactions.csv",
+    "curve-summary.csv",
+    "data-integrity.json",
+    "figure-catalog.md",
+    "figures/figure-01-primary-causal-decision-curves.pdf",
+    "figures/figure-01-primary-causal-decision-curves.png",
+    "figures/figure-02-mechanism-advantage-heatmap.pdf",
+    "figures/figure-02-mechanism-advantage-heatmap.png",
+    "figures/figure-03-observational-fit-vs-causal-error.pdf",
+    "figures/figure-03-observational-fit-vs-causal-error.png",
+    "figures/figure-04-source-composition-stability.pdf",
+    "figures/figure-04-source-composition-stability.png",
+    "figures/figure-05-latent-identification-diagnostics.pdf",
+    "figures/figure-05-latent-identification-diagnostics.png",
+    "figures/figure-06-confounded-minus-independent-gap.pdf",
+    "figures/figure-06-confounded-minus-independent-gap.png",
+    "latent-summary.csv",
+    "manifest.json",
+    "observational-causal-decoupling.csv",
+    "primary-contrasts.csv",
+    "stats-appendix.md",
+    "tail-regret-summary.csv"
+  ],
+  "held_out_anchor_count": 309,
+  "inferential_unit": "model seed",
+  "input_artifacts_modified": false,
+  "input_root": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8c_reward_mechanism_separation",
+  "model_count": 3780,
+  "n_seeds": 5,
+  "output_root": "D:\\o2o2027\\analysis\\phase8c_reward_mechanism_strict_analysis",
+  "primary_setting": {
+    "condition": "confounded",
+    "kappa": 0.3,
+    "mixture": "logger12_balanced"
+  },
+  "stage": "Phase 8C-RM strict results analysis"
+}

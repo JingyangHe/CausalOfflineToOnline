@@ -1,0 +1,11 @@
+method,n_scenarios,spearman_validation_nll_vs_do_mae,spearman_p,same_best_method_fraction,deployable_same_best_method_fraction,mechanism_observationally_best_fraction,mechanism_do_best_fraction
+pooled_mlp,420,0.7725829349534699,1.7267953855146085e-84,,,,
+source_balanced_pooled_mlp,420,0.8082307406354552,3.547096407555284e-98,,,,
+source_conditioned_decoder,420,0.8117825416891737,1.0695664374262078e-99,,,,
+per_source_models,420,0.828061383567934,4.184804839061762e-107,,,,
+mechanism_separated,420,0.82009357033932,2.1931606024691038e-103,,,,
+oracle_u_aware,420,0.5648883659042446,8.9437224734875e-37,,,,
+source_shuffle,420,0.8255736791510804,6.356736669974639e-106,,,,
+no_behavior,420,0.7777441239138867,2.597681228633168e-86,,,,
+source_dependent_reward,420,0.7613627547289303,1.0925577769637562e-80,,,,
+ALL_METHOD_RANKING,420,nan,nan,0.4738095238095238,0.09523809523809523,0.0,0.009523809523809525

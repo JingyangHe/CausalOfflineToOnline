@@ -1,0 +1,25 @@
+{
+  "all_passed": true,
+  "checks": {
+    "anchor_arrays_complete": true,
+    "anchor_predictions_finite": true,
+    "anchor_row_count_exact": true,
+    "composition_finite": true,
+    "composition_row_count": true,
+    "do_row_count": true,
+    "experiment_hard_checks_passed": true,
+    "latent_row_count": true,
+    "observational_row_count": true,
+    "ranking_finite": true,
+    "ranking_keys_unique_complete": true,
+    "ranking_row_count": true,
+    "regret_finite": true,
+    "regret_keys_unique_complete": true,
+    "regret_row_count": true,
+    "seed_finite": true,
+    "seed_keys_unique_complete": true,
+    "seed_row_count": true,
+    "summary_design_matches": true
+  },
+  "failed": []
+}

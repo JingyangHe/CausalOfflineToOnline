@@ -1,0 +1,5 @@
+method,n_models,latent_collapse_fraction,posterior_entropy_mean,reward_mode_separation_mean
+mechanism_separated,35,1.0,0.04187884320105825,0.008367334638855287
+source_shuffle,35,0.0,0.12851775416306088,0.007592670007475785
+no_behavior,35,0.0,0.410298524584089,0.0058027220623833795
+source_dependent_reward,35,1.0,0.041990939208439416,0.008058992294328554
