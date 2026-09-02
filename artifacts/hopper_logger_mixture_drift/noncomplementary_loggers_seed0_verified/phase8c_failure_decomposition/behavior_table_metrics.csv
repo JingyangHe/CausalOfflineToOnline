@@ -1,0 +1,281 @@
+kappa,lambda_reward,condition,mixture,seed,variant,behavior_table_mae,label_permutation,posterior_u_accuracy,posterior_label_flipped
+0.0,0.0,confounded,logger12_balanced,0,current_random_init,0.19418884418490862,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,0,collapsed_constrained_reference,0.15292490385472773,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,0,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,0,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,0,oracle_reward_fixed_learn_behavior,0.11976897517884472,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,0,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,0,oracle_initialized_joint,0.0037282058766593537,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,0,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.0,confounded,logger12_balanced,1,current_random_init,0.1953394964337349,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,1,collapsed_constrained_reference,0.15327228903770446,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,1,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,1,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,1,oracle_reward_fixed_learn_behavior,0.11312042971496429,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,1,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,1,oracle_initialized_joint,0.005219358040666577,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,1,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.0,confounded,logger12_balanced,2,current_random_init,0.18851723602662485,"(1, 0)",0.5,False
+0.0,0.0,confounded,logger12_balanced,2,collapsed_constrained_reference,0.15317546812196572,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,2,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,2,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,2,oracle_reward_fixed_learn_behavior,0.12368784315100696,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,2,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,2,oracle_initialized_joint,0.004619686885452928,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,2,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.0,confounded,logger12_balanced,3,current_random_init,0.19406836840013664,"(1, 0)",0.5,False
+0.0,0.0,confounded,logger12_balanced,3,collapsed_constrained_reference,0.15312261577281686,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,3,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,3,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,3,oracle_reward_fixed_learn_behavior,0.13333333333377778,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,3,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,3,oracle_initialized_joint,0.0032298100495782188,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,3,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.0,confounded,logger12_balanced,4,current_random_init,0.19298991465734114,"(1, 0)",0.5,False
+0.0,0.0,confounded,logger12_balanced,4,collapsed_constrained_reference,0.15329471963147323,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,4,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,4,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,4,oracle_reward_fixed_learn_behavior,0.11710811124951986,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,4,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,4,oracle_initialized_joint,0.004676886648379939,"(0, 1)",0.5,False
+0.0,0.0,confounded,logger12_balanced,4,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.002,confounded,logger12_balanced,0,current_random_init,0.19407730019754835,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,0,collapsed_constrained_reference,0.15292490385472773,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,0,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.501294498381877,False
+0.0,0.002,confounded,logger12_balanced,0,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5003236245954693,True
+0.0,0.002,confounded,logger12_balanced,0,oracle_reward_fixed_learn_behavior,0.10206766890199169,"(0, 1)",0.5119741100323625,False
+0.0,0.002,confounded,logger12_balanced,0,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5084142394822007,False
+0.0,0.002,confounded,logger12_balanced,0,oracle_initialized_joint,0.004194244246128672,"(0, 1)",0.5003236245954693,True
+0.0,0.002,confounded,logger12_balanced,0,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.002,confounded,logger12_balanced,1,current_random_init,0.19534873380843137,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,1,collapsed_constrained_reference,0.15327228903770446,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,1,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5016181229773463,True
+0.0,0.002,confounded,logger12_balanced,1,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5003236245954693,False
+0.0,0.002,confounded,logger12_balanced,1,oracle_reward_fixed_learn_behavior,0.11195972363198435,"(0, 1)",0.510032362459547,False
+0.0,0.002,confounded,logger12_balanced,1,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5055016181229773,False
+0.0,0.002,confounded,logger12_balanced,1,oracle_initialized_joint,0.003808179994865429,"(0, 1)",0.501294498381877,True
+0.0,0.002,confounded,logger12_balanced,1,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.002,confounded,logger12_balanced,2,current_random_init,0.18880744421233736,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,2,collapsed_constrained_reference,0.15317546812196572,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,2,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,2,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5009708737864078,True
+0.0,0.002,confounded,logger12_balanced,2,oracle_reward_fixed_learn_behavior,0.11474364135044807,"(0, 1)",0.5051779935275081,False
+0.0,0.002,confounded,logger12_balanced,2,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5058252427184466,False
+0.0,0.002,confounded,logger12_balanced,2,oracle_initialized_joint,0.007319058975025232,"(0, 1)",0.5080906148867314,False
+0.0,0.002,confounded,logger12_balanced,2,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.002,confounded,logger12_balanced,3,current_random_init,0.19375292768494953,"(1, 0)",0.5,False
+0.0,0.002,confounded,logger12_balanced,3,collapsed_constrained_reference,0.15312261577281686,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,3,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5009708737864078,False
+0.0,0.002,confounded,logger12_balanced,3,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5022653721682848,True
+0.0,0.002,confounded,logger12_balanced,3,oracle_reward_fixed_learn_behavior,0.13333333333377778,"(0, 1)",0.5414239482200647,False
+0.0,0.002,confounded,logger12_balanced,3,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5097087378640777,False
+0.0,0.002,confounded,logger12_balanced,3,oracle_initialized_joint,0.003129561659804838,"(0, 1)",0.5035598705501618,False
+0.0,0.002,confounded,logger12_balanced,3,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.002,confounded,logger12_balanced,4,current_random_init,0.19297358960741098,"(1, 0)",0.5,False
+0.0,0.002,confounded,logger12_balanced,4,collapsed_constrained_reference,0.15329471963147323,"(0, 1)",0.5,False
+0.0,0.002,confounded,logger12_balanced,4,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5042071197411003,False
+0.0,0.002,confounded,logger12_balanced,4,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.501294498381877,False
+0.0,0.002,confounded,logger12_balanced,4,oracle_reward_fixed_learn_behavior,0.114216112097548,"(0, 1)",0.5171521035598705,False
+0.0,0.002,confounded,logger12_balanced,4,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5093851132686085,False
+0.0,0.002,confounded,logger12_balanced,4,oracle_initialized_joint,0.004481053104443595,"(0, 1)",0.5048543689320388,False
+0.0,0.002,confounded,logger12_balanced,4,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.005,confounded,logger12_balanced,0,current_random_init,0.19432165430237852,"(0, 1)",0.5,False
+0.0,0.005,confounded,logger12_balanced,0,collapsed_constrained_reference,0.15292490385472773,"(0, 1)",0.5,False
+0.0,0.005,confounded,logger12_balanced,0,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5058252427184466,True
+0.0,0.005,confounded,logger12_balanced,0,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5042071197411003,True
+0.0,0.005,confounded,logger12_balanced,0,oracle_reward_fixed_learn_behavior,0.08091970582846891,"(0, 1)",0.5297734627831715,False
+0.0,0.005,confounded,logger12_balanced,0,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.529126213592233,False
+0.0,0.005,confounded,logger12_balanced,0,oracle_initialized_joint,0.0030067429778751105,"(0, 1)",0.5084142394822007,False
+0.0,0.005,confounded,logger12_balanced,0,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.005,confounded,logger12_balanced,1,current_random_init,0.19537247798095148,"(0, 1)",0.5,False
+0.0,0.005,confounded,logger12_balanced,1,collapsed_constrained_reference,0.15327228903770446,"(0, 1)",0.5,False
+0.0,0.005,confounded,logger12_balanced,1,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5071197411003237,False
+0.0,0.005,confounded,logger12_balanced,1,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5119741100323625,False
+0.0,0.005,confounded,logger12_balanced,1,oracle_reward_fixed_learn_behavior,0.08200493587431762,"(0, 1)",0.543042071197411,False
+0.0,0.005,confounded,logger12_balanced,1,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5411003236245955,False
+0.0,0.005,confounded,logger12_balanced,1,oracle_initialized_joint,0.0038642646542294983,"(0, 1)",0.5200647249190938,False
+0.0,0.005,confounded,logger12_balanced,1,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.005,confounded,logger12_balanced,2,current_random_init,0.18792730940298905,"(1, 0)",0.5,False
+0.0,0.005,confounded,logger12_balanced,2,collapsed_constrained_reference,0.15317546812196572,"(0, 1)",0.5,False
+0.0,0.005,confounded,logger12_balanced,2,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5058252427184466,False
+0.0,0.005,confounded,logger12_balanced,2,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5048543689320388,False
+0.0,0.005,confounded,logger12_balanced,2,oracle_reward_fixed_learn_behavior,0.07709600826148179,"(0, 1)",0.529126213592233,False
+0.0,0.005,confounded,logger12_balanced,2,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5271844660194175,False
+0.0,0.005,confounded,logger12_balanced,2,oracle_initialized_joint,0.0030013251640183163,"(0, 1)",0.5197411003236246,False
+0.0,0.005,confounded,logger12_balanced,2,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.005,confounded,logger12_balanced,3,current_random_init,0.19377765781763528,"(1, 0)",0.5,False
+0.0,0.005,confounded,logger12_balanced,3,collapsed_constrained_reference,0.15312261577281686,"(0, 1)",0.5,False
+0.0,0.005,confounded,logger12_balanced,3,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5061488673139158,False
+0.0,0.005,confounded,logger12_balanced,3,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5074433656957928,False
+0.0,0.005,confounded,logger12_balanced,3,oracle_reward_fixed_learn_behavior,0.07828460600684778,"(0, 1)",0.5320388349514563,False
+0.0,0.005,confounded,logger12_balanced,3,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5288025889967638,False
+0.0,0.005,confounded,logger12_balanced,3,oracle_initialized_joint,0.0042927231230103936,"(0, 1)",0.5281553398058253,False
+0.0,0.005,confounded,logger12_balanced,3,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.005,confounded,logger12_balanced,4,current_random_init,0.19293714416109856,"(1, 0)",0.5,False
+0.0,0.005,confounded,logger12_balanced,4,collapsed_constrained_reference,0.15329471963147323,"(0, 1)",0.5,False
+0.0,0.005,confounded,logger12_balanced,4,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.511326860841424,False
+0.0,0.005,confounded,logger12_balanced,4,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5009708737864078,False
+0.0,0.005,confounded,logger12_balanced,4,oracle_reward_fixed_learn_behavior,0.0980125347777647,"(0, 1)",0.5362459546925566,False
+0.0,0.005,confounded,logger12_balanced,4,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.517799352750809,False
+0.0,0.005,confounded,logger12_balanced,4,oracle_initialized_joint,0.0016543948820357975,"(0, 1)",0.517799352750809,False
+0.0,0.005,confounded,logger12_balanced,4,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.01,confounded,logger12_balanced,0,current_random_init,0.19416556908852525,"(0, 1)",0.5,False
+0.0,0.01,confounded,logger12_balanced,0,collapsed_constrained_reference,0.15292490385472773,"(0, 1)",0.5,False
+0.0,0.01,confounded,logger12_balanced,0,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5262135922330097,False
+0.0,0.01,confounded,logger12_balanced,0,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5132686084142395,False
+0.0,0.01,confounded,logger12_balanced,0,oracle_reward_fixed_learn_behavior,0.02528567463199112,"(0, 1)",0.5533980582524272,False
+0.0,0.01,confounded,logger12_balanced,0,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5550161812297735,False
+0.0,0.01,confounded,logger12_balanced,0,oracle_initialized_joint,0.002723343174104034,"(0, 1)",0.5355987055016181,False
+0.0,0.01,confounded,logger12_balanced,0,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.01,confounded,logger12_balanced,1,current_random_init,0.19576808456331493,"(0, 1)",0.5,False
+0.0,0.01,confounded,logger12_balanced,1,collapsed_constrained_reference,0.15327228903770446,"(0, 1)",0.5,False
+0.0,0.01,confounded,logger12_balanced,1,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.511326860841424,False
+0.0,0.01,confounded,logger12_balanced,1,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5129449838187702,False
+0.0,0.01,confounded,logger12_balanced,1,oracle_reward_fixed_learn_behavior,0.022696542574709936,"(0, 1)",0.5559870550161812,False
+0.0,0.01,confounded,logger12_balanced,1,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5563106796116505,False
+0.0,0.01,confounded,logger12_balanced,1,oracle_initialized_joint,0.00598597808060343,"(0, 1)",0.5326860841423948,False
+0.0,0.01,confounded,logger12_balanced,1,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.01,confounded,logger12_balanced,2,current_random_init,0.18767921489973866,"(1, 0)",0.5,False
+0.0,0.01,confounded,logger12_balanced,2,collapsed_constrained_reference,0.15317546812196572,"(0, 1)",0.5,False
+0.0,0.01,confounded,logger12_balanced,2,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5132686084142395,False
+0.0,0.01,confounded,logger12_balanced,2,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5313915857605178,False
+0.0,0.01,confounded,logger12_balanced,2,oracle_reward_fixed_learn_behavior,0.022220170498302563,"(0, 1)",0.5508090614886731,False
+0.0,0.01,confounded,logger12_balanced,2,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5504854368932038,False
+0.0,0.01,confounded,logger12_balanced,2,oracle_initialized_joint,0.0022839232455801398,"(0, 1)",0.5119741100323625,False
+0.0,0.01,confounded,logger12_balanced,2,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.01,confounded,logger12_balanced,3,current_random_init,0.1938305810507801,"(1, 0)",0.5,False
+0.0,0.01,confounded,logger12_balanced,3,collapsed_constrained_reference,0.15312261577281686,"(0, 1)",0.5,False
+0.0,0.01,confounded,logger12_balanced,3,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5236245954692557,False
+0.0,0.01,confounded,logger12_balanced,3,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5048543689320388,False
+0.0,0.01,confounded,logger12_balanced,3,oracle_reward_fixed_learn_behavior,0.02345607115202686,"(0, 1)",0.5488673139158576,False
+0.0,0.01,confounded,logger12_balanced,3,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.5508090614886731,False
+0.0,0.01,confounded,logger12_balanced,3,oracle_initialized_joint,0.005885063691708399,"(0, 1)",0.5446601941747573,False
+0.0,0.01,confounded,logger12_balanced,3,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.01,confounded,logger12_balanced,4,current_random_init,0.19345695471598046,"(1, 0)",0.5,False
+0.0,0.01,confounded,logger12_balanced,4,collapsed_constrained_reference,0.15329471963147323,"(0, 1)",0.5,False
+0.0,0.01,confounded,logger12_balanced,4,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5242718446601942,False
+0.0,0.01,confounded,logger12_balanced,4,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5203883495145631,False
+0.0,0.01,confounded,logger12_balanced,4,oracle_reward_fixed_learn_behavior,0.01995079070370038,"(0, 1)",0.5527508090614887,False
+0.0,0.01,confounded,logger12_balanced,4,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.554368932038835,False
+0.0,0.01,confounded,logger12_balanced,4,oracle_initialized_joint,0.006316151801518861,"(0, 1)",0.5284789644012945,False
+0.0,0.01,confounded,logger12_balanced,4,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.02,confounded,logger12_balanced,0,current_random_init,0.19437988762640293,"(0, 1)",0.5,False
+0.0,0.02,confounded,logger12_balanced,0,collapsed_constrained_reference,0.15292490385472773,"(0, 1)",0.5,False
+0.0,0.02,confounded,logger12_balanced,0,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5572815533980583,False
+0.0,0.02,confounded,logger12_balanced,0,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5572815533980583,False
+0.0,0.02,confounded,logger12_balanced,0,oracle_reward_fixed_learn_behavior,0.052099877885987994,"(0, 1)",0.5857605177993528,False
+0.0,0.02,confounded,logger12_balanced,0,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.6307443365695793,False
+0.0,0.02,confounded,logger12_balanced,0,oracle_initialized_joint,0.014227207874677177,"(0, 1)",0.7411003236245954,False
+0.0,0.02,confounded,logger12_balanced,0,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.02,confounded,logger12_balanced,1,current_random_init,0.19545118943270712,"(0, 1)",0.5,False
+0.0,0.02,confounded,logger12_balanced,1,collapsed_constrained_reference,0.15327228903770446,"(0, 1)",0.5,False
+0.0,0.02,confounded,logger12_balanced,1,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5469255663430421,False
+0.0,0.02,confounded,logger12_balanced,1,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.544336569579288,False
+0.0,0.02,confounded,logger12_balanced,1,oracle_reward_fixed_learn_behavior,0.049456031082749666,"(0, 1)",0.5880258899676375,False
+0.0,0.02,confounded,logger12_balanced,1,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.6401294498381876,False
+0.0,0.02,confounded,logger12_balanced,1,oracle_initialized_joint,0.013593551309991915,"(0, 1)",0.7103559870550162,False
+0.0,0.02,confounded,logger12_balanced,1,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.02,confounded,logger12_balanced,2,current_random_init,0.18548024402310453,"(1, 0)",0.5,False
+0.0,0.02,confounded,logger12_balanced,2,collapsed_constrained_reference,0.15317546812196572,"(0, 1)",0.5,False
+0.0,0.02,confounded,logger12_balanced,2,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5446601941747573,False
+0.0,0.02,confounded,logger12_balanced,2,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.540453074433657,False
+0.0,0.02,confounded,logger12_balanced,2,oracle_reward_fixed_learn_behavior,0.043791034486911,"(0, 1)",0.5825242718446602,False
+0.0,0.02,confounded,logger12_balanced,2,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.6171521035598706,False
+0.0,0.02,confounded,logger12_balanced,2,oracle_initialized_joint,0.006826815340683209,"(0, 1)",0.9048543689320389,False
+0.0,0.02,confounded,logger12_balanced,2,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.02,confounded,logger12_balanced,3,current_random_init,0.1939025476574898,"(1, 0)",0.5,False
+0.0,0.02,confounded,logger12_balanced,3,collapsed_constrained_reference,0.15312261577281686,"(0, 1)",0.5,False
+0.0,0.02,confounded,logger12_balanced,3,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5631067961165048,False
+0.0,0.02,confounded,logger12_balanced,3,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.553074433656958,False
+0.0,0.02,confounded,logger12_balanced,3,oracle_reward_fixed_learn_behavior,0.05548534885910434,"(0, 1)",0.5870550161812298,False
+0.0,0.02,confounded,logger12_balanced,3,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.6216828478964401,False
+0.0,0.02,confounded,logger12_balanced,3,oracle_initialized_joint,0.012757856316457716,"(0, 1)",0.7012944983818771,False
+0.0,0.02,confounded,logger12_balanced,3,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.02,confounded,logger12_balanced,4,current_random_init,0.19280412904918195,"(1, 0)",0.5,False
+0.0,0.02,confounded,logger12_balanced,4,collapsed_constrained_reference,0.15329471963147323,"(0, 1)",0.5,False
+0.0,0.02,confounded,logger12_balanced,4,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.5579288025889968,False
+0.0,0.02,confounded,logger12_balanced,4,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.5559870550161812,False
+0.0,0.02,confounded,logger12_balanced,4,oracle_reward_fixed_learn_behavior,0.0342366373790941,"(0, 1)",0.5912621359223301,False
+0.0,0.02,confounded,logger12_balanced,4,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.6491909385113268,False
+0.0,0.02,confounded,logger12_balanced,4,oracle_initialized_joint,0.00818439647598648,"(0, 1)",0.5844660194174758,False
+0.0,0.02,confounded,logger12_balanced,4,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.05,confounded,logger12_balanced,0,current_random_init,0.19598505892273455,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,0,collapsed_constrained_reference,0.15292490385472773,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,0,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.7608414239482201,False
+0.0,0.05,confounded,logger12_balanced,0,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.6207119741100323,False
+0.0,0.05,confounded,logger12_balanced,0,oracle_reward_fixed_learn_behavior,0.006231774390129021,"(0, 1)",0.9799352750809062,False
+0.0,0.05,confounded,logger12_balanced,0,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9812297734627832,False
+0.0,0.05,confounded,logger12_balanced,0,oracle_initialized_joint,0.0015910406084020333,"(0, 1)",0.9944983818770227,False
+0.0,0.05,confounded,logger12_balanced,0,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.05,confounded,logger12_balanced,1,current_random_init,0.19636698541127975,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,1,collapsed_constrained_reference,0.15327228903770446,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,1,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.7637540453074434,False
+0.0,0.05,confounded,logger12_balanced,1,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.6058252427184466,False
+0.0,0.05,confounded,logger12_balanced,1,oracle_reward_fixed_learn_behavior,0.0077606902358123685,"(0, 1)",0.9634304207119742,False
+0.0,0.05,confounded,logger12_balanced,1,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9715210355987055,False
+0.0,0.05,confounded,logger12_balanced,1,oracle_initialized_joint,0.0014651739767350784,"(0, 1)",0.988673139158576,False
+0.0,0.05,confounded,logger12_balanced,1,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.05,confounded,logger12_balanced,2,current_random_init,0.18933722488582136,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,2,collapsed_constrained_reference,0.15317546812196572,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,2,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.7275080906148867,False
+0.0,0.05,confounded,logger12_balanced,2,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.6401294498381876,False
+0.0,0.05,confounded,logger12_balanced,2,oracle_reward_fixed_learn_behavior,0.006591281046853867,"(0, 1)",0.9588996763754045,False
+0.0,0.05,confounded,logger12_balanced,2,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9692556634304207,False
+0.0,0.05,confounded,logger12_balanced,2,oracle_initialized_joint,0.0008114390907505754,"(0, 1)",0.9896440129449838,False
+0.0,0.05,confounded,logger12_balanced,2,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.05,confounded,logger12_balanced,3,current_random_init,0.19442156576034098,"(1, 0)",0.5,False
+0.0,0.05,confounded,logger12_balanced,3,collapsed_constrained_reference,0.15312261577281686,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,3,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.7323624595469256,False
+0.0,0.05,confounded,logger12_balanced,3,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.6634304207119741,False
+0.0,0.05,confounded,logger12_balanced,3,oracle_reward_fixed_learn_behavior,0.005939707077596721,"(0, 1)",0.9770226537216828,False
+0.0,0.05,confounded,logger12_balanced,3,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9809061488673139,False
+0.0,0.05,confounded,logger12_balanced,3,oracle_initialized_joint,0.0010002531943541042,"(0, 1)",0.9948220064724919,False
+0.0,0.05,confounded,logger12_balanced,3,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.05,confounded,logger12_balanced,4,current_random_init,0.1931085639115837,"(1, 0)",0.5,False
+0.0,0.05,confounded,logger12_balanced,4,collapsed_constrained_reference,0.15329471963147323,"(0, 1)",0.5,False
+0.0,0.05,confounded,logger12_balanced,4,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.7132686084142394,False
+0.0,0.05,confounded,logger12_balanced,4,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.6653721682847896,False
+0.0,0.05,confounded,logger12_balanced,4,oracle_reward_fixed_learn_behavior,0.005957272649196289,"(0, 1)",0.9660194174757282,False
+0.0,0.05,confounded,logger12_balanced,4,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9728155339805825,False
+0.0,0.05,confounded,logger12_balanced,4,oracle_initialized_joint,0.0012207913734320266,"(0, 1)",0.9896440129449838,False
+0.0,0.05,confounded,logger12_balanced,4,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.1,confounded,logger12_balanced,0,current_random_init,0.19778636199318703,"(0, 1)",0.5,False
+0.0,0.1,confounded,logger12_balanced,0,collapsed_constrained_reference,0.15292490385472773,"(0, 1)",0.5,False
+0.0,0.1,confounded,logger12_balanced,0,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.9980582524271845,False
+0.0,0.1,confounded,logger12_balanced,0,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.9789644012944984,False
+0.0,0.1,confounded,logger12_balanced,0,oracle_reward_fixed_learn_behavior,0.0018570424785821782,"(0, 1)",0.9996763754045307,False
+0.0,0.1,confounded,logger12_balanced,0,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9996763754045307,False
+0.0,0.1,confounded,logger12_balanced,0,oracle_initialized_joint,0.0015825493472639888,"(0, 1)",1.0,False
+0.0,0.1,confounded,logger12_balanced,0,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.1,confounded,logger12_balanced,1,current_random_init,0.1976455836867293,"(1, 0)",0.5,False
+0.0,0.1,confounded,logger12_balanced,1,collapsed_constrained_reference,0.15327228903770446,"(0, 1)",0.5,False
+0.0,0.1,confounded,logger12_balanced,1,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.9951456310679612,False
+0.0,0.1,confounded,logger12_balanced,1,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.9867313915857605,False
+0.0,0.1,confounded,logger12_balanced,1,oracle_reward_fixed_learn_behavior,0.0013251274828063183,"(0, 1)",0.9980582524271845,False
+0.0,0.1,confounded,logger12_balanced,1,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9980582524271845,False
+0.0,0.1,confounded,logger12_balanced,1,oracle_initialized_joint,0.0019943917795513374,"(0, 1)",0.998705501618123,False
+0.0,0.1,confounded,logger12_balanced,1,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.1,confounded,logger12_balanced,2,current_random_init,0.19112102726681368,"(1, 0)",0.5,False
+0.0,0.1,confounded,logger12_balanced,2,collapsed_constrained_reference,0.15317546812196572,"(0, 1)",0.5,False
+0.0,0.1,confounded,logger12_balanced,2,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.9990291262135922,False
+0.0,0.1,confounded,logger12_balanced,2,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.9851132686084142,False
+0.0,0.1,confounded,logger12_balanced,2,oracle_reward_fixed_learn_behavior,0.0015088552406045267,"(0, 1)",0.9996763754045307,False
+0.0,0.1,confounded,logger12_balanced,2,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9996763754045307,False
+0.0,0.1,confounded,logger12_balanced,2,oracle_initialized_joint,0.0007375471298376822,"(0, 1)",1.0,False
+0.0,0.1,confounded,logger12_balanced,2,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.1,confounded,logger12_balanced,3,current_random_init,0.19619635438753502,"(1, 0)",0.5,False
+0.0,0.1,confounded,logger12_balanced,3,collapsed_constrained_reference,0.15312261577281686,"(0, 1)",0.5,False
+0.0,0.1,confounded,logger12_balanced,3,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.998705501618123,False
+0.0,0.1,confounded,logger12_balanced,3,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.9857605177993527,False
+0.0,0.1,confounded,logger12_balanced,3,oracle_reward_fixed_learn_behavior,0.0011662997309312888,"(0, 1)",1.0,False
+0.0,0.1,confounded,logger12_balanced,3,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",1.0,False
+0.0,0.1,confounded,logger12_balanced,3,oracle_initialized_joint,0.0011178149121822847,"(0, 1)",1.0,False
+0.0,0.1,confounded,logger12_balanced,3,oracle_u_aware_ceiling,,,1.0,False
+0.0,0.1,confounded,logger12_balanced,4,current_random_init,0.1943931291707688,"(0, 1)",0.5,False
+0.0,0.1,confounded,logger12_balanced,4,collapsed_constrained_reference,0.15329471963147323,"(0, 1)",0.5,False
+0.0,0.1,confounded,logger12_balanced,4,true_behavior_fixed,6.623182749422238e-09,"(0, 1)",0.9996763754045307,False
+0.0,0.1,confounded,logger12_balanced,4,true_behavior_fixed_em,6.623182749422238e-09,"(0, 1)",0.9624595469255663,False
+0.0,0.1,confounded,logger12_balanced,4,oracle_reward_fixed_learn_behavior,0.0020932405363137847,"(0, 1)",0.9990291262135922,False
+0.0,0.1,confounded,logger12_balanced,4,oracle_compatible_plugin,6.623182749422238e-09,"(0, 1)",0.9990291262135922,False
+0.0,0.1,confounded,logger12_balanced,4,oracle_initialized_joint,0.001292520182444066,"(0, 1)",0.9977346278317152,False
+0.0,0.1,confounded,logger12_balanced,4,oracle_u_aware_ceiling,,,1.0,False

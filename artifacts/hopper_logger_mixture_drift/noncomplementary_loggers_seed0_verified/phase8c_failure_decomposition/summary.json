@@ -1,0 +1,41 @@
+{
+  "all_hard_checks_passed": true,
+  "analyzed_anchor_count": 2048,
+  "kappas": [
+    0.0
+  ],
+  "lambdas": [
+    0.0,
+    0.002,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1
+  ],
+  "model_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "observational_best_matches_do_best_fraction": 0.37142857142857144,
+  "observational_best_matches_ranking_best_fraction": 0.17142857142857143,
+  "observational_best_matches_regret_best_fraction": 0.17142857142857143,
+  "oracle_information_used_for_diagnosis_only": true,
+  "oracle_variants_are_not_deployable": true,
+  "stage": "Phase 8C-FD",
+  "statistical_unit": "model_seed",
+  "test_anchor_count": 309,
+  "variants": [
+    "current_random_init",
+    "collapsed_constrained_reference",
+    "true_behavior_fixed",
+    "true_behavior_fixed_em",
+    "oracle_reward_fixed_learn_behavior",
+    "oracle_compatible_plugin",
+    "oracle_initialized_joint",
+    "oracle_u_aware_ceiling"
+  ]
+}

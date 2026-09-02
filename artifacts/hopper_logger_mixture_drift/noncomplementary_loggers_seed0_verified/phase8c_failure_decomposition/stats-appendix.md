@@ -1,0 +1,3 @@
+# Statistical appendix
+
+The inferential unit is the model seed (`n=5` per complete variant/dose curve). The 309 held-out anchors are repeated test cases, not independent replicates. `seed_summary.csv` reports mean, sample SD, min/max, and t-based descriptive 95% intervals. `paired_seed_contrasts.csv` reports paired dose-AUC differences against the explicit collapsed reference, paired standardized effects, exact sign-flip p-values, and Holm adjustment across the reported contrast family. With few seeds, the exact p-values have coarse resolution and are supplementary; mechanism effect sizes and trajectories are primary.

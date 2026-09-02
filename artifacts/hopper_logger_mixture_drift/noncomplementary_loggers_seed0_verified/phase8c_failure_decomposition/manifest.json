@@ -1,0 +1,78 @@
+{
+  "all_hard_checks_passed": true,
+  "analyzed_anchor_count": 2048,
+  "batch_size": 128,
+  "checkpoint_selection": "observational validation NLL only",
+  "device": "cuda",
+  "em_iterations": 30,
+  "em_mstep_updates": 100,
+  "frozen_lambda_grid": {
+    "automatic_grid_selection": false,
+    "held_out_test_used": false,
+    "lambdas": [
+      0.0,
+      0.002,
+      0.005,
+      0.01,
+      0.02,
+      0.05,
+      0.1
+    ],
+    "manually_frozen": true,
+    "optional_legacy_positive_control": 0.1,
+    "selection_basis": [
+      "train_validation_threshold_quantiles",
+      "preexisting_positive_control"
+    ],
+    "selection_source": "analysis/phase8b_rs_low_dose_threshold_audit/proposed_lambda_quantiles_trainval.json",
+    "stage": "Phase 8C-RM",
+    "strong_positive_control": 0.05
+  },
+  "gradient_updates": 3000,
+  "input_roots": {
+    "dgp": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified",
+    "direct_public": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid",
+    "oracle": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/oracle_direct_reward_confounding_audit",
+    "phase8c": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_reward_mechanism_separation",
+    "phase8c_analysis": "/home/grads/he/CausalOfflineToOnline/analysis/phase8c_reward_mechanism_strict_analysis"
+  },
+  "kappas": [
+    0.0
+  ],
+  "lambdas": [
+    0.0,
+    0.002,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1
+  ],
+  "learning_rate": 0.001,
+  "model_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "observational_best_matches_do_best_fraction": 0.37142857142857144,
+  "observational_best_matches_ranking_best_fraction": 0.17142857142857143,
+  "observational_best_matches_regret_best_fraction": 0.17142857142857143,
+  "optimizer": "Adam",
+  "oracle_information_used_for_diagnosis_only": true,
+  "oracle_variants_are_not_deployable": true,
+  "stage": "Phase 8C-FD",
+  "statistical_unit": "model_seed",
+  "test_anchor_count": 309,
+  "variants": [
+    "current_random_init",
+    "collapsed_constrained_reference",
+    "true_behavior_fixed",
+    "true_behavior_fixed_em",
+    "oracle_reward_fixed_learn_behavior",
+    "oracle_compatible_plugin",
+    "oracle_initialized_joint",
+    "oracle_u_aware_ceiling"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "all_passed": true,
+  "checks": {
+    "all_variants_same_public_split": true,
+    "anchor_split_exactly_reused": true,
+    "behavior_profile_alpha_one_is_true_table": true,
+    "behavior_profile_alpha_zero_is_latent_insensitive": true,
+    "checkpoint_roundtrip": true,
+    "collapsed_constraint_active": true,
+    "current_variant_reads_original_checkpoint": true,
+    "do_oracle_not_used_for_checkpoint_selection": true,
+    "em_observed_nll_finite": true,
+    "em_responsibilities_normalized": true,
+    "exact_latent_marginalization": true,
+    "frozen_lambda_grid_exactly_reused": true,
+    "input_hashes_unchanged": true,
+    "label_permutation_alignment_valid": true,
+    "no_nan_inf": true,
+    "old_artifacts_unchanged": true,
+    "oracle_variants_physically_isolated": true,
+    "phase8c_strict_numbers_reproduced": true,
+    "reward_profile_alpha_one_is_oracle_branches": true,
+    "reward_profile_alpha_zero_is_collapsed": true,
+    "test_u_not_used_for_training": true,
+    "true_behavior_fixed_has_no_grad": true,
+    "true_behavior_loaded_from_manifest": true,
+    "true_behavior_probabilities_valid": true,
+    "v2_v3_do_not_read_row_u": true,
+    "v2_v3_paired_initialization": true,
+    "v6_update_zero_matches_v5": true
+  },
+  "failed": []
+}

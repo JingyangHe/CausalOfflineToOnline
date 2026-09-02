@@ -1,0 +1,41 @@
+{
+  "oracle_information_used_for_diagnosis_only": true,
+  "oracle_variants_are_not_deployable": true,
+  "variants": {
+    "collapsed_constrained_reference": {
+      "data": "public",
+      "label": "V1"
+    },
+    "current_random_init": {
+      "data": "public",
+      "label": "V0",
+      "training": "reuse"
+    },
+    "oracle_compatible_plugin": {
+      "data": "oracle_train_val_U",
+      "label": "V5",
+      "training": "none_after_plugin"
+    },
+    "oracle_initialized_joint": {
+      "data": "oracle_initialization_then_public",
+      "label": "V6"
+    },
+    "oracle_reward_fixed_learn_behavior": {
+      "data": "oracle_train_val_U",
+      "label": "V4"
+    },
+    "oracle_u_aware_ceiling": {
+      "data": "oracle_train_val_U",
+      "label": "V7",
+      "training": "reuse"
+    },
+    "true_behavior_fixed": {
+      "data": "public+manifest_structure",
+      "label": "V2"
+    },
+    "true_behavior_fixed_em": {
+      "data": "public+manifest_structure",
+      "label": "V3"
+    }
+  }
+}
