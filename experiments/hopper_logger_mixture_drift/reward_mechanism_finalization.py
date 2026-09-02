@@ -86,6 +86,58 @@ def _validate_numeric_rows(rows: Sequence[Mapping[str, str]], fields: Sequence[s
     return True
 
 
+def _validate_probability_field(rows: Sequence[Mapping[str, str]], field: str,
+                                label: str) -> None:
+    try:
+        values = np.asarray([float(row[field]) for row in rows], dtype=np.float64)
+    except (KeyError, TypeError, ValueError) as exc:
+        raise RewardMechanismFinalizationError(f"{label}.{field} is not numeric") from exc
+    if not np.all(np.isfinite(values)) or np.any(values < 0.0) or np.any(values > 1.0):
+        raise RewardMechanismFinalizationError(f"{label}.{field} is outside [0,1]")
+
+
+def _load_validated_tables(output: Path, counts: Mapping[str, int]) -> dict[str, list[dict[str, str]]]:
+    """Validate cheap result tables before scanning thousands of checkpoints."""
+    tables = {
+        "observational_metrics": _read_csv(output / "observational_metrics.csv"),
+        "do_metrics": _read_csv(output / "do_metrics.csv"),
+        "ranking_metrics": _read_csv(output / "ranking_metrics.csv"),
+        "regret_metrics": _read_csv(output / "regret_metrics.csv"),
+        "composition_stability": _read_csv(output / "composition_stability.csv"),
+        "latent_diagnostics": _read_csv(output / "latent_diagnostics.csv"),
+        "seed_metrics": _read_csv(output / "seed_metrics.csv"),
+    }
+    for name, rows in tables.items():
+        if len(rows) != counts[name]:
+            raise RewardMechanismFinalizationError(
+                f"{name} row count differs: expected {counts[name]}, found {len(rows)}")
+    _validate_numeric_rows(tables["observational_metrics"],
+                           ("mae", "rmse", "signed_bias"), "observational_metrics")
+    observational_nll = [float(row["observational_nll"])
+                         for row in tables["observational_metrics"]
+                         if row.get("observational_nll", "") != ""]
+    if (len(observational_nll) != counts["models"] * 2
+            or not np.all(np.isfinite(observational_nll))):
+        raise RewardMechanismFinalizationError("observational NLL rows are incomplete/non-finite")
+    _validate_numeric_rows(tables["do_metrics"], ("mae", "rmse", "signed_bias"),
+                           "do_metrics")
+    _validate_numeric_rows(tables["ranking_metrics"],
+                           ("top_set_disagreement", "strict_flip"), "ranking_metrics")
+    _validate_probability_field(tables["ranking_metrics"], "top_set_disagreement",
+                                "ranking_metrics")
+    _validate_probability_field(tables["ranking_metrics"], "strict_flip", "ranking_metrics")
+    _validate_numeric_rows(tables["regret_metrics"], ("mean_regret", "max_regret"),
+                           "regret_metrics")
+    _validate_numeric_rows(tables["composition_stability"], ("prediction_mae",),
+                           "composition_stability")
+    _validate_numeric_rows(tables["latent_diagnostics"],
+                           ("value", "posterior_entropy", "reward_mode_separation"),
+                           "latent_diagnostics")
+    _validate_numeric_rows(tables["seed_metrics"], ("best_validation_nll", "mae", "rmse"),
+                           "seed_metrics")
+    return tables
+
+
 def _validate_checkpoint(path: Path, scenario: Mapping[str, Any]) -> None:
     try:
         import torch
@@ -203,6 +255,7 @@ def finalize_reward_mechanism_separation(
 
     scenario_count = len(kappas) * len(grid) * len(conditions) * len(seeds)
     counts = expected_result_counts(len(splits["test"]), scenario_count)
+    tables = _load_validated_tables(output, counts)
     expected_checkpoints: list[tuple[Path, dict[str, Any]]] = []
     for kappa in kappas:
         for dose in grid:
@@ -229,45 +282,6 @@ def finalize_reward_mechanism_separation(
                           if scenario["method"] == "mechanism_separated")
     mechanism_model, _ = load_model(mechanism_path, "cpu")
     structure_checks = validate_main_model_structure(mechanism_model)
-
-    tables = {
-        "observational_metrics": _read_csv(output / "observational_metrics.csv"),
-        "do_metrics": _read_csv(output / "do_metrics.csv"),
-        "ranking_metrics": _read_csv(output / "ranking_metrics.csv"),
-        "regret_metrics": _read_csv(output / "regret_metrics.csv"),
-        "composition_stability": _read_csv(output / "composition_stability.csv"),
-        "latent_diagnostics": _read_csv(output / "latent_diagnostics.csv"),
-        "seed_metrics": _read_csv(output / "seed_metrics.csv"),
-    }
-    for name, rows in tables.items():
-        if len(rows) != counts[name]:
-            raise RewardMechanismFinalizationError(
-                f"{name} row count differs: expected {counts[name]}, found {len(rows)}")
-    _validate_numeric_rows(tables["observational_metrics"],
-                           ("mae", "rmse", "signed_bias"),
-                           "observational_metrics")
-    observational_nll = [float(row["observational_nll"])
-                         for row in tables["observational_metrics"]
-                         if row.get("observational_nll", "") != ""]
-    if (len(observational_nll) != counts["models"] * 2
-            or not np.all(np.isfinite(observational_nll))):
-        raise RewardMechanismFinalizationError("observational NLL rows are incomplete/non-finite")
-    _validate_numeric_rows(tables["do_metrics"], ("mae", "rmse", "signed_bias"),
-                           "do_metrics")
-    _validate_numeric_rows(tables["ranking_metrics"], ("top_set_disagreement",),
-                           "ranking_metrics")
-    if not all(str(row.get("strict_flip", "")).lower() in {"true", "false", "0", "1"}
-               for row in tables["ranking_metrics"]):
-        raise RewardMechanismFinalizationError("ranking strict_flip values are invalid")
-    _validate_numeric_rows(tables["regret_metrics"], ("mean_regret", "max_regret"),
-                           "regret_metrics")
-    _validate_numeric_rows(tables["composition_stability"], ("prediction_mae",),
-                           "composition_stability")
-    _validate_numeric_rows(tables["latent_diagnostics"], ("value", "posterior_entropy",
-                                                           "reward_mode_separation"),
-                           "latent_diagnostics")
-    _validate_numeric_rows(tables["seed_metrics"], ("best_validation_nll", "mae", "rmse"),
-                           "seed_metrics")
 
     metrics_path = output / "anchor_action_metrics.npz"
     if not metrics_path.is_file():

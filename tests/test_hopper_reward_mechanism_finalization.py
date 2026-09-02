@@ -53,10 +53,14 @@ def test_numeric_validation_rejects_nonfinite():
         raise AssertionError("non-finite metric was accepted")
 
 
+def test_strict_flip_is_a_probability_not_a_boolean():
+    rows = [{"strict_flip": "0.375"}, {"strict_flip": "1.0"}]
+    finalizer._validate_probability_field(rows, "strict_flip", "ranking")
+
+
 def test_cli_has_recovery_markers():
     text = (ROOT / "scripts/finalize_hopper_reward_mechanism_separation.py").read_text(
         encoding="utf-8")
     assert "PHASE8C_REWARD_MECHANISM_FINALIZATION_BLOCKED" in text
     assert "PHASE8C_REWARD_MECHANISM_FINALIZATION_COMPLETE" in text
     assert "READY_FOR_MECHANISM_EFFECT_REVIEW" in text
-
