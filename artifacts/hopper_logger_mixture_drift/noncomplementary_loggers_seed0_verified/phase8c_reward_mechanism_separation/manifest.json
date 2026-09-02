@@ -1,0 +1,64 @@
+{
+  "action_index_used_only_as_behavior_target": true,
+  "all_hard_checks_passed": true,
+  "analyzed_anchor_count": 2048,
+  "batch_size": 512,
+  "checkpoint_selection": "observational validation NLL only",
+  "conditions": [
+    "confounded",
+    "independent_latents"
+  ],
+  "controlled_three_action_mechanism_diagnostic_only": true,
+  "device": "checkpoint training device recorded per run",
+  "direct_reward_root": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid",
+  "do_oracle_used_only_for_final_test_evaluation": true,
+  "exact_marginalization": true,
+  "finalization_numpy_version": "1.26.4",
+  "finalization_python_version": "3.12.14",
+  "gradient_updates": 3000,
+  "kappas": [
+    0.0,
+    0.3
+  ],
+  "lambda_grid_sha256": "ae457969d5a6892564a236f692be5efc41933074efcde5c79a4591bf6743e2b9",
+  "lambdas": [
+    0.0,
+    0.002,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1
+  ],
+  "latent_states": 2,
+  "learning_rate": 0.001,
+  "methods": [
+    "pooled_mlp",
+    "source_balanced_pooled_mlp",
+    "source_conditioned_decoder",
+    "per_source_models",
+    "mechanism_separated",
+    "oracle_u_aware",
+    "source_shuffle",
+    "no_behavior",
+    "source_dependent_reward"
+  ],
+  "model_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "models_retrained_during_finalization": false,
+  "optimizer": "Adam",
+  "oracle_root": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/oracle_direct_reward_confounding_audit",
+  "phase8anc_root": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified",
+  "post_training_finalization_recovery": true,
+  "primary_mixture": "logger12_balanced",
+  "recovery_reason": "post-training KeyError('mae') in base-action figure",
+  "reward_decoder": "17-256-256-1 ReLU",
+  "stage": "Phase 8C-RM",
+  "test_anchor_count": 309,
+  "trained_model_count": 3780
+}

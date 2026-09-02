@@ -1,0 +1,30 @@
+{
+  "all_passed": true,
+  "checks": {
+    "action_index_behavior_target_only": true,
+    "action_index_used_only_as_behavior_target": true,
+    "all_arrays_and_metrics_finite": true,
+    "all_checkpoint_metadata_valid": true,
+    "all_checkpoint_state_hashes_valid": true,
+    "all_expected_figures_complete": true,
+    "all_methods_same_frozen_lambda_grid": true,
+    "all_methods_same_split": true,
+    "all_metric_tables_complete": true,
+    "anchor_action_predictions_complete": true,
+    "checkpoint_selected_by_observational_validation_only": true,
+    "complete_checkpoint_set": true,
+    "controlled_three_action_only": true,
+    "do_oracle_not_used_for_training_or_selection": true,
+    "exact_two_state_marginalization": true,
+    "hidden_u_not_in_main_training": true,
+    "input_hashes_unchanged_during_finalization": true,
+    "no_model_retraining_during_finalization": true,
+    "old_input_artifacts_unchanged_during_finalization": true,
+    "oracle_u_model_isolated": true,
+    "prior_is_source_invariant": true,
+    "reward_decoder_is_source_invariant": true,
+    "source_only_enters_behavior": true,
+    "split_by_anchor": true
+  },
+  "failed": []
+}

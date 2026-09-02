@@ -1,0 +1,47 @@
+{
+  "action_index_used_only_as_behavior_target": true,
+  "all_hard_checks_passed": true,
+  "analyzed_anchor_count": 2048,
+  "conditions": [
+    "confounded",
+    "independent_latents"
+  ],
+  "controlled_three_action_mechanism_diagnostic_only": true,
+  "do_oracle_used_only_for_final_test_evaluation": true,
+  "kappas": [
+    0.0,
+    0.3
+  ],
+  "lambdas": [
+    0.0,
+    0.002,
+    0.005,
+    0.01,
+    0.02,
+    0.05,
+    0.1
+  ],
+  "methods": [
+    "pooled_mlp",
+    "source_balanced_pooled_mlp",
+    "source_conditioned_decoder",
+    "per_source_models",
+    "mechanism_separated",
+    "oracle_u_aware",
+    "source_shuffle",
+    "no_behavior",
+    "source_dependent_reward"
+  ],
+  "model_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "models_retrained_during_finalization": false,
+  "post_training_finalization_recovery": true,
+  "stage": "Phase 8C-RM",
+  "test_anchor_count": 309,
+  "trained_model_count": 3780
+}
