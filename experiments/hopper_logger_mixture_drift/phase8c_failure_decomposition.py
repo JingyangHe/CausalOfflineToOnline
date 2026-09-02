@@ -255,7 +255,8 @@ def make_collapsed_reference(seed: int = 0) -> Any:
                       - 0.5 * math.log(2.0 * math.pi))
             return behavior + normal
 
-        def plain_mean(self, x: Any) -> Any:
+        def plain_mean(self, x: Any, source: Any | None = None) -> Any:
+            del source
             return self.reward_decoder(x).squeeze(1)
 
         def latent_means(self, x: Any) -> Any:

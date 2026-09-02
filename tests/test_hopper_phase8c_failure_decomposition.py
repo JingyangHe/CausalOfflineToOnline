@@ -103,10 +103,12 @@ def test_collapsed_model_has_identical_branches():
     torch = _torch_or_skip()
     model = phase.make_collapsed_reference(0)
     x = torch.randn(8, 15)
+    source = torch.arange(8) % 3
     means = model.latent_means(x).detach().numpy()
     beta = model.behavior_probabilities().detach().numpy()
     assert np.array_equal(means[:, 0], means[:, 1])
     assert np.array_equal(beta[:, 0], beta[:, 1])
+    assert torch.equal(model.plain_mean(x), model.plain_mean(x, source))
 
 
 def test_em_responsibilities_sum_to_one():
