@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import inspect
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -30,6 +31,7 @@ from experiments.hopper_logger_mixture_drift.phase8e_quick_go_nogo import (
     fit_quick_model,
     preflight_estimate,
     quick_scenarios,
+    resolve_quick_inputs,
     run_phase8e_quick,
 )
 from experiments.hopper_logger_mixture_drift.multisource_contrast_calibration import (
@@ -159,6 +161,30 @@ def test_fixed_configuration_gate_runs_before_input_resolution(tmp_path: Path):
             model_seeds=(0, 1, 2), gradient_updates=1000,
             calibration_budgets=QUICK_BUDGETS, calibration_replicates=5,
             device="cpu")
+
+
+def test_phase8a_root_manifest_pair_is_optional_for_raw_oracle_layout(tmp_path: Path):
+    phase8a = tmp_path / "controlled_loggers_seed0_verified"
+    raw = phase8a / "kappa_0p00" / "do_oracle_raw.npz"
+    raw.parent.mkdir(parents=True)
+    np.savez(raw, placeholder=np.asarray([1]))
+    direct = (tmp_path / "noncomplementary_loggers_seed0_verified"
+              / "phase8c_direct_reward_public_grid")
+    direct.mkdir(parents=True)
+    (direct / "manifest.json").write_text("{}", encoding="utf-8")
+    (direct / "hard_checks.json").write_text(
+        json.dumps({"all_passed": True, "checks": {"ok": True}}), encoding="utf-8")
+    (direct / "splits.json").write_text("{}", encoding="utf-8")
+    (direct / "frozen_lambda_grid.json").write_text(json.dumps({
+        "manually_frozen": True, "lambdas": [0.0, 0.01, 0.05]}), encoding="utf-8")
+    for dose, condition in ((0.0, "confounded"), (0.01, "confounded"),
+                            (0.05, "confounded"), (0.05, "independent_latents")):
+        np.savez(direct / f"dose_{dose}_{condition}_public.npz",
+                 kappa_env=np.asarray([0.0]), lambda_reward=np.asarray([dose]),
+                 condition=np.asarray([condition]))
+    resolved = resolve_quick_inputs(phase8a, QUICK_LAMBDAS)
+    assert resolved["phase8a_root_checks_available"] is False
+    assert raw.resolve() in resolved["required_paths"]
 
 
 def test_paired_comparisons_report_seed_differences():

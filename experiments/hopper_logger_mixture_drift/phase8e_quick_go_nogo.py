@@ -123,15 +123,22 @@ def resolve_quick_inputs(phase8a_root: Path, lambda_values: Sequence[float]) -> 
     phase8a = Path(phase8a_root).resolve()
     direct = _find_direct_root(phase8a)
     grid_path = _find_lambda_grid(direct)
+    phase8a_manifest = phase8a / "manifest.json"
+    phase8a_checks = phase8a / "hard_checks.json"
+    if phase8a_manifest.is_file() != phase8a_checks.is_file():
+        raise Phase8EMultisourceContrastError(
+            "Phase 8A root-level manifest/hard-check pair is incomplete")
     required = [
-        phase8a / "manifest.json", phase8a / "hard_checks.json",
         phase8a / kappa_name(0.0) / "do_oracle_raw.npz",
         direct / "manifest.json", direct / "hard_checks.json", direct / "splits.json", grid_path,
     ]
+    if phase8a_checks.is_file():
+        required.extend((phase8a_manifest, phase8a_checks))
     for path in required:
         if not path.is_file():
             raise Phase8EMultisourceContrastError(f"required read-only input is missing: {path}")
-    require_all_passed(phase8a / "hard_checks.json")
+    if phase8a_checks.is_file():
+        require_all_passed(phase8a_checks)
     require_all_passed(direct / "hard_checks.json")
     frozen, frozen_record = load_frozen_lambda_grid(grid_path)
     if not all(any(np.isclose(value, item) for item in frozen) for value in lambda_values):
@@ -147,6 +154,7 @@ def resolve_quick_inputs(phase8a_root: Path, lambda_values: Sequence[float]) -> 
         "phase8a": phase8a, "direct": direct, "grid_path": grid_path,
         "frozen_grid": frozen, "frozen_record": frozen_record,
         "public_index": index, "required_paths": tuple(dict.fromkeys(required)),
+        "phase8a_root_checks_available": phase8a_checks.is_file(),
     }
 
 
@@ -613,6 +621,13 @@ def run_phase8e_quick(
 
     zero_public = inputs["public_index"][(0.0, 0.0, "confounded")]
     universe = load_anchor_universe(inputs["phase8a"], zero_public, 0.0)
+    phase8a_raw_valid = (
+        len(universe["anchor_id"]) >= num_anchors
+        and np.asarray(universe["observation"]).shape == (len(universe["anchor_id"]), 12)
+        and np.asarray(universe["commanded_action"]).shape == (len(universe["anchor_id"]), 3, 3)
+        and np.asarray(universe["reward_branches"]).shape == (len(universe["anchor_id"]), 3, 2)
+        and all(np.all(np.isfinite(np.asarray(universe[name], dtype=np.float64)))
+                for name in ("observation", "commanded_action", "reward_branches")))
     split_record = _read_json(inputs["direct"] / "splits.json")
     splits = select_anchor_splits(split_record, universe["anchor_id"], num_anchors, max(budgets))
     split_sets = [set(map(int, values)) for values in splits.values()]
@@ -943,6 +958,7 @@ def run_phase8e_quick(
         and np.allclose(closed_form_calibration(np.zeros(len(x1)), x1 @ theta1, x1).coefficients, theta1))
     formal_roots = list(Path(inputs["phase8a"]).parent.glob("phase8e_multisource_contrast_calibration*"))
     hard_checks = {
+        "phase8a_anchor_oracle_raw_complete_and_finite": bool(phase8a_raw_valid),
         "all_source_action_marginals_equal": bool(all(action_marginal_checks)),
         "all_source_settings_same_total_sample_count": sample_counts == {offline_sample_budget},
         "correct_and_shuffle_same_network_initialization": bool(all(paired_initialization_checks)),
@@ -1003,6 +1019,7 @@ def run_phase8e_quick(
         "checkpoint_selection": "best observational-validation MSE checked every 10 updates",
         "artifact_schema": "phase8e_quick_compact_v1",
         "frozen_lambda_information": inputs["frozen_record"],
+        "phase8a_root_hard_checks_available": inputs["phase8a_root_checks_available"],
         "formal_phase8e_roots_excluded": [str(path) for path in formal_roots],
         "all_hard_checks_passed": not failed,
     }
