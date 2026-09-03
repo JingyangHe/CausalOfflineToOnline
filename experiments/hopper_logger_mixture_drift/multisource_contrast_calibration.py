@@ -234,8 +234,16 @@ def deterministic_rank1_svd(centered: np.ndarray) -> tuple[np.ndarray, np.ndarra
     matrix = np.asarray(centered, dtype=np.float64)
     if matrix.ndim != 2:
         raise ValueError("SVD matrix must be two-dimensional")
+    if not np.all(np.isfinite(matrix)):
+        raise Phase8EMultisourceContrastError("SVD matrix contains NaN or Inf")
     if np.linalg.norm(matrix) <= np.finfo(np.float64).eps * max(1, matrix.size):
-        return np.zeros(matrix.shape[0]), np.zeros(matrix.shape[1]), np.zeros(min(matrix.shape))
+        # The direction is exactly zero, but a zero loading vector makes the
+        # forward normalization singular during finite-sample joint training.
+        # Use a deterministic unit-RMS representative of the unidentified
+        # loading; multiplying it by the zero direction still reconstructs the
+        # population matrix exactly and satisfies the stated loading constraint.
+        loading = normalize_loadings(np.linspace(-1.0, 1.0, matrix.shape[0]))
+        return loading, np.zeros(matrix.shape[1]), np.zeros(min(matrix.shape))
     left, singular, right = np.linalg.svd(matrix, full_matrices=False)
     loading = normalize_loadings(left[:, 0])
     raw = left[:, 0]
@@ -405,6 +413,9 @@ def closed_form_calibration(base_prediction: Sequence[float], reward: Sequence[f
     design = np.asarray(features, dtype=np.float64)
     if design.ndim != 2 or base.shape != outcome.shape or len(base) != len(design):
         raise ValueError("calibration arrays are misaligned")
+    if not (np.all(np.isfinite(base)) and np.all(np.isfinite(outcome))
+            and np.all(np.isfinite(design))):
+        raise Phase8EMultisourceContrastError("calibration arrays contain NaN or Inf")
     target = outcome - base
     coefficients = np.linalg.pinv(design) @ target
     prediction = base + design @ coefficients
@@ -510,6 +521,10 @@ def budgets_are_nested(order: Sequence[int], budgets: Sequence[int]) -> bool:
 def reward_prediction_metrics(truth: np.ndarray, prediction: np.ndarray) -> dict[str, float]:
     target = np.asarray(truth, dtype=np.float64)
     estimate = np.asarray(prediction, dtype=np.float64)
+    if target.shape != estimate.shape or not (np.all(np.isfinite(target))
+                                               and np.all(np.isfinite(estimate))):
+        raise Phase8EMultisourceContrastError(
+            "reward metric inputs are misaligned or non-finite")
     error = estimate - target
     return {"do_mae": float(np.mean(np.abs(error))),
             "do_rmse": float(np.sqrt(np.mean(error ** 2))),
@@ -520,6 +535,10 @@ def decision_metrics(truth: np.ndarray, prediction: np.ndarray,
                      atol: float = 1e-10, rtol: float = 1e-8) -> dict[str, float]:
     target = np.asarray(truth, dtype=np.float64)
     estimate = np.asarray(prediction, dtype=np.float64)
+    if (target.ndim != 2 or target.shape != estimate.shape or target.shape[1] != 3
+            or not (np.all(np.isfinite(target)) and np.all(np.isfinite(estimate)))):
+        raise Phase8EMultisourceContrastError(
+            "decision metric inputs are misaligned or non-finite")
     true_top = np.isclose(target, target.max(axis=1, keepdims=True), atol=atol, rtol=rtol)
     pred_top = np.isclose(estimate, estimate.max(axis=1, keepdims=True), atol=atol, rtol=rtol)
     maximum = target.max(axis=1)
@@ -637,6 +656,8 @@ def fit_source_free_model(public: Mapping[str, np.ndarray], initialization: SVDI
         optimizer.zero_grad(set_to_none=True)
         loss = ((model.g(target_x) - center_target).square().mean()
                 + (model.h(target_x) - contrast_target).square().mean())
+        if not torch.isfinite(loss):
+            raise Phase8EMultisourceContrastError("non-finite SVD pretraining loss")
         loss.backward(); optimizer.step()
     generator = np.random.default_rng(seed + 901)
     final_loss = math.nan
@@ -646,6 +667,8 @@ def fit_source_free_model(public: Mapping[str, np.ndarray], initialization: SVDI
         optimizer.zero_grad(set_to_none=True)
         prediction = model.source_mean(x[batch], source[batch], action[batch])
         loss = (prediction - reward[batch]).square().mean()
+        if not torch.isfinite(loss):
+            raise Phase8EMultisourceContrastError("non-finite observational training loss")
         loss.backward(); optimizer.step()
         final_loss = float(loss.detach().cpu())
     normalization = {"x_mean": x_mean, "x_std": x_std,
@@ -669,7 +692,10 @@ def predict_components(model: Any, normalization: Mapping[str, np.ndarray],
         g = model.g(x).cpu().numpy().reshape(len(obs), 3)
         h = model.h(x).cpu().numpy().reshape(len(obs), 3)
     scale, mean = float(normalization["reward_std"]), float(normalization["reward_mean"])
-    return g * scale + mean, h * scale
+    g, h = g * scale + mean, h * scale
+    if not (np.all(np.isfinite(g)) and np.all(np.isfinite(h))):
+        raise Phase8EMultisourceContrastError("model prediction contains NaN or Inf")
+    return g, h
 
 
 def save_checkpoint(path: Path, model: Any, normalization: Mapping[str, np.ndarray],

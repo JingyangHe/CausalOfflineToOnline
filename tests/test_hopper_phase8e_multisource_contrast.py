@@ -90,6 +90,11 @@ def test_diversity_profiles_exact():
 
 def test_redundant_sources_identical():
     assert np.array_equal(diversity_profile(8, 0.0), np.full(8, 0.75))
+    loading, direction, singular = deterministic_rank1_svd(np.zeros((8, 12)))
+    assert np.isclose(loading.mean(), 0.0)
+    assert np.isclose(np.mean(loading ** 2), 1.0)
+    assert np.array_equal(direction, np.zeros(12))
+    assert np.array_equal(singular, np.zeros(8))
 
 
 def test_reward_noise_antithetic():
