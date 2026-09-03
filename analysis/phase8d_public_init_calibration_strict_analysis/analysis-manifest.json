@@ -1,0 +1,29 @@
+{
+  "calibration_duplicate_file_detected": true,
+  "calibration_replicates_nested_within_seed": 20,
+  "exact_sign_flip_minimum_nonzero_two_sided_p": 0.0625,
+  "formal_hard_checks_passed": true,
+  "input_hashes": {
+    "anchor_action_metrics.npz": "9adcc64ed315b749b48cdaa13d8cfd0fdce12be2090ba80dfd97a2935cffd094",
+    "calibration_budget_metrics.csv": "962bf2259864fe95e39e9b8c6fddc1a32757f4a329bca5f75d799f0cb51c3279",
+    "calibration_replicate_variation.csv": "962bf2259864fe95e39e9b8c6fddc1a32757f4a329bca5f75d799f0cb51c3279",
+    "candidate_diversity.csv": "88c7db94ca6662c19f0a3d9722eba89f45cb0c5ce4f691a43969baec57ffcbd9",
+    "candidate_selection_metrics.csv": "113bb5dc895d0323e966682d3047ef3729526c5f99c6363964f2b0439e30a724",
+    "hard_checks.json": "88b71b77593dcaea45c9e49555a8f01751f59a0791fb4a11a9fd7c9eb5162447",
+    "manifest.json": "69681de7daf48825cf91bc7d1df3f545889bd6901bda170df8b4a69d700977c0",
+    "seed_metrics.csv": "62ad7e807faae6ce5e05a5d2a4053e5025c6a83aeb9f7a16481633a274726d3d",
+    "summary.json": "447e394abb7a3210f7f3b31fde56bad2f92ac1af9aa8568bd4c709c861e715de"
+  },
+  "input_hashes_unchanged": true,
+  "input_root": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\noncomplementary_loggers_seed0_verified\\phase8d_public_init_intervention_calibration",
+  "n_model_seeds": 5,
+  "primary_dose_estimand": "equal-weight mean over seven frozen doses",
+  "primary_setting": {
+    "condition": "confounded",
+    "kappa": 0.0,
+    "mixture": "logger12_balanced"
+  },
+  "sensitivity_dose_estimand": "normalized trapezoidal AUC over lambda [0, 0.1]",
+  "stage": "Phase 8D-PRIC strict read-only analysis",
+  "statistical_unit": "model_seed"
+}
