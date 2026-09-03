@@ -47,6 +47,7 @@ from .phase8e_multisource_contrast import (
     load_anchor_universe,
     select_anchor_splits,
 )
+from .phase8d_public_init_calibration import phase8d_anchor_splits
 from .reward_mechanism_separation import (
     index_derived_public_files,
     kappa_name,
@@ -168,6 +169,18 @@ def quick_scenarios(source_settings: Sequence[str], lambda_values: Sequence[floa
         scenarios.append({"setting": "M5_diverse", "lambda_reward": 0.05,
                           "condition": "independent_latents"})
     return scenarios
+
+
+def normalize_quick_split_schema(split_record: Mapping[str, Sequence[int]]) -> dict[str, Any]:
+    """Accept frozen Phase 8C or already-expanded Phase 8D split records."""
+    expanded = {"train", "observational_validation", "do_calibration_pool", "test"}
+    if expanded.issubset(split_record):
+        return {name: list(map(int, split_record[name])) for name in expanded}
+    legacy = {"train", "validation", "test"}
+    if legacy.issubset(split_record):
+        return phase8d_anchor_splits(split_record, seed=0)
+    raise Phase8EMultisourceContrastError(
+        "frozen split must use train/validation/test or the expanded Phase 8D schema")
 
 
 def preflight_estimate(scenario_count: int, model_seed_count: int,
@@ -628,7 +641,8 @@ def run_phase8e_quick(
         and np.asarray(universe["reward_branches"]).shape == (len(universe["anchor_id"]), 3, 2)
         and all(np.all(np.isfinite(np.asarray(universe[name], dtype=np.float64)))
                 for name in ("observation", "commanded_action", "reward_branches")))
-    split_record = _read_json(inputs["direct"] / "splits.json")
+    split_record = normalize_quick_split_schema(
+        _read_json(inputs["direct"] / "splits.json"))
     splits = select_anchor_splits(split_record, universe["anchor_id"], num_anchors, max(budgets))
     split_sets = [set(map(int, values)) for values in splits.values()]
     split_disjoint = not any(split_sets[i] & split_sets[j] for i in range(4)

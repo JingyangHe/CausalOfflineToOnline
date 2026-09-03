@@ -29,6 +29,7 @@ from experiments.hopper_logger_mixture_drift.phase8e_quick_go_nogo import (
     _comparison_rows,
     _save_scenario_rows,
     fit_quick_model,
+    normalize_quick_split_schema,
     preflight_estimate,
     quick_scenarios,
     resolve_quick_inputs,
@@ -185,6 +186,22 @@ def test_phase8a_root_manifest_pair_is_optional_for_raw_oracle_layout(tmp_path: 
     resolved = resolve_quick_inputs(phase8a, QUICK_LAMBDAS)
     assert resolved["phase8a_root_checks_available"] is False
     assert raw.resolve() in resolved["required_paths"]
+
+
+def test_legacy_frozen_validation_is_deterministically_split_for_calibration():
+    frozen = {
+        "train": list(range(10)),
+        "validation": list(range(10, 40)),
+        "test": list(range(40, 50)),
+    }
+    first = normalize_quick_split_schema(frozen)
+    second = normalize_quick_split_schema(frozen)
+    assert first == second
+    assert set(first["observational_validation"]) | set(first["do_calibration_pool"]) == set(
+        frozen["validation"])
+    groups = [set(first[name]) for name in
+              ("train", "observational_validation", "do_calibration_pool", "test")]
+    assert not any(groups[i] & groups[j] for i in range(4) for j in range(i + 1, 4))
 
 
 def test_paired_comparisons_report_seed_differences():
