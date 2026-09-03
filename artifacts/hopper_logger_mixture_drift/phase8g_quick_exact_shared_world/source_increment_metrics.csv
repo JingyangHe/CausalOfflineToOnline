@@ -1,0 +1,5 @@
+kappa,lambda_reward,source_setting,condition,mean_middle_source_increment,median_middle_source_increment,positive_fraction
+0.0,0.05,M5_same_direction_diverse,confounded,-4.915049848600954e-18,0.0,0.0
+0.3,0.05,M5_same_direction_diverse,confounded,4.409088834774385e-17,0.0,0.0
+0.3,0.0,M5_same_direction_diverse,confounded,4.640385298237959e-17,0.0,0.0
+0.3,0.05,M5_same_direction_diverse,independent_latents,-7.040086106672543e-17,0.0,0.0

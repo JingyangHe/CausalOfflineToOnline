@@ -1,0 +1,34 @@
+{
+  "anchor_count": 256,
+  "deprecated_supplement_only": "original deterministic opposite pair (two-action support-limited)",
+  "derivation_module": "experiments.hopper_logger_mixture_drift.phase8g_quick_exact_shared_world",
+  "derived_input_contains_public_population_quantities_only": true,
+  "do_oracle_use": "final coverage, certification, and regret evaluation only",
+  "do_oracle_used_for_estimation": false,
+  "hidden_u_used_by_estimator": false,
+  "lp_solver": "scipy.optimize.linprog(method='highs')",
+  "numeric_tolerance": 1e-08,
+  "old_phase8f_artifact_modified": false,
+  "positive_control": "matched_opposite_M2",
+  "public_derived_input": "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8g_quick_exact_shared_world/derived_inputs/phase8f_public_joint_support_v2.npz",
+  "public_derived_input_sha256": "c67ec13209207fffb825653b63dc660867321725694ffba9135a38cb251214a7",
+  "public_fields": [
+    "anchor_id",
+    "reward_values",
+    "support_sizes",
+    "public_joint_mass"
+  ],
+  "scenario_count": 10,
+  "source_phase8f_hashes": {
+    "/home/grads/he/CausalOfflineToOnline/artifacts/_smoke/phase8f_quick_bound_intersection_codex_v3/bound_metrics.csv": "714d5d8308ddf97bfe50196b280152c181eb72c3e254e40676cf627dc233bc88",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/_smoke/phase8f_quick_bound_intersection_codex_v3/hard_checks.json": "7e1500ae4c24c6a7b59e16298c63c4250ed113d2266252c3036d594d15f4df01",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/_smoke/phase8f_quick_bound_intersection_codex_v3/manifest.json": "63426024830351c0ff3d0f8808b9d323c7a961ae19ba2dda219064da412e5bc2"
+  },
+  "source_settings": [
+    "M2_same_direction_diverse",
+    "M5_same_direction_diverse",
+    "M5_redundant",
+    "matched_opposite_M2"
+  ],
+  "stage": "Phase 8G-Q"
+}

@@ -1,0 +1,10 @@
+{
+  "all_hard_checks_passed": true,
+  "anchor_count": 256,
+  "coverage_failures": 0,
+  "failed_hard_checks": [],
+  "false_certifications": 0,
+  "max_lp_equality_residual": 9.71445146547012e-16,
+  "scenario_count": 10,
+  "stage": "Phase 8G-Q"
+}
