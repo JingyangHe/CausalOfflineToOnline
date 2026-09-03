@@ -1,0 +1,22 @@
+{
+  "confirmatory_inference": false,
+  "hard_check_count": 23,
+  "hard_checks_passed": true,
+  "independent_seed_count": 3,
+  "independent_unit": "model seed after averaging five nested calibration replicates",
+  "input_bytes": 17847187,
+  "input_files": 120,
+  "input_root": "D:\\o2o2027\\artifacts\\hopper_logger_mixture_drift\\phase8e_quick_go_nogo",
+  "minimum_attainable_two_sided_exact_p_for_three_nonzero_paired_differences": 0.25,
+  "model_count": 90,
+  "num_anchors": 512,
+  "scenario_count": 10,
+  "split_counts": {
+    "do_calibration_pool": 51,
+    "observational_validation": 51,
+    "test": 77,
+    "train": 333
+  },
+  "stage": "Phase 8E-Q strict read-only analysis",
+  "test_anchor_count": 77
+}
