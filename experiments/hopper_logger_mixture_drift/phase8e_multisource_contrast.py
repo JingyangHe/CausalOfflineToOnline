@@ -784,8 +784,16 @@ def run_phase8e_multisource_contrast(
                                     redundant_contrast_zero &= audit.centered_norm < 1e-12
                                 if condition == "independent_latents":
                                     independent_contrast_zero &= audit.centered_norm < 1e-12
-                                correlation = (float(np.corrcoef(audit.loading, p_values)[0, 1])
-                                               if np.std(audit.loading) > 0 else 0.0)
+                                correlation_defined = bool(
+                                    condition == "confounded"
+                                    and action != 1
+                                    and audit.centered_norm > (
+                                        np.finfo(np.float64).eps * max(1, audit.direction.size))
+                                    and np.std(audit.loading) > 0
+                                    and np.std(p_values) > 0)
+                                correlation = (float(np.corrcoef(
+                                    audit.loading, p_values)[0, 1])
+                                    if correlation_defined else 0.0)
                                 subspace_rows.append({
                                     "protocol": "population_support", "source_count": m,
                                     "diversity_half_width": diversity,
@@ -801,6 +809,7 @@ def run_phase8e_multisource_contrast(
                                     "shuffle_centered_norm": 0.0,
                                     "numerical_rank": audit.numerical_rank,
                                     "loading_true_p_correlation_posthoc": correlation,
+                                    "loading_true_p_correlation_defined": correlation_defined,
                                 })
                             if diversity > 0 and condition == "confounded":
                                 plus = pop_train[:, :, 2] - pop_train[:, :, 2].mean(axis=0)
@@ -901,9 +910,13 @@ def run_phase8e_multisource_contrast(
                                     "source_reconstruction_mae": float(np.mean(
                                         np.abs(predicted_sources - pop_test))),
                                     "loading_true_p_correlation_posthoc": float(np.mean([
-                                        abs(np.corrcoef(model.normalized_loadings().detach().cpu().numpy()[:, a],
-                                                        p_values)[0, 1])
-                                        if diversity > 0 and a != 1 else 0.0 for a in range(3)])),
+                                        abs(np.corrcoef(
+                                            model.normalized_loadings().detach().cpu().numpy()[:, a],
+                                            p_values)[0, 1])
+                                        if (condition == "confounded" and diversity > 0 and a != 1)
+                                        else 0.0 for a in range(3)])),
+                                    "loading_true_p_correlation_defined": bool(
+                                        condition == "confounded" and diversity > 0),
                                     "observational_mse": history["observational_mse_standardized"],
                                 })
 
