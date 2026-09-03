@@ -1,0 +1,29 @@
+{
+  "all_passed": true,
+  "checks": {
+    "B16_is_prefix_of_B64": true,
+    "all_arrays_and_metrics_finite": true,
+    "all_source_action_marginals_equal": true,
+    "all_source_settings_same_total_sample_count": true,
+    "base_action_population_contrast_zero": true,
+    "bic_tie_returns_rank0": true,
+    "calibration_action_independent_of_u": true,
+    "correct_and_shuffle_same_network_initialization": true,
+    "correct_and_shuffle_same_normalization_and_schedule": true,
+    "correct_and_shuffle_same_public_rows_except_source": true,
+    "do_oracle_not_in_offline_training": true,
+    "formal_artifacts_not_read_or_written": true,
+    "hidden_u_not_in_model": true,
+    "independent_latents_population_contrast_zero": true,
+    "input_hashes_unchanged": true,
+    "lightweight_file_scaling": true,
+    "only_best_checkpoint_saved": true,
+    "phase8a_anchor_oracle_raw_complete_and_finite": true,
+    "rank0_rank1_closed_form_correct": true,
+    "redundant_population_contrast_zero": true,
+    "source_not_in_g_or_h": true,
+    "source_shuffle_within_anchor_action": true,
+    "splits_fully_disjoint": true
+  },
+  "failed": []
+}

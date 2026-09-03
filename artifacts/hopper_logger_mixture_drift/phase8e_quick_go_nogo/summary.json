@@ -1,0 +1,17 @@
+{
+  "all_hard_checks_passed": true,
+  "conclusions": {
+    "B0_to_B16_to_B64_improves_all_three_metrics": false,
+    "M5_diverse_beats_M2_diverse": false,
+    "M5_redundant_has_no_equal_benefit": false,
+    "continuous_action_extension_recommended": false,
+    "correct_source_beats_shuffle": false,
+    "lambda_zero_safely_returns_to_rank0": false
+  },
+  "continuous_action_extension_recommended": false,
+  "failed": [],
+  "go_to_larger_phase8e": false,
+  "model_count": 90,
+  "scenario_count": 10,
+  "stage": "Phase 8E-Q"
+}

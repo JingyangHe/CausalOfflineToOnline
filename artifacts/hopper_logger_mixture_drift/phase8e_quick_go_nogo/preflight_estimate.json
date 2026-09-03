@@ -1,0 +1,8 @@
+{
+  "estimated_disk_bytes": 50906880,
+  "estimated_disk_mib": 48.548583984375,
+  "estimated_file_count": 120,
+  "model_count": 90,
+  "scaling_rule": "files scale with scenario x method x model_seed, not row x budget x replicate",
+  "scenario_count": 10
+}

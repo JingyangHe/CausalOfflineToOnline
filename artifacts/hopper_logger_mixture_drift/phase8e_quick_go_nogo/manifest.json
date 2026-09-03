@@ -1,0 +1,85 @@
+{
+  "CONTROLLED_THREE_ACTION_SETTING": true,
+  "QUICK_GO_NO_GO_ONLY": true,
+  "activation": "ReLU",
+  "all_hard_checks_passed": true,
+  "artifact_schema": "phase8e_quick_compact_v1",
+  "calibration_budgets": [
+    0,
+    16,
+    64
+  ],
+  "calibration_replicates": 5,
+  "checkpoint_selection": "best observational-validation MSE checked every 10 updates",
+  "condition": "confounded",
+  "data_seed": 2026,
+  "formal_phase8e_roots_excluded": [],
+  "frozen_lambda_information": {
+    "automatic_grid_selection": false,
+    "held_out_test_used": false,
+    "lambdas": [
+      0.0,
+      0.002,
+      0.005,
+      0.01,
+      0.02,
+      0.05,
+      0.1
+    ],
+    "manually_frozen": true,
+    "optional_legacy_positive_control": 0.1,
+    "selection_basis": [
+      "train_validation_threshold_quantiles",
+      "preexisting_positive_control"
+    ],
+    "selection_source": "analysis/phase8b_rs_low_dose_threshold_audit/proposed_lambda_quantiles_trainval.json",
+    "stage": "Phase 8C-RM",
+    "strong_positive_control": 0.05
+  },
+  "gradient_updates": 1000,
+  "hidden_layers": 2,
+  "hidden_width": 128,
+  "kappa": 0.0,
+  "lambda_values": [
+    0.0,
+    0.01,
+    0.05
+  ],
+  "learning_rate": 0.001,
+  "model_seeds": [
+    0,
+    1,
+    2
+  ],
+  "negative_control": {
+    "condition": "independent_latents",
+    "lambda_reward": 0.05,
+    "setting": "M5_diverse"
+  },
+  "num_anchors": 512,
+  "offline_sample_budget": 49152,
+  "optimizer": "Adam",
+  "phase8a_root_hard_checks_available": false,
+  "reward_noise_std": 0.02,
+  "source_settings": {
+    "M2_diverse": [
+      0.55,
+      0.95
+    ],
+    "M5_diverse": [
+      0.55,
+      0.65,
+      0.75,
+      0.85,
+      0.95
+    ],
+    "M5_redundant": [
+      0.75,
+      0.75,
+      0.75,
+      0.75,
+      0.75
+    ]
+  },
+  "stage": "Phase 8E-Q"
+}

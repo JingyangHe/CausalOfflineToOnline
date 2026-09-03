@@ -1,0 +1,25 @@
+{
+  "sha256_after": {
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p00/do_oracle_raw.npz": "b36bc91ac9b9b525d09bf6c9a3bc58f73c4a90ff01ebe434a7bb8f3fde178771",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0/confounded_public.npz": "16c33fbced6b963138df1eba0341a7ea53d0161972702a8b2e4b34350b416a25",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0p01/confounded_public.npz": "9b53fdbf0699698da4ad110fc7df9701ae24c3cf44663d6eb1aa51cfab55c596",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0p05/confounded_public.npz": "389a332021d5f727f66913ec83be9439483375f7ba1f6d2cd6548d1053a4475d",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0p05/independent_latents_public.npz": "7583986f60a87ff4276f9ea8645b13601022d3e277b53fd21689258a82543eee",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/frozen_lambda_grid.json": "1123c06bc0f088540a0bae4ff8a519576c0e3be607da461d8a0147dbca98cf24",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/hard_checks.json": "619ffb82757ab50adde39903fde34f38ae915aa4e8ecd69e3729436446f02f6f",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/manifest.json": "27385b780d3b5bc4b27489b02b94b3f0349f74a277930a705efd7263e2714acd",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/splits.json": "3ece86c655d7363e150b11ddb93cb1fa18d6865f58ac3e5fbd54b193b9fc393b"
+  },
+  "sha256_before": {
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/kappa_0p00/do_oracle_raw.npz": "b36bc91ac9b9b525d09bf6c9a3bc58f73c4a90ff01ebe434a7bb8f3fde178771",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0/confounded_public.npz": "16c33fbced6b963138df1eba0341a7ea53d0161972702a8b2e4b34350b416a25",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0p01/confounded_public.npz": "9b53fdbf0699698da4ad110fc7df9701ae24c3cf44663d6eb1aa51cfab55c596",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0p05/confounded_public.npz": "389a332021d5f727f66913ec83be9439483375f7ba1f6d2cd6548d1053a4475d",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/derived_data/kappa_0p00/lambda_0p05/independent_latents_public.npz": "7583986f60a87ff4276f9ea8645b13601022d3e277b53fd21689258a82543eee",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/frozen_lambda_grid.json": "1123c06bc0f088540a0bae4ff8a519576c0e3be607da461d8a0147dbca98cf24",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/hard_checks.json": "619ffb82757ab50adde39903fde34f38ae915aa4e8ecd69e3729436446f02f6f",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/manifest.json": "27385b780d3b5bc4b27489b02b94b3f0349f74a277930a705efd7263e2714acd",
+    "/home/grads/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/noncomplementary_loggers_seed0_verified/phase8c_direct_reward_public_grid/splits.json": "3ece86c655d7363e150b11ddb93cb1fa18d6865f58ac3e5fbd54b193b9fc393b"
+  },
+  "unchanged": true
+}
