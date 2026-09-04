@@ -106,6 +106,13 @@ def _input_hashes(paths: Sequence[Path]) -> dict[str, str]:
     return {str(Path(path).resolve()): file_sha256(Path(path)) for path in paths}
 
 
+def _input_metadata(paths: Sequence[Path]) -> dict[str, dict[str, int]]:
+    return {str(Path(path).resolve()): {
+        "size_bytes": Path(path).stat().st_size,
+        "modified_time_ns": Path(path).stat().st_mtime_ns,
+    } for path in paths}
+
+
 def source_policy_parameters() -> dict[str, Any]:
     return {"b": SOURCE_B.tolist(), "d": SOURCE_D.tolist(),
             "sigma_action": SIGMA_ACTION, "v_q": V_Q.tolist(), "v_u": V_U.tolist()}
@@ -197,7 +204,8 @@ def _resolve_split_path(phase8a_root: Path) -> Path:
 
 
 def _load_phase8h_inputs(phase8a_root: Path, num_anchors: int,
-                         reference_checkpoint: Path | None) -> dict[str, Any]:
+                         reference_checkpoint: Path | None,
+                         *, compute_checkpoint_hash: bool = True) -> dict[str, Any]:
     root = Path(phase8a_root).resolve()
     manifest_path, checks_path, anchors_path = (
         root / "manifest.json", root / "hard_checks.json", root / "anchors.npz")
@@ -257,7 +265,7 @@ def _load_phase8h_inputs(phase8a_root: Path, num_anchors: int,
             raise Phase8HQuickMultipolicyAAMASError(
                 f"explicit reference SAC checkpoint is missing: {checkpoint}")
         original_manifest = manifest.get("source2_original_manifest", {})
-        checkpoint_hash = sha256(checkpoint)
+        checkpoint_hash = sha256(checkpoint) if compute_checkpoint_hash else None
     required = [manifest_path, anchors_path, split_path, checkpoint]
     if checks_path.is_file():
         required.append(checks_path)
@@ -382,7 +390,7 @@ def action_overlap_audit(public: Mapping[str, np.ndarray]) -> dict[str, Any]:
 class FrozenSACReferenceValue:
     """Hidden-blind, frozen Source-2 SAC actor/critic reference value."""
 
-    def __init__(self, sac: Any, device: str) -> None:
+    def __init__(self, sac: Any, device: str, *, use_parameter_hash: bool = True) -> None:
         import torch
         self.torch = torch
         self.sac = sac
@@ -391,7 +399,11 @@ class FrozenSACReferenceValue:
             module.eval()
             for parameter in module.parameters():
                 parameter.requires_grad_(False)
-        self.parameter_hash_before = self.parameter_hash()
+        self.parameter_hash_before = self.parameter_hash() if use_parameter_hash else None
+        self.parameter_snapshot_before = None if use_parameter_hash else tuple(
+            (f"{prefix}.{name}", value.detach().cpu().clone())
+            for prefix, module in (("actor", self.sac.actor), ("critic", self.sac.critic))
+            for name, value in sorted(module.state_dict().items()))
 
     def parameter_hash(self) -> str:
         digest = hashlib.sha256()
@@ -432,7 +444,18 @@ class FrozenSACReferenceValue:
         return result.detach().cpu().numpy().astype(np.float64)
 
     def verify_frozen(self) -> bool:
-        return self.parameter_hash() == self.parameter_hash_before and all(
+        if self.parameter_hash_before is not None:
+            unchanged = self.parameter_hash() == self.parameter_hash_before
+        else:
+            current = tuple(
+                (f"{prefix}.{name}", value.detach().cpu())
+                for prefix, module in (("actor", self.sac.actor), ("critic", self.sac.critic))
+                for name, value in sorted(module.state_dict().items()))
+            unchanged = len(current) == len(self.parameter_snapshot_before or ()) and all(
+                left_name == right_name and self.torch.equal(left_value, right_value)
+                for (left_name, left_value), (right_name, right_value)
+                in zip(current, self.parameter_snapshot_before or ()))
+        return unchanged and all(
             not parameter.requires_grad
             for module in (self.sac.actor, self.sac.critic)
             for parameter in module.parameters())
@@ -504,7 +527,7 @@ def fit_aamas_components(
     public: Mapping[str, np.ndarray], train_anchors: Sequence[int],
     validation_anchors: Sequence[int], *, row_probabilities: np.ndarray,
     seed: int, gradient_updates: int, batch_size: int, device: str,
-    official: Any, torch: Any,
+    official: Any, torch: Any, record_schedule_digest: bool = True,
 ) -> tuple[ContinuousAAMASComponents, dict[str, Any], dict[str, Any]]:
     """Fit released behavior/delta/reward modules; select on public validation only."""
     model_public = _model_public_view(public)
@@ -528,12 +551,13 @@ def fit_aamas_components(
     generator = np.random.default_rng(seed + 810_001)
     best_loss = np.inf; best_step = 0; best_metrics: dict[str, float] = {}
     best_state: dict[str, dict[str, Any]] | None = None
-    schedule = hashlib.sha256()
+    schedule = hashlib.sha256() if record_schedule_digest else None
     history = []
     for step in range(1, gradient_updates + 1):
         chosen = generator.choice(train_rows, size=min(batch_size, len(train_rows)),
                                   replace=True, p=probability)
-        schedule.update(np.asarray(chosen, dtype=np.int64).tobytes())
+        if schedule is not None:
+            schedule.update(np.asarray(chosen, dtype=np.int64).tobytes())
         index = torch.as_tensor(chosen, dtype=torch.long, device=device)
         values = agent.train_reward_probability_state_delta(
             tensors["observation"][index], tensors["action"][index],
@@ -546,7 +570,16 @@ def fit_aamas_components(
             raise Phase8HQuickMultipolicyAAMASError("AAMAS component training is nonfinite")
         if step == 1 or step % 10 == 0 or step == gradient_updates:
             loss, metrics = _component_validation(agent, tensors, validation_rows, torch)
-            history.append({"step": step, **metrics})
+            train_values = np.asarray(values, dtype=np.float64).reshape(-1)
+            history.append({
+                "step": step,
+                "train_loss": float(train_values.sum()),
+                "train_behavior_loss": float(train_values[0]) if len(train_values) > 0 else 0.0,
+                "train_state_loss": float(train_values[1]) if len(train_values) > 1 else 0.0,
+                "train_reward_loss": float(train_values[2]) if len(train_values) > 2 else 0.0,
+                "validation_loss": metrics["total"],
+                **metrics,
+            })
             if loss < best_loss:
                 best_loss, best_step, best_metrics = loss, step, metrics
                 best_state = {
@@ -574,9 +607,13 @@ def fit_aamas_components(
     metadata = {"seed": seed, "best_step": best_step,
                 "best_observational_validation": best_metrics,
                 "gradient_updates": gradient_updates, "batch_size": batch_size,
-                "minibatch_schedule_sha256": schedule.hexdigest(),
                 "model_input_fields": ["observation", "commanded_action"],
                 "checkpoint_selection_fields": ["behavior_nll", "delta_mse", "reward_mse"]}
+    if schedule is not None:
+        metadata["minibatch_schedule_sha256"] = schedule.hexdigest()
+    else:
+        metadata["minibatch_schedule_identifier"] = (
+            f"seed={seed};updates={gradient_updates};batch_size={batch_size}")
     return bundle, normalization, {"metadata": metadata, "history": history,
                                     "state_dict": best_state}
 
@@ -915,6 +952,8 @@ def run_phase8h_quick_multipolicy_aamas(
     gradient_updates: int,
     device: str,
     include_independent_control: bool = False,
+    independent_model_seeds: Sequence[int] | None = None,
+    use_sha256_integrity: bool = True,
     reference_sac_checkpoint: Path | None = None,
     external_repo: Path = Path("external/li_aamas2026"),
 ) -> dict[str, Any]:
@@ -929,6 +968,12 @@ def run_phase8h_quick_multipolicy_aamas(
         raise Phase8HQuickMultipolicyAAMASError("quick run fixes 32 transitions/anchor/source")
     if not model_seeds or len(set(map(int, model_seeds))) != len(model_seeds):
         raise ValueError("model seeds must be nonempty and unique")
+    independent_seeds = tuple(map(
+        int, (0,) if independent_model_seeds is None else independent_model_seeds))
+    if (include_independent_control
+            and (not independent_seeds
+                 or len(set(independent_seeds)) != len(independent_seeds))):
+        raise ValueError("independent model seeds must be nonempty and unique")
     if gradient_updates <= 0 or candidate_actions_per_source <= 0:
         raise ValueError("updates and candidate action count must be positive")
     output = Path(output_root)
@@ -937,8 +982,11 @@ def run_phase8h_quick_multipolicy_aamas(
             f"output directory is not empty; use a fresh path: {output}")
     output.mkdir(parents=True, exist_ok=True)
 
-    inputs = _load_phase8h_inputs(phase8a_root, num_anchors, reference_sac_checkpoint)
-    hashes_before = _input_hashes(inputs["required_paths"])
+    inputs = _load_phase8h_inputs(
+        phase8a_root, num_anchors, reference_sac_checkpoint,
+        compute_checkpoint_hash=use_sha256_integrity)
+    integrity_snapshot = _input_hashes if use_sha256_integrity else _input_metadata
+    integrity_before = integrity_snapshot(inputs["required_paths"])
     external = validate_external_repo(external_repo, EXTERNAL_COMMIT)
     try:
         import stable_baselines3
@@ -992,7 +1040,7 @@ def run_phase8h_quick_multipolicy_aamas(
         selected_checkpoints = 0
         condition_seed_pairs = [
             (condition, int(seed)) for condition in conditions
-            for seed in (model_seeds if condition == "confounded" else (0,))]
+            for seed in (model_seeds if condition == "confounded" else independent_seeds)]
         expected_models = len(condition_seed_pairs) * 6
 
         for condition, seed in condition_seed_pairs:
@@ -1008,7 +1056,8 @@ def run_phase8h_quick_multipolicy_aamas(
                     source_public, splits["train"], splits["observational_validation"],
                     row_probabilities=np.ones(len(source_public["reward"])),
                     seed=seed * 100 + source_id, gradient_updates=gradient_updates,
-                    batch_size=512, device=selected_device, official=official, torch=torch)
+                    batch_size=512, device=selected_device, official=official, torch=torch,
+                    record_schedule_digest=use_sha256_integrity)
                 metadata = {**training["metadata"], "condition": condition,
                             "model_kind": "source", "source_id": source_id,
                             "row_count": int(mask.sum())}
@@ -1029,7 +1078,8 @@ def run_phase8h_quick_multipolicy_aamas(
                     public, splits["train"], splits["observational_validation"],
                     row_probabilities=weights, seed=seed * 100 + 50,
                     gradient_updates=gradient_updates, batch_size=512,
-                    device=selected_device, official=official, torch=torch)
+                    device=selected_device, official=official, torch=torch,
+                    record_schedule_digest=use_sha256_integrity)
                 metadata = {**training["metadata"], "condition": condition,
                             "model_kind": "pooled", "composition": mixture_name,
                             "mixture_weights": mixture.tolist(), "row_count": len(public["reward"])}
@@ -1145,11 +1195,17 @@ def run_phase8h_quick_multipolicy_aamas(
     finally:
         simulator.close()
 
-    hashes_after = _input_hashes(inputs["required_paths"])
+    integrity_after = integrity_snapshot(inputs["required_paths"])
     validate_external_repo(external_repo, EXTERNAL_COMMIT)
-    _write_json(output / "input_integrity.json", {
-        "sha256_before": hashes_before, "sha256_after": hashes_after,
-        "unchanged": hashes_before == hashes_after})
+    integrity_record = {
+        "mode": "sha256" if use_sha256_integrity else "file_metadata",
+        "before": integrity_before, "after": integrity_after,
+        "unchanged": integrity_before == integrity_after,
+    }
+    if use_sha256_integrity:
+        integrity_record.update({
+            "sha256_before": integrity_before, "sha256_after": integrity_after})
+    _write_json(output / "input_integrity.json", integrity_record)
     # Account for the three JSON files written immediately below.
     file_count = sum(1 for path in output.rglob("*") if path.is_file()) + 3
     artifact_bytes = sum(path.stat().st_size for path in output.rglob("*") if path.is_file())
@@ -1192,10 +1248,11 @@ def run_phase8h_quick_multipolicy_aamas(
             or abs(behavior_u_corr["independent_latents"]) < 0.05),
         "anchor_splits_disjoint": len(set().union(*(
             set(map(int, splits[name])) for name in SPLIT_NAMES))) == num_anchors,
-        "input_hashes_unchanged": hashes_before == hashes_after,
+        ("input_hashes_unchanged" if use_sha256_integrity
+         else "input_metadata_unchanged"): integrity_before == integrity_after,
         "all_arrays_and_metrics_finite": bool(all_numeric and all(
             np.all(np.isfinite(value)) for value in prediction_arrays.values())),
-        "old_artifacts_unchanged": hashes_before == hashes_after,
+        "old_artifacts_unchanged": integrity_before == integrity_after,
         "only_best_checkpoints_saved": (
             selected_checkpoints == expected_models
             and len(list((output / "models").rglob("*.pt"))) == expected_models),
@@ -1212,18 +1269,26 @@ def run_phase8h_quick_multipolicy_aamas(
         "total_offline_rows_per_condition": num_anchors * 3 * samples_per_anchor_source,
         "candidate_actions_per_source": candidate_actions_per_source,
         "union_candidate_count": 3 * (candidate_actions_per_source + 1) + 1,
-        "model_seeds": list(map(int, model_seeds)), "gradient_updates": gradient_updates,
-        "conditions": conditions, "negative_control_seed": 0,
+        "model_seeds": list(map(int, model_seeds)),
+        "confounded_model_seeds": list(map(int, model_seeds)),
+        "independent_model_seeds": (
+            list(independent_seeds) if include_independent_control else []),
+        "gradient_updates": gradient_updates,
+        "conditions": conditions,
+        "negative_control_seed": (
+            independent_seeds[0] if include_independent_control and len(independent_seeds) == 1
+            else None),
         "kappa": KAPPA, "lambda_reward": LAMBDA_REWARD,
         "source_policy": source_policy_parameters(),
         "pooled_compositions": {name: value.tolist()
                                 for name, value in POOLED_MIXTURES.items()},
         "reference_sac_checkpoint": str(inputs["checkpoint"]),
-        "reference_sac_sha256": inputs["checkpoint_hash"],
+        "reference_sac_size_bytes": inputs["checkpoint"].stat().st_size,
         "reference_value_definition": (
             "hidden-blind mean over synthetic U=+-1 of min frozen SAC twin critics "
             "at the averaged deterministic actor action"),
         "gamma": GAMMA, "device": selected_device,
+        "integrity_mode": "sha256" if use_sha256_integrity else "file_metadata",
         "checkpoint_selection": "minimum public observational validation behavior+delta+reward loss",
         "selected_phase8a_anchor_ids": np.asarray(
             inputs["selected_original_anchor_ids"], dtype=np.int64).tolist(),
@@ -1234,6 +1299,8 @@ def run_phase8h_quick_multipolicy_aamas(
         "file_count": file_count, "artifact_bytes_before_final_json": artifact_bytes,
         "all_hard_checks_passed": not failed,
     }
+    if use_sha256_integrity:
+        manifest["reference_sac_sha256"] = inputs["checkpoint_hash"]
     _write_json(output / "manifest.json", manifest)
     summary = {"stage": PHASE, "anchor_count": num_anchors,
                "condition_count": len(conditions), "model_count": selected_checkpoints,
