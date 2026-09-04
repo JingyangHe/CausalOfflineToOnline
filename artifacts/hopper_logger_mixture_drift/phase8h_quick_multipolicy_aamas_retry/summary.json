@@ -1,0 +1,11 @@
+{
+  "all_hard_checks_passed": true,
+  "anchor_count": 512,
+  "artifact_bytes_before_final_json": 30623536,
+  "automatic_scientific_success_threshold_applied": false,
+  "condition_count": 2,
+  "failed_hard_checks": [],
+  "file_count": 41,
+  "model_count": 24,
+  "stage": "Phase 8H-Q"
+}

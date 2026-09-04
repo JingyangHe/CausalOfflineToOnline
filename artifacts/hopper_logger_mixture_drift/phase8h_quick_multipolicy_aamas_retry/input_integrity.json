@@ -1,0 +1,15 @@
+{
+  "sha256_after": {
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip": "e8391e396fd2688b766e58d33f697b31c31e0a20d4d0d0b0bcd15c89aaffa2f7",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/anchors.npz": "fd9c7aa054edbfe4eb2866ff5cf372056ca8144d90f0991db928ce30f88e77e0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/manifest.json": "feb6ca071ce7e165a631c0a08d73147b935ee9c3943daf8fed11ccfa8c610bc8",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8e_quick_go_nogo/splits.json": "3df9160439c0cbbddcb3ccee62db7f2245b071f54326d6a58632675ac79084f8"
+  },
+  "sha256_before": {
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip": "e8391e396fd2688b766e58d33f697b31c31e0a20d4d0d0b0bcd15c89aaffa2f7",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/anchors.npz": "fd9c7aa054edbfe4eb2866ff5cf372056ca8144d90f0991db928ce30f88e77e0",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/manifest.json": "feb6ca071ce7e165a631c0a08d73147b935ee9c3943daf8fed11ccfa8c610bc8",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8e_quick_go_nogo/splits.json": "3df9160439c0cbbddcb3ccee62db7f2245b071f54326d6a58632675ac79084f8"
+  },
+  "unchanged": true
+}
