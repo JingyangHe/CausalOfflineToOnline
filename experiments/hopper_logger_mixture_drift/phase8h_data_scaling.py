@@ -23,6 +23,7 @@ from aamas_hopper_adapter import _import_official_module, validate_external_repo
 from scripts.train_aamas_hopper_potential import seed_everything
 from .generate_datasets import MujocoOneStepSimulator
 from .phase8h_quick_multipolicy_aamas import (
+    CANDIDATE_ACTIONS,
     EXTERNAL_COMMIT,
     FORBIDDEN_MODEL_FIELDS,
     GAMMA,
@@ -352,7 +353,7 @@ def _fit_scenario(
         source_models, test_states, test_base, samples_per_source=8, seed=20260805)
     truth = do_bellman_oracle(simulator, anchors, test_positions, candidates, reference)
     noise = np.random.default_rng(20260806).standard_normal(
-        (len(test_states) * candidates.shape[1], 32, 3)).astype(np.float32)
+        (len(test_states) * candidates.shape[1], CANDIDATE_ACTIONS, 3)).astype(np.float32)
     source_q = compute_source_aamas_backup(
         source_models, test_states, candidates, reference, common_noise=noise)
     envelope = action_and_state_level_envelopes(source_q)

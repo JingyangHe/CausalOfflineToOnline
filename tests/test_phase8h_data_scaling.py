@@ -22,6 +22,7 @@ from experiments.hopper_logger_mixture_drift.phase8h_data_scaling import (
     subset_nested,
 )
 from experiments.hopper_logger_mixture_drift.phase8h_quick_multipolicy_aamas import (
+    CANDIDATE_ACTIONS,
     FORBIDDEN_MODEL_FIELDS,
     KAPPA,
     LAMBDA_REWARD,
@@ -119,6 +120,7 @@ def test_reference_value_frozen() -> None:
 
 def test_candidate_protocol_unchanged() -> None:
     assert 3 * (8 + 1) + 1 == 28
+    assert CANDIDATE_ACTIONS == 25
 
 
 def test_hidden_u_not_input() -> None:
