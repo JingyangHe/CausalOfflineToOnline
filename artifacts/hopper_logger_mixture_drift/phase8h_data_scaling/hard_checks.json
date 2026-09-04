@@ -1,0 +1,29 @@
+{
+  "all_passed": true,
+  "checks": {
+    "all_expected_figures_complete": true,
+    "batch_size_fixed": true,
+    "candidate_protocol_28_unchanged": true,
+    "d32_exactly_matches_phase8h_generator": true,
+    "dgp_parameters_unchanged": true,
+    "do_oracle_not_used_for_training": true,
+    "equal_source_sample_counts": true,
+    "hidden_u_not_model_input": true,
+    "input_metadata_unchanged": true,
+    "lightweight_file_count_below_300": true,
+    "lightweight_storage_below_2gb": true,
+    "n32_extra_compute_only_changes_updates": true,
+    "nested_d16_d32_d64_d128": true,
+    "no_nan_or_inf": true,
+    "old_artifacts_unchanged": true,
+    "only_best_checkpoints_saved": true,
+    "phase8h_n32_results_reproduced": true,
+    "reference_actor_critic_frozen": true,
+    "regret_definition_frozen": true,
+    "same_candidate_set_for_all_methods": true,
+    "split_unchanged": true,
+    "underestimation_definition_frozen": true,
+    "update_scaling_exact": true
+  },
+  "failed": []
+}

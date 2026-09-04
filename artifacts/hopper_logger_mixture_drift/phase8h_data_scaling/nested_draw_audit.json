@@ -1,0 +1,74 @@
+{
+  "conditions": [
+    {
+      "all_nested": true,
+      "all_source_counts_equal": true,
+      "condition": "confounded",
+      "extension_protocol": "continue the original global RNG after all original D32 draws",
+      "master_draws_per_anchor_source": 128,
+      "original_d32_exact": true,
+      "source_counts": {
+        "128": {
+          "1": 65536,
+          "2": 65536,
+          "3": 65536
+        },
+        "16": {
+          "1": 8192,
+          "2": 8192,
+          "3": 8192
+        },
+        "32": {
+          "1": 16384,
+          "2": 16384,
+          "3": 16384
+        },
+        "64": {
+          "1": 32768,
+          "2": 32768,
+          "3": 32768
+        }
+      },
+      "subset_checks": {
+        "D16_subset_D32": true,
+        "D32_subset_D64": true,
+        "D64_subset_D128": true
+      }
+    },
+    {
+      "all_nested": true,
+      "all_source_counts_equal": true,
+      "condition": "independent_latents",
+      "extension_protocol": "continue the original global RNG after all original D32 draws",
+      "master_draws_per_anchor_source": 128,
+      "original_d32_exact": true,
+      "source_counts": {
+        "128": {
+          "1": 65536,
+          "2": 65536,
+          "3": 65536
+        },
+        "16": {
+          "1": 8192,
+          "2": 8192,
+          "3": 8192
+        },
+        "32": {
+          "1": 16384,
+          "2": 16384,
+          "3": 16384
+        },
+        "64": {
+          "1": 32768,
+          "2": 32768,
+          "3": 32768
+        }
+      },
+      "subset_checks": {
+        "D16_subset_D32": true,
+        "D32_subset_D64": true,
+        "D64_subset_D128": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,439 @@
+{
+  "after": [
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/analysis-manifest.json",
+      "size_bytes": 11506
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/analysis-report.md",
+      "size_bytes": 5453
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/anchor-level-decomposition.csv",
+      "size_bytes": 4298
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figure-catalog.md",
+      "size_bytes": 1523
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figures/figure-01-confounded-method-comparison.pdf",
+      "size_bytes": 22106
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figures/figure-02-tightening-versus-regret.pdf",
+      "size_bytes": 16824
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figures/figure-03-negative-control-retention.pdf",
+      "size_bytes": 17225
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/method-summary.csv",
+      "size_bytes": 1147
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/paired-seed-contrasts.csv",
+      "size_bytes": 3965
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/stats-appendix.md",
+      "size_bytes": 1914
+    },
+    {
+      "modified_time_ns": 1787643322415246161,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip",
+      "size_bytes": 3152924
+    },
+    {
+      "modified_time_ns": 1788223965785326816,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/anchors.npz",
+      "size_bytes": 523098
+    },
+    {
+      "modified_time_ns": 1788223965974721331,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/manifest.json",
+      "size_bytes": 4444
+    },
+    {
+      "modified_time_ns": 1788500258588947385,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8e_quick_go_nogo/splits.json",
+      "size_bytes": 4602
+    },
+    {
+      "modified_time_ns": 1788500858733890780,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/hard_checks.json",
+      "size_bytes": 1333
+    },
+    {
+      "modified_time_ns": 1788500858741464550,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/manifest.json",
+      "size_bytes": 6635
+    },
+    {
+      "modified_time_ns": 1788500647231179627,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/balanced/seed_0.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500707560110228,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/balanced/seed_1.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500763299592955,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/balanced/seed_2.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500651781579579,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source1_heavy/seed_0.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500712134421452,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source1_heavy/seed_1.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500769779527401,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source1_heavy/seed_2.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500656584501162,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source3_heavy/seed_0.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500716543107087,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source3_heavy/seed_1.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500774359749627,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source3_heavy/seed_2.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500633610028768,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_1/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500691188376181,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_1/seed_1.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500749672488153,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_1/seed_2.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500638367979662,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_2/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500698179882523,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_2/seed_1.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500754108625298,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_2/seed_2.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500642767179620,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_3/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500702928477085,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_3/seed_1.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500758571265777,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_3/seed_2.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500820613868078,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/pooled/balanced/seed_0.pt",
+      "size_bytes": 1248253
+    },
+    {
+      "modified_time_ns": 1788500825164625245,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/pooled/source1_heavy/seed_0.pt",
+      "size_bytes": 1248253
+    },
+    {
+      "modified_time_ns": 1788500829835589126,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/pooled/source3_heavy/seed_0.pt",
+      "size_bytes": 1248253
+    },
+    {
+      "modified_time_ns": 1788500807398220742,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/source/source_1/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500811727500933,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/source/source_2/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500816227932731,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/source/source_3/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500858237808859,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/predictions/anchor_candidate_predictions.npz",
+      "size_bytes": 300807
+    },
+    {
+      "modified_time_ns": 1788500858237808859,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/seed_metrics.csv",
+      "size_bytes": 18590
+    },
+    {
+      "modified_time_ns": 1788500858237808859,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/splits.json",
+      "size_bytes": 4601
+    }
+  ],
+  "before": [
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/analysis-manifest.json",
+      "size_bytes": 11506
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/analysis-report.md",
+      "size_bytes": 5453
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/anchor-level-decomposition.csv",
+      "size_bytes": 4298
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figure-catalog.md",
+      "size_bytes": 1523
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figures/figure-01-confounded-method-comparison.pdf",
+      "size_bytes": 22106
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figures/figure-02-tightening-versus-regret.pdf",
+      "size_bytes": 16824
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/figures/figure-03-negative-control-retention.pdf",
+      "size_bytes": 17225
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/method-summary.csv",
+      "size_bytes": 1147
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/paired-seed-contrasts.csv",
+      "size_bytes": 3965
+    },
+    {
+      "modified_time_ns": 1788562831224795443,
+      "path": "/home/causal/he/CausalOfflineToOnline/analysis/phase8h_quick_multipolicy_aamas_strict_analysis/stats-appendix.md",
+      "size_bytes": 1914
+    },
+    {
+      "modified_time_ns": 1787643322415246161,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip",
+      "size_bytes": 3152924
+    },
+    {
+      "modified_time_ns": 1788223965785326816,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/anchors.npz",
+      "size_bytes": 523098
+    },
+    {
+      "modified_time_ns": 1788223965974721331,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/controlled_loggers_seed0_verified/manifest.json",
+      "size_bytes": 4444
+    },
+    {
+      "modified_time_ns": 1788500258588947385,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8e_quick_go_nogo/splits.json",
+      "size_bytes": 4602
+    },
+    {
+      "modified_time_ns": 1788500858733890780,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/hard_checks.json",
+      "size_bytes": 1333
+    },
+    {
+      "modified_time_ns": 1788500858741464550,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/manifest.json",
+      "size_bytes": 6635
+    },
+    {
+      "modified_time_ns": 1788500647231179627,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/balanced/seed_0.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500707560110228,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/balanced/seed_1.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500763299592955,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/balanced/seed_2.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500651781579579,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source1_heavy/seed_0.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500712134421452,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source1_heavy/seed_1.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500769779527401,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source1_heavy/seed_2.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500656584501162,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source3_heavy/seed_0.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500716543107087,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source3_heavy/seed_1.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500774359749627,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/pooled/source3_heavy/seed_2.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "modified_time_ns": 1788500633610028768,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_1/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500691188376181,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_1/seed_1.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500749672488153,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_1/seed_2.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500638367979662,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_2/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500698179882523,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_2/seed_1.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500754108625298,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_2/seed_2.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500642767179620,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_3/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500702928477085,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_3/seed_1.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500758571265777,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/confounded/source/source_3/seed_2.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500820613868078,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/pooled/balanced/seed_0.pt",
+      "size_bytes": 1248253
+    },
+    {
+      "modified_time_ns": 1788500825164625245,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/pooled/source1_heavy/seed_0.pt",
+      "size_bytes": 1248253
+    },
+    {
+      "modified_time_ns": 1788500829835589126,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/pooled/source3_heavy/seed_0.pt",
+      "size_bytes": 1248253
+    },
+    {
+      "modified_time_ns": 1788500807398220742,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/source/source_1/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500811727500933,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/source/source_2/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500816227932731,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/models/independent_latents/source/source_3/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "modified_time_ns": 1788500858237808859,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/predictions/anchor_candidate_predictions.npz",
+      "size_bytes": 300807
+    },
+    {
+      "modified_time_ns": 1788500858237808859,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/seed_metrics.csv",
+      "size_bytes": 18590
+    },
+    {
+      "modified_time_ns": 1788500858237808859,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry/splits.json",
+      "size_bytes": 4601
+    }
+  ],
+  "cryptographic_digest_computed": false,
+  "mode": "exact configuration plus file size and modification time",
+  "unchanged": true
+}

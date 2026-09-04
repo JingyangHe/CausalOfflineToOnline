@@ -1,0 +1,58 @@
+{
+  "all_hard_checks_passed": true,
+  "artifact_bytes_before_final_json": 78531693,
+  "batch_size": 512,
+  "candidate_count": 28,
+  "conditions": [
+    "confounded",
+    "independent_latents"
+  ],
+  "device": "cuda",
+  "file_count": 84,
+  "gamma": 0.99,
+  "kappa": 0.2,
+  "lambda_reward": 0.01,
+  "model_seeds": [
+    0,
+    1,
+    2
+  ],
+  "phase8h_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_quick_multipolicy_aamas_retry",
+  "reference_checkpoint": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_behavior_policies/seed_0/source_2_step_500000.zip",
+  "samples_per_anchor_source": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "source_policy": {
+    "b": [
+      -0.15,
+      0.0,
+      0.15
+    ],
+    "d": [
+      0.1,
+      0.18,
+      0.26
+    ],
+    "sigma_action": 0.2,
+    "v_q": [
+      0.7071067811865475,
+      -0.7071067811865475,
+      0.0
+    ],
+    "v_u": [
+      0.4082482904638631,
+      0.4082482904638631,
+      -0.8164965809277261
+    ]
+  },
+  "stage": "Phase 8H-DS",
+  "update_budgets": {
+    "16": 500,
+    "32": 1000,
+    "64": 2000,
+    "128": 4000
+  }
+}
