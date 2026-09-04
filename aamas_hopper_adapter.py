@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
@@ -37,6 +38,182 @@ CHECKPOINT_METADATA_FIELDS = {
     "observation_dim", "action_dim", "gamma", "reward_mode", "seed",
     "architecture", "external_repo_path", "external_commit",
 }
+
+
+@dataclass(frozen=True)
+class ContinuousAAMASComponents:
+    """Frozen official continuous components needed for one action backup.
+
+    The networks are instances of the released ``GaussianNN`` and
+    ``RegressionNN`` classes.  Reward values stored in the model are in the
+    released z-normalized training scale; the wrapper returns backups in the
+    original reward scale so they can be compared with a frozen SAC critic.
+    """
+
+    behavior_model: Any
+    state_difference_model: Any
+    reward_model: Any
+    reward_mean: float
+    reward_std: float
+    reward_upper: float
+    gamma: float
+    device: Any
+    action_separation: float = 0.1
+    not_action_samples: int = 25
+
+
+def _joint_log_probability(distribution: Any, actions: Any) -> Any:
+    """Match the released continuous implementation's joint action density."""
+    value = distribution.log_prob(actions)
+    return value.sum(dim=-1) if value.ndim > 1 else value
+
+
+def _normal_action_samples(distribution: Any, noise: Any, torch: Any) -> Any:
+    """Reparameterized TanhNormal samples with caller-owned common noise."""
+    location = getattr(distribution, "loc", None)
+    scale = getattr(distribution, "scale", None)
+    if location is None or scale is None:
+        base = getattr(distribution, "base_dist", None)
+        location = getattr(base, "loc", None)
+        scale = getattr(base, "scale", None)
+    if location is None or scale is None:
+        raise RuntimeError("official behavior distribution does not expose loc/scale")
+    return torch.tanh(location.unsqueeze(1) + scale.unsqueeze(1) * noise)
+
+
+def compute_official_continuous_action_backup(
+    source_model: ContinuousAAMASComponents,
+    states: np.ndarray,
+    candidate_actions: np.ndarray,
+    reference_value: Any,
+    *,
+    common_noise: np.ndarray | None = None,
+    rng_seed: int = 0,
+) -> np.ndarray:
+    """Evaluate the released AAMAS continuous causal target for fixed actions.
+
+    This is a side-effect-free extraction of the target construction in
+    ``CausalUpperBoundEstimator.train_critic`` and
+    ``sample_not_a_state_continuous``.  The learned AAMAS critic is replaced by
+    the explicitly frozen ``reference_value`` requested by Phase 8H; behavior,
+    state-difference, reward handling, negative-action sampling, clipping,
+    density weighting, and max backup retain the released implementation's
+    semantics.
+    """
+    torch = importlib.import_module("torch")
+    state = np.asarray(states, dtype=np.float32)
+    action = np.asarray(candidate_actions, dtype=np.float32)
+    if state.ndim != 2 or state.shape[1] != 12 or not np.all(np.isfinite(state)):
+        raise ValueError("states must be finite with shape [N, 12]")
+    if action.ndim != 3 or action.shape[0] != len(state) or action.shape[2] != 3:
+        raise ValueError("candidate_actions must have shape [N, K, 3]")
+    if not np.all(np.isfinite(action)) or np.any(np.abs(action) > 1.0 + 1e-6):
+        raise ValueError("candidate actions must be finite and lie in [-1, 1]")
+    if source_model.not_action_samples <= 0:
+        raise ValueError("not_action_samples must be positive")
+
+    count, candidates = action.shape[:2]
+    flat_state = np.repeat(state, candidates, axis=0)
+    flat_action = action.reshape(-1, 3)
+    tensor_state = torch.as_tensor(flat_state, dtype=torch.float32, device=source_model.device)
+    tensor_action = torch.as_tensor(flat_action, dtype=torch.float32, device=source_model.device)
+    batch = len(flat_state)
+    sample_count = int(source_model.not_action_samples)
+    if common_noise is None:
+        noise = np.random.default_rng(rng_seed).standard_normal((batch, sample_count, 3))
+    else:
+        noise = np.asarray(common_noise, dtype=np.float32)
+        if noise.shape != (batch, sample_count, 3) or not np.all(np.isfinite(noise)):
+            raise ValueError(
+                f"common_noise must have shape {(batch, sample_count, 3)}")
+    tensor_noise = torch.as_tensor(noise, dtype=torch.float32, device=source_model.device)
+
+    with torch.no_grad():
+        distribution = source_model.behavior_model(tensor_state)
+        action_log_probability = _joint_log_probability(distribution, tensor_action)
+        state_action = torch.cat((tensor_state, tensor_action), dim=1)
+        predicted_next = tensor_state + source_model.state_difference_model(state_action)
+        predicted_reward_z = source_model.reward_model(state_action).reshape(-1)
+
+        sampled = _normal_action_samples(distribution, tensor_noise, torch)
+        original = tensor_action.unsqueeze(1).expand(-1, sample_count, -1)
+        positive = original - torch.clamp(
+            original + float(source_model.action_separation), min=-1.0, max=1.0)
+        negative = original - torch.clamp(
+            original - float(source_model.action_separation), min=-1.0, max=1.0)
+        actual = original - sampled
+        stacked = torch.stack((positive, negative, actual), dim=2)
+        choice = torch.abs(stacked).argmax(dim=2, keepdim=True)
+        selected_delta = torch.gather(stacked, 2, choice).squeeze(2)
+        clean_not_action = original - selected_delta
+        expanded_state = tensor_state.unsqueeze(1).expand(-1, sample_count, -1)
+        alternative_pair = torch.cat(
+            (expanded_state.reshape(-1, 12), clean_not_action.reshape(-1, 3)), dim=1)
+        alternative_next = (
+            expanded_state.reshape(-1, 12)
+            + source_model.state_difference_model(alternative_pair)
+        )
+        alternative_distribution = source_model.behavior_model(
+            expanded_state.reshape(-1, 12))
+        alternative_log_probability = _joint_log_probability(
+            alternative_distribution, clean_not_action.reshape(-1, 3)
+        ).reshape(batch, sample_count).mean(dim=1)
+
+    current_value = np.asarray(
+        reference_value(predicted_next.detach().cpu().numpy()), dtype=np.float64
+    ).reshape(-1)
+    alternative_value = np.asarray(
+        reference_value(alternative_next.detach().cpu().numpy()), dtype=np.float64
+    ).reshape(batch, sample_count)
+    if current_value.shape != (batch,) or not np.all(np.isfinite(current_value)):
+        raise RuntimeError("reference_value returned invalid current-action values")
+    if not np.all(np.isfinite(alternative_value)):
+        raise RuntimeError("reference_value returned invalid alternative-action values")
+
+    reward = (
+        predicted_reward_z.detach().cpu().numpy().astype(np.float64)
+        * float(source_model.reward_std)
+        + float(source_model.reward_mean)
+    )
+    value_not_taken = np.maximum(alternative_value.max(axis=1), current_value)
+    taken = reward + float(source_model.gamma) * current_value
+    not_taken = float(source_model.reward_upper) + float(source_model.gamma) * value_not_taken
+    log_taken = np.clip(
+        action_log_probability.detach().cpu().numpy().reshape(-1), -50.0, -0.01)
+    log_not = np.clip(
+        alternative_log_probability.detach().cpu().numpy().reshape(-1), -50.0, -0.01)
+    taken_weight = np.exp(log_taken) / (np.exp(log_taken) + np.exp(log_not))
+    result = taken_weight * taken + (1.0 - taken_weight) * not_taken
+    if not np.all(np.isfinite(result)):
+        raise RuntimeError("official continuous AAMAS backup produced NaN or Inf")
+    return result.reshape(count, candidates)
+
+
+def compute_source_aamas_backup(
+    source_models: Any,
+    states: np.ndarray,
+    candidate_actions: np.ndarray,
+    reference_value: Any,
+    *,
+    common_noise: np.ndarray | None = None,
+    rng_seed: int = 0,
+) -> np.ndarray:
+    """Thin multi-source wrapper returning ``Q_plus_e(s, a)``.
+
+    The returned shape is ``[source, state, candidate]``.  No pooling or
+    envelope operation is performed here, which makes the M=1 equivalence to
+    the official continuous target directly auditable.
+    """
+    models = tuple(source_models)
+    if not models:
+        raise ValueError("at least one source model is required")
+    return np.stack([
+        compute_official_continuous_action_backup(
+            model, states, candidate_actions, reference_value,
+            common_noise=common_noise, rng_seed=rng_seed,
+        )
+        for model in models
+    ], axis=0)
 
 
 def file_sha256(path: Path) -> str:
