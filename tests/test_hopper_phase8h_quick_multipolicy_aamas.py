@@ -32,6 +32,7 @@ from experiments.hopper_logger_mixture_drift.phase8h_quick_multipolicy_aamas imp
     generate_source_dataset,
     pooled_row_weights,
     prediction_metrics,
+    select_and_renumber_split_anchors,
     source_commanded_action,
     source_duplication_invariant,
     source_policy_parameters,
@@ -93,6 +94,25 @@ class _Simulator:
 
 def _anchors(count: int = 4) -> dict[str, np.ndarray]:
     return {"anchor_id": np.arange(count), "base_action": np.zeros((count, 3))}
+
+
+def _complete_anchors(count: int) -> dict[str, np.ndarray]:
+    base_action = np.zeros((count, 3), dtype=np.float64)
+    base_action[:, 0] = np.arange(count)
+    return {
+        "anchor_id": np.arange(count, dtype=np.int64),
+        "qpos": np.zeros((count, 6), dtype=np.float64),
+        "qvel": np.zeros((count, 6), dtype=np.float64),
+        "simulator_state": np.zeros((count, 13), dtype=np.float64),
+        "state_spec": np.zeros(count, dtype=np.int64),
+        "wrapper_elapsed_steps": np.zeros((count, 2), dtype=np.int64),
+        "elapsed_steps": np.zeros(count, dtype=np.int64),
+        "public_observation": np.zeros((count, 12), dtype=np.float32),
+        "base_action": base_action,
+        "anchor_origin_source": np.ones(count, dtype=np.int8),
+        "anchor_origin_episode": np.zeros(count, dtype=np.int64),
+        "anchor_origin_timestep": np.zeros(count, dtype=np.int32),
+    }
 
 
 def test_aamas_baseline_available() -> None:
@@ -211,6 +231,22 @@ def test_anchor_splits_disjoint() -> None:
     result = fixed_anchor_splits(record, ids)
     groups = [set(value.tolist()) for value in result.values()]
     assert not any(groups[i] & groups[j] for i in range(4) for j in range(i + 1, 4))
+
+
+def test_formal_split_selects_frozen_noncontiguous_anchor_ids() -> None:
+    complete = _complete_anchors(2048)
+    selected = np.concatenate((np.arange(333), np.arange(500, 551),
+                               np.arange(900, 951), np.arange(1900, 1977)))
+    record = {}
+    offset = 0
+    for name, count in EXPECTED_SPLIT_COUNTS.items():
+        record[name] = selected[offset:offset + count].tolist()
+        offset += count
+    anchors, splits, original_ids = select_and_renumber_split_anchors(complete, record)
+    assert np.array_equal(original_ids, selected)
+    assert np.array_equal(anchors["anchor_id"], np.arange(512))
+    assert np.array_equal(anchors["base_action"], complete["base_action"][selected])
+    assert set().union(*(set(value.tolist()) for value in splits.values())) == set(range(512))
 
 
 def test_input_hashes_unchanged(tmp_path: Path) -> None:

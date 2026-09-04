@@ -143,6 +143,43 @@ def fixed_anchor_splits(record: Mapping[str, Sequence[int]], anchor_ids: Sequenc
     return result
 
 
+def select_and_renumber_split_anchors(
+    complete: Mapping[str, np.ndarray],
+    split_record: Mapping[str, Sequence[int]],
+) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], np.ndarray]:
+    """Select frozen split members and map their original IDs to compact IDs.
+
+    Phase 8E-Q selected 512 anchors from the full 2,048-anchor Phase 8A pool,
+    so its frozen IDs are intentionally not the contiguous range 0..511.
+    Phase 8H uses a compact copy for simulation while retaining the exact
+    frozen membership through this deterministic old-ID to new-ID mapping.
+    """
+    selected_original_ids = np.concatenate([
+        np.asarray(split_record[name], dtype=np.int64) for name in SPLIT_NAMES
+    ])
+    frozen = fixed_anchor_splits(split_record, selected_original_ids)
+    complete_ids = np.asarray(complete["anchor_id"], dtype=np.int64)
+    id_to_position = {int(anchor): position
+                      for position, anchor in enumerate(complete_ids)}
+    missing = sorted(set(map(int, selected_original_ids)) - set(id_to_position))
+    if missing:
+        raise Phase8HQuickMultipolicyAAMASError(
+            f"frozen split contains anchors absent from Phase 8A pool: {missing[:10]}")
+    positions = np.asarray(
+        [id_to_position[int(anchor)] for anchor in selected_original_ids], dtype=np.int64)
+    anchors = {name: np.asarray(value)[positions].copy()
+               for name, value in complete.items()}
+    anchors["anchor_id"] = np.arange(len(selected_original_ids), dtype=np.int64)
+    old_to_new = {int(old): new for new, old in enumerate(selected_original_ids)}
+    splits = {
+        name: np.asarray([old_to_new[int(anchor)] for anchor in frozen[name]], dtype=np.int64)
+        for name in SPLIT_NAMES
+    }
+    validate_anchor_pool(anchors, len(selected_original_ids))
+    fixed_anchor_splits(splits, anchors["anchor_id"])
+    return anchors, splits, selected_original_ids
+
+
 def _resolve_split_path(phase8a_root: Path) -> Path:
     parent = Path(phase8a_root).resolve().parent
     candidates = (
@@ -192,11 +229,8 @@ def _load_phase8h_inputs(phase8a_root: Path, num_anchors: int,
     split_path = _resolve_split_path(root)
     split_record = json.loads(split_path.read_text(encoding="utf-8"))
     if num_anchors == 512:
-        selected_ids = np.arange(512, dtype=np.int64)
-        positions = np.searchsorted(complete["anchor_id"], selected_ids)
-        anchors = {name: np.asarray(value)[positions].copy() for name, value in complete.items()}
-        validate_anchor_pool(anchors, num_anchors)
-        splits = fixed_anchor_splits(split_record, anchors["anchor_id"])
+        anchors, splits, selected_ids = select_and_renumber_split_anchors(
+            complete, split_record)
     else:
         # Smoke preserves membership in every frozen split, then renumbers its
         # compact anchor copy only; the original IDs remain recorded below.
@@ -228,6 +262,7 @@ def _load_phase8h_inputs(phase8a_root: Path, num_anchors: int,
     if checks_path.is_file():
         required.append(checks_path)
     return {"root": root, "manifest": manifest, "anchors": anchors, "splits": splits,
+            "selected_original_anchor_ids": selected_ids,
             "split_path": split_path, "checkpoint": checkpoint,
             "checkpoint_hash": checkpoint_hash, "source_manifest": original_manifest,
             "required_paths": tuple(required)}
@@ -1190,6 +1225,9 @@ def run_phase8h_quick_multipolicy_aamas(
             "at the averaged deterministic actor action"),
         "gamma": GAMMA, "device": selected_device,
         "checkpoint_selection": "minimum public observational validation behavior+delta+reward loss",
+        "selected_phase8a_anchor_ids": np.asarray(
+            inputs["selected_original_anchor_ids"], dtype=np.int64).tolist(),
+        "split_source": str(inputs["split_path"]),
         "neural_output_name": "approximate AAMAS upper backup",
         "finite_sample_confidence_correction": False,
         "full_bellman_fixed_point": False, "online_sac": False,
