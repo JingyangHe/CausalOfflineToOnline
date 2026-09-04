@@ -93,9 +93,22 @@ def cvar90(values: np.ndarray, anchor_ids: np.ndarray) -> float:
     return float(values[order[:count]].mean())
 
 
+def _json_default(value: Any) -> Any:
+    if isinstance(value, np.bool_):
+        return bool(value)
+    if isinstance(value, np.integer):
+        return int(value)
+    if isinstance(value, np.floating):
+        return float(value)
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
+
+
 def _write_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n",
+    path.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False,
+                               default=_json_default) + "\n",
                     encoding="utf-8")
 
 

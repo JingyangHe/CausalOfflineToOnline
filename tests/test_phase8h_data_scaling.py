@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import inspect
+import json
 from pathlib import Path
 
 import numpy as np
@@ -12,6 +13,7 @@ from experiments.hopper_logger_mixture_drift.phase8h_data_scaling import (
     UPDATE_BUDGETS,
     Phase8HDataScalingError,
     _baseline_gate,
+    _write_json,
     aggregate_scaling_metrics,
     cvar90,
     _metric_row,
@@ -182,6 +184,14 @@ def test_no_nan_inf() -> None:
     ])
     assert rows and all(np.isfinite(float(value)) for value in rows[0].values()
                         if isinstance(value, (int, float)))
+
+
+def test_numpy_scalars_are_json_serializable(tmp_path: Path) -> None:
+    path = tmp_path / "numpy-scalars.json"
+    _write_json(path, {"passed": np.bool_(True), "count": np.int64(3),
+                       "value": np.float32(1.5)})
+    assert json.loads(path.read_text(encoding="utf-8")) == {
+        "passed": True, "count": 3, "value": 1.5}
 
 
 def test_old_artifacts_unchanged(tmp_path: Path, nested_master) -> None:
