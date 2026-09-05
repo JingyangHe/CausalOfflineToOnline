@@ -47,6 +47,17 @@ def test_stage_ancestor_search_starts_from_checkpoint_parent(tmp_path: Path) -> 
     assert fvi._ancestor_with_stage(checkpoint, "Phase 8H-DS") == root
 
 
+def test_old_curve_aliases_and_late_window_are_recognized() -> None:
+    rows = [
+        {"potential": "pooled_union", "run_id": "0", "epoch": "190"},
+        {"method": "pooled_aamas_union_full", "model_seed": "0", "epoch": "200"},
+        {"potential": "state_min", "run_id": "0", "epoch": "200"},
+        {"potential": "pooled_union", "run_id": "1", "epoch": "200"},
+    ]
+    matched = fvi._old_pooled_union_curve_rows(rows)
+    assert [int(row["epoch"]) for row in matched] == [190, 200]
+
+
 def test_summary_and_nearest_neighbor_distances() -> None:
     train = np.asarray([[0.0, 0.0], [2.0, 0.0]])
     query = np.asarray([[1.0, 0.0], [2.0, 0.0]])

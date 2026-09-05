@@ -150,6 +150,18 @@ def _fingerprint_matches(record: Mapping[str, Any], actual: Path) -> bool:
             and record.get("blake2b_128") == current.get("blake2b_128"))
 
 
+def _old_pooled_union_curve_rows(rows: Sequence[Mapping[str, Any]]) -> list[Mapping[str, Any]]:
+    """Accept historical field aliases while keeping the scientific scope exact."""
+    matched = []
+    for row in rows:
+        potential = row.get("potential", row.get("method", ""))
+        seed = row.get("run_id", row.get("model_seed", row.get("seed", -1)))
+        if potential in {"pooled_union", "pooled_aamas_union_full"} \
+                and int(float(seed)) == MODEL_SEED:
+            matched.append(row)
+    return matched
+
+
 def _source_fingerprints() -> list[dict[str, Any]]:
     root = Path(__file__).resolve().parents[2]
     paths = (
@@ -198,12 +210,21 @@ def _resolve_context(fix_root: Path, external_repo: Path, device: str) -> dict[s
     if not old_curve.is_file() or not old_checkpoint.is_file():
         raise Phase8JFVIError(
             "recorded pooled_union seed-0 divergence curve/checkpoint is unavailable")
-    curve_rows = _read_csv(old_curve)
-    if not any(row.get("potential") == "pooled_union"
-               and int(float(row.get("run_id", -1))) == MODEL_SEED
-               and int(float(row.get("epoch", -1))) == POTENTIAL_EPOCHS
-               for row in curve_rows):
-        raise Phase8JFVIError("old pooled_union seed-0 curve does not reach epoch 200")
+    curve_rows = _old_pooled_union_curve_rows(_read_csv(old_curve))
+    if not curve_rows or max(int(float(row.get("epoch", -1))) for row in curve_rows) < 150:
+        raise Phase8JFVIError(
+            "old pooled_union seed-0 curve does not cover the late-instability window")
+    checkpoint_payload = context["torch"].load(
+        old_checkpoint, map_location="cpu", weights_only=False)
+    checkpoint_metadata = checkpoint_payload.get("metadata", {})
+    checkpoint_seed = checkpoint_metadata.get(
+        "run_id", checkpoint_metadata.get("model_seed", checkpoint_metadata.get("seed", -1)))
+    if (checkpoint_metadata.get("method") not in {
+            "pooled_union", "pooled_aamas_union_full"}
+            or int(checkpoint_seed) != MODEL_SEED
+            or int(checkpoint_metadata.get("epochs", -1)) != POTENTIAL_EPOCHS):
+        raise Phase8JFVIError(
+            "old pooled_union checkpoint metadata is not seed-0/200-epoch complete")
     context.update({
         "fix_root": fix,
         "fix_manifest": manifest,
@@ -212,6 +233,8 @@ def _resolve_context(fix_root: Path, external_repo: Path, device: str) -> dict[s
         "recorded_component_paths": sorted(expected, key=str),
         "old_divergence_curve": old_curve,
         "old_divergence_checkpoint": old_checkpoint,
+        "old_divergence_curve_max_epoch": max(
+            int(float(row["epoch"])) for row in curve_rows),
     })
     return context
 
@@ -674,7 +697,7 @@ def run_preflight_and_tests(
     checks = {
         "exact_scope_pooled_union_seed0_n128_4000": True,
         "phase8j_fix_manifest_resolved": True,
-        "old_pooled_union_epoch200_curve_and_checkpoint_resolved": (
+        "old_pooled_union_late_curve_and_epoch200_checkpoint_resolved": (
             old_curve is not None and old_checkpoint is not None),
         "input_fingerprints_valid": True,
         "real_aamas_backup_reused": "compute_official_continuous_action_backup" in source,
