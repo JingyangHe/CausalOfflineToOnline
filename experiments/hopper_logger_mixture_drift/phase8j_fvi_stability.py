@@ -133,12 +133,13 @@ def _relocate_recorded_path(recorded: str | Path, repository: Path) -> Path:
 
 
 def _ancestor_with_stage(path: Path, stage: str) -> Path:
-    for parent in (path, *path.parents):
+    start = path.parent if path.is_file() else path
+    for parent in (start, *start.parents):
         manifest = parent / "manifest.json"
         try:
             if json.loads(manifest.read_text(encoding="utf-8")).get("stage") == stage:
                 return parent
-        except (FileNotFoundError, json.JSONDecodeError):
+        except (OSError, json.JSONDecodeError):
             continue
     raise Phase8JFVIError(f"cannot locate {stage} ancestor for {path}")
 

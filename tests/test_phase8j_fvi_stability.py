@@ -37,6 +37,16 @@ def test_pairing_digest_depends_only_on_shared_rows_and_rng() -> None:
     assert len(fvi._pairing_digest(context, 2)) == 2
 
 
+def test_stage_ancestor_search_starts_from_checkpoint_parent(tmp_path: Path) -> None:
+    root = tmp_path / "phase8h"
+    checkpoint = root / "models" / "seed_0.pt"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_bytes(b"checkpoint")
+    (root / "manifest.json").write_text(
+        '{"stage": "Phase 8H-DS"}\n', encoding="utf-8")
+    assert fvi._ancestor_with_stage(checkpoint, "Phase 8H-DS") == root
+
+
 def test_summary_and_nearest_neighbor_distances() -> None:
     train = np.asarray([[0.0, 0.0], [2.0, 0.0]])
     query = np.asarray([[1.0, 0.0], [2.0, 0.0]])
