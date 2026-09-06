@@ -1,0 +1,32 @@
+{
+  "all_passed": true,
+  "checks": {
+    "D0_D1_D2_D3_complete": true,
+    "all_outputs_finite": true,
+    "all_requested_checkpoints_read_only_and_valid": true,
+    "amplification_is_empirical_not_global_lipschitz": true,
+    "candidate_count_28": true,
+    "candidate_level_rows_complete": true,
+    "candidate_output_is_real_parquet": true,
+    "checkpoint_schedule_is_prespecified": true,
+    "density_weights_nonnegative_and_sum_one": true,
+    "exact_observed_and_road_branches_reproduced": true,
+    "no_training_SAC_or_hyperparameter_change": true,
+    "paired_candidate_behavior_rng_and_components_fixed": true,
+    "posthoc_simulator_rows_complete": true,
+    "probe_anchors_exclude_test_split": true,
+    "read_only_input_fingerprints_unchanged": true,
+    "scope_pooled_union_seed0_n128_4000": true,
+    "simulator_is_posthoc_validation_only": true,
+    "simulator_uses_exact_E_of_V_not_V_of_E": true,
+    "single_critic_readout_explicit": true,
+    "ten_required_figures_complete": true
+  },
+  "failed": [],
+  "mechanism_labels": [
+    "CORE_BOOTSTRAP_OR_VALUE_SCALE_INSTABILITY",
+    "DENSITY_WEIGHTING_CONTRIBUTES_TO_INSTABILITY",
+    "MODEL_EXTRAPOLATION_AMPLIFIED_BY_MAX"
+  ],
+  "stage": "Phase 8J-BF-Q"
+}

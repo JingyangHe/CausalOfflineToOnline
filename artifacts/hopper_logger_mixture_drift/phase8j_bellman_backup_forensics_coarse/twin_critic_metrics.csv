@@ -1,0 +1,11 @@
+variant,epoch,readout,twin_critics_present,disagreement_mean,actual_readout
+matched_moving_target,0,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+matched_moving_target,50,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+matched_moving_target,100,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+matched_moving_target,150,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+matched_moving_target,200,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+frozen_outer_target,0,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+frozen_outer_target,50,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+frozen_outer_target,100,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+frozen_outer_target,150,single_critic_not_applicable,False,0.0,unclamped single Critic.network output
+frozen_outer_target,200,single_critic_not_applicable,False,0.0,unclamped single Critic.network output

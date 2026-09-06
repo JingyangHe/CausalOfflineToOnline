@@ -1,0 +1,104 @@
+{
+  "analyzed_checkpoints": [
+    0,
+    50,
+    100,
+    150,
+    200
+  ],
+  "candidate_count": 28,
+  "candidate_digest": "e1d8ebe55eaf498a09abf13f5428cfb5",
+  "checkpoint_protocol": "coarse_existing_milestones",
+  "checkpoint_selection_performed": false,
+  "component_updates": 4000,
+  "do_oracle_used_for_selection": false,
+  "forensic_anchor_count": 51,
+  "fvi_root": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_fvi_stability_diagnostic",
+  "mechanism_label_evidence": {
+    "frozen_outer_target": {
+      "contribution_std_growth": {
+        "observed_continuation_contribution": 223.04148648496147,
+        "reward_contribution": 0.0,
+        "road_continuation_contribution": 238.279412766649
+      },
+      "largest_contribution_std_growth": "road_continuation_contribution",
+      "latest_max_selected_simulator_error": {
+        "all_positive_bellman_error_mean": 38.988364062798325,
+        "all_signed_bellman_error_mean": 34.85184594650804,
+        "backup_error_spearman": 0.14192762658444313,
+        "selected_positive_bellman_error_mean": 48.8879544322784,
+        "selected_signed_bellman_error_mean": 44.106457505734035
+      },
+      "selected_observed_weight_first_last": [
+        0.04618019610643387,
+        0.21553994715213776
+      ],
+      "std_growth_final_minus_initial": {
+        "D0_observed_only": 209.72849594184245,
+        "D1_model_next_no_max": 213.5716786649232,
+        "D2_model_next_candidate_mean": 213.57743590185189,
+        "D3_original_candidate_max": 212.8283846257947
+      }
+    },
+    "matched_moving_target": {
+      "contribution_std_growth": {
+        "observed_continuation_contribution": 661.7616685170456,
+        "reward_contribution": 0.0,
+        "road_continuation_contribution": 737.8628369390943
+      },
+      "largest_contribution_std_growth": "road_continuation_contribution",
+      "latest_max_selected_simulator_error": {
+        "all_positive_bellman_error_mean": 208.2263122655818,
+        "all_signed_bellman_error_mean": 187.13018340801298,
+        "backup_error_spearman": 0.1316171453852603,
+        "selected_positive_bellman_error_mean": 248.52014431039845,
+        "selected_signed_bellman_error_mean": 222.53502089127198
+      },
+      "selected_observed_weight_first_last": [
+        0.04618019610643387,
+        0.237842857837677
+      ],
+      "std_growth_final_minus_initial": {
+        "D0_observed_only": 728.5488501773658,
+        "D1_model_next_no_max": 761.8328583591966,
+        "D2_model_next_candidate_mean": 750.3821292629342,
+        "D3_original_candidate_max": 772.2987045797394
+      }
+    }
+  },
+  "mechanism_labels": [
+    "CORE_BOOTSTRAP_OR_VALUE_SCALE_INSTABILITY",
+    "DENSITY_WEIGHTING_CONTRIBUTES_TO_INSTABILITY",
+    "MODEL_EXTRAPOLATION_AMPLIFIED_BY_MAX"
+  ],
+  "mechanism_rule": "direction/order comparisons only; no magnitude success threshold",
+  "method": "pooled_union",
+  "model_seed": 0,
+  "network_training_performed": false,
+  "onset_localization_limit": "coarse checkpoints cannot localize the first abnormality within an interval",
+  "posthoc_simulator_only": true,
+  "requested_checkpoints": [
+    0,
+    50,
+    100,
+    150,
+    200
+  ],
+  "requested_simulator_anchor_cap": 128,
+  "road_samples": 25,
+  "samples_per_anchor_source": 128,
+  "simulator_latent_population": [
+    -1,
+    1
+  ],
+  "simulator_latent_replicates": 2,
+  "simulator_note": "balanced binary U is exactly enumerated; repeated deterministic restores add no Monte Carlo information",
+  "simulator_unique_evaluations_per_action": 2,
+  "source_commit": "4968c0813d13324085382bdc9f4d152eb9b9e515",
+  "stage": "Phase 8J-BF-Q",
+  "temporal_resolution_epochs": 50,
+  "variants": [
+    "matched_moving_target",
+    "frozen_outer_target"
+  ]
+}
