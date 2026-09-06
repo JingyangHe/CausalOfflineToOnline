@@ -400,6 +400,17 @@ def _termination_audit() -> dict[str, Any]:
         "terminated": np.array([False, True, False]),
         "truncated": np.array([False, False, True]),
     }
+    result = real_transition_target(
+        public, np.arange(3), lambda states: np.full(len(states), 7.0)
+    )
+    expected = np.array([2.0 + GAMMA * 7.0, 2.0, 2.0 + GAMMA * 7.0])
+    return {
+        "computed": result,
+        "expected": expected,
+        "terminated_zeroes_continuation": bool(result[1] == 2.0),
+        "truncated_retains_continuation": bool(result[2] > 2.0),
+        "matches_parent_semantics": bool(np.array_equal(result, expected)),
+    }
 
 
 def _target_detachment_audit(
@@ -431,15 +442,6 @@ def _target_detachment_audit(
             and not hasattr(target, "grad_fn")
         )
     return {"checks": checks, "all_passed": all(checks.values())}
-    result = real_transition_target(public, np.arange(3), lambda states: np.full(len(states), 7.0))
-    expected = np.array([2.0 + GAMMA * 7.0, 2.0, 2.0 + GAMMA * 7.0])
-    return {
-        "computed": result,
-        "expected": expected,
-        "terminated_zeroes_continuation": bool(result[1] == 2.0),
-        "truncated_retains_continuation": bool(result[2] > 2.0),
-        "matches_parent_semantics": bool(np.array_equal(result, expected)),
-    }
 
 
 def run_preflight(

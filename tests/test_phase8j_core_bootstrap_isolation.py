@@ -62,6 +62,13 @@ def test_real_transition_target_uses_terminated_but_not_truncated() -> None:
     )
 
 
+def test_termination_audit_returns_complete_parent_semantics() -> None:
+    audit = bi._termination_audit()
+    assert audit["terminated_zeroes_continuation"] is True
+    assert audit["truncated_retains_continuation"] is True
+    assert audit["matches_parent_semantics"] is True
+
+
 def test_minibatch_rows_are_deterministic_and_outer_specific() -> None:
     rows = np.arange(4097)
     first = bi._minibatch_audit(rows)
