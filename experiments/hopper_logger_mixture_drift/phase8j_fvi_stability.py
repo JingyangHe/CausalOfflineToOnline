@@ -57,7 +57,9 @@ COMPONENT_UPDATES = 4000
 VARIANTS = ("matched_moving_target", "frozen_outer_target")
 DIAGNOSTIC_EPOCHS = (0, 10, 20, 30, 40, 50, 75, 100, 125, 150, 160, 170,
                      180, 190, 200)
-MILESTONE_EPOCHS = (50, 100, 150, 200)
+# The four original recovery milestones remain, with read-only forensic snapshots
+# added at 20-epoch intervals.  Saving more state does not alter optimization.
+MILESTONE_EPOCHS = (20, 40, 50, 60, 80, 100, 120, 140, 150, 160, 180, 200)
 DEFAULT_FIX_ROOT = Path(
     "artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick")
 DEFAULT_OUTPUT_ROOT = Path(

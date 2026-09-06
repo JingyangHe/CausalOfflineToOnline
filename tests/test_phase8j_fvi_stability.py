@@ -18,7 +18,8 @@ def test_frozen_protocol_constants() -> None:
     assert fvi.COMPONENT_UPDATES == 4000
     assert fvi.VARIANTS == ("matched_moving_target", "frozen_outer_target")
     assert len(fvi.DIAGNOSTIC_EPOCHS) == 15
-    assert fvi.MILESTONE_EPOCHS == (50, 100, 150, 200)
+    assert fvi.MILESTONE_EPOCHS == (
+        20, 40, 50, 60, 80, 100, 120, 140, 150, 160, 180, 200)
 
 
 def test_outer_batches_and_rng_stream_are_deterministic_and_nested() -> None:
