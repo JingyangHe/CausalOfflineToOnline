@@ -17,11 +17,20 @@ def test_frozen_scope_and_cli_defaults() -> None:
     assert bf.METHOD == "pooled_union"
     assert bf.MODEL_SEED == 0
     assert bf.REQUIRED_CHECKPOINTS == (0, 20, 40, 60, 80, 100, 120)
+    assert bf.COARSE_CHECKPOINTS == (0, 50, 100, 150, 200)
     assert bf.OPTIONAL_LATE_CHECKPOINTS == (140, 160, 180, 200)
     assert bf.SIMULATOR_LATENT_REPLICATES == 2
     args = parse_arguments(["--phase", "analyze"])
     assert tuple(args.checkpoints) == bf.REQUIRED_CHECKPOINTS
     assert args.simulator_anchor_count == 128
+
+
+def test_checkpoint_protocol_accepts_only_prespecified_fine_or_coarse_grids() -> None:
+    assert bf._checkpoint_protocol(bf.REQUIRED_CHECKPOINTS) == ("fine_prespecified", 20)
+    assert bf._checkpoint_protocol(bf.COARSE_CHECKPOINTS) \
+        == ("coarse_existing_milestones", 50)
+    with pytest.raises(bf.Phase8JBellmanForensicsError):
+        bf._checkpoint_protocol((0, 100, 200))
 
 
 def _dummy_components(torch):

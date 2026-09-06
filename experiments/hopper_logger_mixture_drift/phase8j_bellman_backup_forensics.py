@@ -46,6 +46,7 @@ PHASE = "Phase 8J-BF-Q"
 DEFAULT_OUTPUT_ROOT = Path(
     "artifacts/hopper_logger_mixture_drift/phase8j_bellman_backup_forensics")
 REQUIRED_CHECKPOINTS = (0, 20, 40, 60, 80, 100, 120)
+COARSE_CHECKPOINTS = (0, 50, 100, 150, 200)
 OPTIONAL_LATE_CHECKPOINTS = (140, 160, 180, 200)
 # The environment is deterministic after restoring an anchor.  Exact enumeration
 # of the two equally weighted latent states is therefore the population average;
@@ -56,6 +57,17 @@ KNN_K = 5
 
 class Phase8JBellmanForensicsError(RuntimeError):
     """Raised when a read-only forensic invariant is unavailable or violated."""
+
+
+def _checkpoint_protocol(checkpoints: Sequence[int]) -> tuple[str, int]:
+    requested = set(map(int, checkpoints))
+    if set(REQUIRED_CHECKPOINTS).issubset(requested):
+        return "fine_prespecified", 20
+    if set(COARSE_CHECKPOINTS).issubset(requested):
+        return "coarse_existing_milestones", 50
+    raise Phase8JBellmanForensicsError(
+        "checkpoint list must include either the fine schedule "
+        f"{REQUIRED_CHECKPOINTS} or coarse schedule {COARSE_CHECKPOINTS}")
 
 
 def _json_default(value: Any) -> Any:
@@ -816,9 +828,7 @@ def run_analyze(
     if method != METHOD or model_seed != MODEL_SEED:
         raise Phase8JBellmanForensicsError("scope must remain pooled_union, model seed 0")
     requested = tuple(sorted(set(map(int, checkpoints))))
-    if not set(REQUIRED_CHECKPOINTS).issubset(requested):
-        raise Phase8JBellmanForensicsError(
-            f"requested checkpoints must include {REQUIRED_CHECKPOINTS}")
+    checkpoint_protocol, temporal_resolution = _checkpoint_protocol(requested)
     output = Path(output_root).resolve(); output.mkdir(parents=True, exist_ok=True)
     fvi = Path(fvi_root).resolve()
     manifest_path, hard_path = fvi / "manifest.json", fvi / "hard_checks.json"
@@ -1003,6 +1013,12 @@ def run_analyze(
         "component_updates": 4000, "fvi_root": str(fvi),
         "variants": list(VARIANTS), "requested_checkpoints": list(requested),
         "analyzed_checkpoints": analyzed_epochs,
+        "checkpoint_protocol": checkpoint_protocol,
+        "temporal_resolution_epochs": temporal_resolution,
+        "onset_localization_limit": (
+            "coarse checkpoints cannot localize the first abnormality within an interval"
+            if checkpoint_protocol == "coarse_existing_milestones" else
+            "fine prespecified checkpoint schedule"),
         "forensic_anchor_count": len(probe["anchor_ids"]),
         "requested_simulator_anchor_cap": simulator_anchor_count,
         "candidate_count": 28, "road_samples": CANDIDATE_ACTIONS,
@@ -1019,6 +1035,8 @@ def run_analyze(
     _write_json(output / "manifest.json", manifest)
     checks = {
         "scope_pooled_union_seed0_n128_4000": True,
+        "checkpoint_schedule_is_prespecified": checkpoint_protocol in {
+            "fine_prespecified", "coarse_existing_milestones"},
         "all_requested_checkpoints_read_only_and_valid": True,
         "read_only_input_fingerprints_unchanged": integrity_unchanged,
         "paired_candidate_behavior_rng_and_components_fixed": True,
@@ -1057,6 +1075,9 @@ def run_analyze(
         "This is a read-only, single-seed mechanism diagnosis. It does not retrain a "
         "potential, select a checkpoint, tune a hyperparameter, run SAC, establish a global "
         "Lipschitz constant, or prove a causal mechanism.", "",
+        f"Checkpoint protocol: `{checkpoint_protocol}`; temporal resolution is "
+        f"{temporal_resolution} epochs. This supports mechanism classification but cannot "
+        "localize onset within a checkpoint interval.", "",
         "## Mechanism labels", "",
         *[f"- `{label}`" for label in labels], "",
         "Labels use only the direction and ordering of continuous diagnostic growth curves; "
@@ -1106,4 +1127,5 @@ def run_analyze(
         raise Phase8JBellmanForensicsError(
             f"forensic output checks failed: {[k for k, v in checks.items() if not v]}")
     return {"all_passed": True, "mechanism_labels": labels,
-            "analyzed_checkpoints": analyzed_epochs}
+            "analyzed_checkpoints": analyzed_epochs,
+            "checkpoint_protocol": checkpoint_protocol}
