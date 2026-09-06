@@ -33,6 +33,17 @@ def test_checkpoint_protocol_accepts_only_prespecified_fine_or_coarse_grids() ->
         bf._checkpoint_protocol((0, 100, 200))
 
 
+def test_density_weight_check_uses_float32_machine_precision() -> None:
+    observed = np.float32(0.1234567)
+    road = np.float32(1.0 - observed)
+    assert bf._density_weights_valid([
+        {"observed_weight": float(observed), "road_weight": float(road)}])
+    assert not bf._density_weights_valid([
+        {"observed_weight": 0.4, "road_weight": 0.5}])
+    assert not bf._density_weights_valid([
+        {"observed_weight": -0.1, "road_weight": 1.1}])
+
+
 def _dummy_components(torch):
     class Behavior(torch.nn.Module):
         def forward(self, states):

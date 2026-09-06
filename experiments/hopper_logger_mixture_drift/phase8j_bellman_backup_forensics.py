@@ -159,6 +159,18 @@ def _numeric_records_finite(*tables: Sequence[Mapping[str, Any]]) -> bool:
     return True
 
 
+def _density_weights_valid(rows: Sequence[Mapping[str, Any]]) -> bool:
+    tolerance = 2.0 * np.finfo(np.float32).eps
+    for row in rows:
+        observed = float(row["observed_weight"])
+        road = float(row["road_weight"])
+        if (not np.isfinite(observed) or not np.isfinite(road)
+                or observed < 0.0 or road < 0.0
+                or not np.isclose(observed + road, 1.0, atol=tolerance, rtol=0.0)):
+            return False
+    return True
+
+
 def _spearman(left: np.ndarray, right: np.ndarray) -> float:
     x, y = np.asarray(left, dtype=np.float64), np.asarray(right, dtype=np.float64)
     if len(x) < 2 or np.std(x) == 0.0 or np.std(y) == 0.0:
@@ -1044,10 +1056,7 @@ def run_analyze(
             probe["anchor_ids"], np.asarray(context["splits"]["test"], dtype=np.int64)).size,
         "candidate_count_28": probe["candidates"].shape[1] == 28,
         "exact_observed_and_road_branches_reproduced": True,
-        "density_weights_nonnegative_and_sum_one": all(
-            float(row["observed_weight"]) >= 0 and float(row["road_weight"]) >= 0
-            and np.isclose(float(row["observed_weight"]) + float(row["road_weight"]), 1.0,
-                           atol=1e-12, rtol=0.0) for row in candidate_rows),
+        "density_weights_nonnegative_and_sum_one": _density_weights_valid(candidate_rows),
         "D0_D1_D2_D3_complete": len(diagnostic_rows)
         == len(VARIANTS) * len(analyzed_epochs) * 4,
         "candidate_level_rows_complete": len(candidate_rows)
