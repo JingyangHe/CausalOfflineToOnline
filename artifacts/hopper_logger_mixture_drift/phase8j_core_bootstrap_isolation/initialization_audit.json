@@ -1,0 +1,15 @@
+{
+  "all_elementwise_identical": true,
+  "initial_parameter_fingerprint": {
+    "max_abs": 0.009999838657677174,
+    "parameter_count": 51329,
+    "sum": 0.04473338099748503,
+    "sum_squares": 1.6903245136656058
+  },
+  "parameter_count": 51329,
+  "variant_elementwise_equality": {
+    "full_aamas_frozen": true,
+    "real_transition_bootstrap": true,
+    "reward_only": true
+  }
+}

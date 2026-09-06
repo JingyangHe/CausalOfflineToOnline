@@ -1,0 +1,83 @@
+{
+  "algorithm": "BLAKE2b-128",
+  "forbidden_inputs": [
+    "hidden_u",
+    "do_oracle",
+    "online_return",
+    "SAC"
+  ],
+  "inputs": [
+    {
+      "blake2b_128": "cfdbe46bc672f05de405e4de89a26ec1",
+      "modified_time_ns": 1788500258588947385,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8e_quick_go_nogo/splits.json",
+      "size_bytes": 4602
+    },
+    {
+      "blake2b_128": "a564ae119265c4f1e05cc27b379edb0e",
+      "modified_time_ns": 1788564290880123201,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/pooled/balanced/seed_0.pt",
+      "size_bytes": 1248189
+    },
+    {
+      "blake2b_128": "af71bb372efbcaf00b70284d7a2f68b5",
+      "modified_time_ns": 1788564225121573773,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/source/source_1/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "blake2b_128": "cc213139cbb57707a4f5b08fe2eb065f",
+      "modified_time_ns": 1788564247764878136,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/source/source_2/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "blake2b_128": "c71eea2536bb7da40578b7ab89fecea8",
+      "modified_time_ns": 1788564267473209078,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/source/source_3/seed_0.pt",
+      "size_bytes": 1248125
+    },
+    {
+      "blake2b_128": "276ea1d4179c1029ba613bc7c53f6438",
+      "modified_time_ns": 1788651167989107733,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_fvi_stability_diagnostic/hard_checks.json",
+      "size_bytes": 461
+    },
+    {
+      "blake2b_128": "78cab604babc7c499850c74b9b2107f3",
+      "modified_time_ns": 1788648022019142141,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_fvi_stability_diagnostic/manifest.json",
+      "size_bytes": 4848
+    },
+    {
+      "blake2b_128": "2555ea81da38dae8295e5c30bc7a711e",
+      "modified_time_ns": 1788593208620558383,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_large_data_online_sanity/input_data/n128_confounded_public.npz",
+      "size_bytes": 10785105
+    },
+    {
+      "blake2b_128": "ba80dcd230fbb8011dbb893f381c7014",
+      "modified_time_ns": 1788603296467436077,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick/gradient_and_fit_tests.json",
+      "size_bytes": 8786
+    },
+    {
+      "blake2b_128": "1cb1f7ac9f45d97ddc14835976800871",
+      "modified_time_ns": 1788605549767790362,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick/potential_training_metrics.csv",
+      "size_bytes": 199137
+    },
+    {
+      "blake2b_128": "f18c55b8ee76650adee0bca18da11fae",
+      "modified_time_ns": 1788605549755760709,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick/potentials/pooled_union_seed0.pt",
+      "size_bytes": 419205
+    },
+    {
+      "blake2b_128": "26369e74ad8c1de5b4d0feb9def55fd9",
+      "modified_time_ns": 1788603296527435091,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick/repair_manifest.json",
+      "size_bytes": 7639
+    }
+  ]
+}

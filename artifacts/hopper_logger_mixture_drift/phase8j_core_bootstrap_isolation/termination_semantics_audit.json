@@ -1,0 +1,15 @@
+{
+  "computed": [
+    8.93,
+    2.0,
+    8.93
+  ],
+  "expected": [
+    8.93,
+    2.0,
+    8.93
+  ],
+  "matches_parent_semantics": true,
+  "terminated_zeroes_continuation": true,
+  "truncated_retains_continuation": true
+}

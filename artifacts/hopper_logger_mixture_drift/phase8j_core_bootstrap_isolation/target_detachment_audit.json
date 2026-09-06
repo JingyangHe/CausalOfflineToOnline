@@ -1,0 +1,8 @@
+{
+  "all_passed": true,
+  "checks": {
+    "full_aamas_frozen": true,
+    "real_transition_bootstrap": true,
+    "reward_only": true
+  }
+}

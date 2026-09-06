@@ -1,0 +1,61 @@
+{
+  "growth_summary": [
+    {
+      "best_validation_loss": 0.0024461226215089613,
+      "final_over_best_validation_ratio": 1.1276836885763526,
+      "final_validation_loss": 0.0027584525805332827,
+      "gradient_epoch1": 7.726260073355638,
+      "gradient_epoch200": 0.048379099884308024,
+      "gradient_growth_ratio": 0.006261645275331278,
+      "late_monotone_instability": false,
+      "late_monotone_metric_count": 0,
+      "p99_abs_growth_ratio": 88467829.44425672,
+      "prediction_p99_epoch0": 5.68006868206794e-08,
+      "prediction_p99_epoch200": 5.025033473968506,
+      "prediction_std_epoch0": 5.2120563877682587e-08,
+      "prediction_std_epoch200": 0.770694620579996,
+      "std_growth_ratio": 14786766.743135687,
+      "variant": "reward_only"
+    },
+    {
+      "best_validation_loss": 0.03783944293901106,
+      "final_over_best_validation_ratio": 2498.325689749422,
+      "final_validation_loss": 94.53525238033869,
+      "gradient_epoch1": 7.72626002041983,
+      "gradient_epoch200": 52.840082869215564,
+      "gradient_growth_ratio": 6.839024667764719,
+      "late_monotone_instability": true,
+      "late_monotone_metric_count": 6,
+      "p99_abs_growth_ratio": 3879740370.399512,
+      "prediction_p99_epoch0": 5.68006868206794e-08,
+      "prediction_p99_epoch200": 220.37191772460938,
+      "prediction_std_epoch0": 5.2120563877682587e-08,
+      "prediction_std_epoch200": 34.5258238725527,
+      "std_growth_ratio": 662422301.3699254,
+      "variant": "real_transition_bootstrap"
+    },
+    {
+      "best_validation_loss": 0.18669221104443226,
+      "final_over_best_validation_ratio": 2338.0052821980644,
+      "final_validation_loss": 436.4873755671184,
+      "gradient_epoch1": 14.159921255621446,
+      "gradient_epoch200": 1458.3305140059026,
+      "gradient_growth_ratio": 102.99001581148976,
+      "late_monotone_instability": true,
+      "late_monotone_metric_count": 6,
+      "p99_abs_growth_ratio": 31282236862.24164,
+      "prediction_p99_epoch0": 5.68006868206794e-08,
+      "prediction_p99_epoch200": 1776.8525390625,
+      "prediction_std_epoch0": 5.2120563877682587e-08,
+      "prediction_std_epoch200": 224.48867317736688,
+      "std_growth_ratio": 4307103693.356055,
+      "variant": "full_aamas_frozen"
+    }
+  ],
+  "mechanism_labels": [
+    "CORE_BOOTSTRAP_VALUE_FITTING_INSTABILITY",
+    "CORE_BOOTSTRAP_INSTABILITY_AMPLIFIED_BY_AAMAS_BACKUP"
+  ],
+  "root_cause_layer": "B_REAL_TRANSITION_BOOTSTRAP",
+  "stage": "Phase 8J-BI-Q"
+}

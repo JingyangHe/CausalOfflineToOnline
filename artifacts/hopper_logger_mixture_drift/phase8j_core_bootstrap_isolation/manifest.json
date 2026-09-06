@@ -1,0 +1,208 @@
+{
+  "analysis_is_single_seed_descriptive": true,
+  "batch_size": 1028,
+  "component_updates": 4000,
+  "do_oracle_used": false,
+  "figures": [
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/figures/loss.png",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/figures/target_std.png",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/figures/value_std.png",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/figures/value_p99.png",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/figures/gradient_norm.png",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/figures/bellman_residual.png",
+    "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/figures/value_on_probe_sets.png"
+  ],
+  "gamma": 0.99,
+  "initial_checkpoint": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation/init_seed0.pt",
+  "inner_epochs": 5,
+  "learning_rate": 0.0001,
+  "loss": "mean_squared_error",
+  "mechanism_labels": [
+    "CORE_BOOTSTRAP_VALUE_FITTING_INSTABILITY",
+    "CORE_BOOTSTRAP_INSTABILITY_AMPLIFIED_BY_AAMAS_BACKUP"
+  ],
+  "method": "pooled_union",
+  "model_seed": 0,
+  "network_training_performed_during_preflight": false,
+  "online_sac_enabled": false,
+  "optimizer": "Adam",
+  "outer_iterations": 40,
+  "phase": "analyze",
+  "potential_architecture": "same repaired pooled_union critic",
+  "potential_readout": "unclamped_linear",
+  "record_epochs": [
+    0,
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    80,
+    100,
+    120,
+    140,
+    160,
+    180,
+    200
+  ],
+  "root_cause_layer": "B_REAL_TRANSITION_BOOTSTRAP",
+  "samples_per_anchor_source": 128,
+  "source_fingerprints": [
+    {
+      "blake2b_128": "d4290045f45f56bd4ad11b325a93a7ec",
+      "modified_time_ns": 1788666312180193415,
+      "path": "/home/causal/he/CausalOfflineToOnline/experiments/hopper_logger_mixture_drift/phase8j_core_bootstrap_isolation.py",
+      "size_bytes": 62551
+    },
+    {
+      "blake2b_128": "742fedaf597a016f75fc922b7f674855",
+      "modified_time_ns": 1788662006062457077,
+      "path": "/home/causal/he/CausalOfflineToOnline/experiments/hopper_logger_mixture_drift/phase8j_fvi_stability.py",
+      "size_bytes": 70739
+    },
+    {
+      "blake2b_128": "d0ed2ff2834b8b5719629048cf40a3fc",
+      "modified_time_ns": 1788603262503323473,
+      "path": "/home/causal/he/CausalOfflineToOnline/experiments/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick.py",
+      "size_bytes": 71503
+    },
+    {
+      "blake2b_128": "ffe1bb7a2940df46aa1f8b9df92c5f9b",
+      "modified_time_ns": 1788500258524606240,
+      "path": "/home/causal/he/CausalOfflineToOnline/aamas_hopper_adapter.py",
+      "size_bytes": 24873
+    }
+  ],
+  "source_fvi_configuration": {
+    "backup_method": "pooled_aamas_union_full",
+    "batch_size": 1028,
+    "candidate_count": 28,
+    "candidate_samples_per_source": 8,
+    "component_checkpoints": [
+      {
+        "blake2b_128": "a564ae119265c4f1e05cc27b379edb0e",
+        "modified_time_ns": 1788564290880123201,
+        "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/pooled/balanced/seed_0.pt",
+        "size_bytes": 1248189
+      },
+      {
+        "blake2b_128": "af71bb372efbcaf00b70284d7a2f68b5",
+        "modified_time_ns": 1788564225121573773,
+        "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/source/source_1/seed_0.pt",
+        "size_bytes": 1248125
+      },
+      {
+        "blake2b_128": "cc213139cbb57707a4f5b08fe2eb065f",
+        "modified_time_ns": 1788564247764878136,
+        "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/source/source_2/seed_0.pt",
+        "size_bytes": 1248125
+      },
+      {
+        "blake2b_128": "c71eea2536bb7da40578b7ab89fecea8",
+        "modified_time_ns": 1788564267473209078,
+        "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8h_data_scaling/models/confounded/n128/source/source_3/seed_0.pt",
+        "size_bytes": 1248125
+      }
+    ],
+    "component_updates": 4000,
+    "continuation_mask": "terminated only; truncated bootstraps",
+    "dataset": {
+      "blake2b_128": "2555ea81da38dae8295e5c30bc7a711e",
+      "modified_time_ns": 1788593208620558383,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_large_data_online_sanity/input_data/n128_confounded_public.npz",
+      "size_bytes": 10785105
+    },
+    "do_oracle_used": false,
+    "epochs": 200,
+    "formal_initialization_reuses_diagnostic_network": false,
+    "inner_epochs": 5,
+    "learning_rate": 0.0001,
+    "loss": "mean_squared_error",
+    "method": "pooled_union",
+    "model_seed": 0,
+    "old_divergence_checkpoint": {
+      "blake2b_128": "f18c55b8ee76650adee0bca18da11fae",
+      "modified_time_ns": 1788605549755760709,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick/potentials/pooled_union_seed0.pt",
+      "size_bytes": 419205
+    },
+    "old_divergence_curve": {
+      "blake2b_128": "1cb1f7ac9f45d97ddc14835976800871",
+      "modified_time_ns": 1788605549767790362,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick/potential_training_metrics.csv",
+      "size_bytes": 199137
+    },
+    "online_sac_enabled": false,
+    "optimizer": "Adam",
+    "optimizer_updates_per_epoch": 125,
+    "outer_iterations": 40,
+    "phase": "preflight-and-tests",
+    "phase8j_fix_manifest": {
+      "blake2b_128": "26369e74ad8c1de5b4d0feb9def55fd9",
+      "modified_time_ns": 1788603296527435091,
+      "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick/repair_manifest.json",
+      "size_bytes": 7639
+    },
+    "potential_readout": "single unclamped linear official Critic.network output",
+    "reward_normalization": "none at potential level",
+    "samples_per_anchor_source": 128,
+    "source_commit": "56b2dcd91d957dd075f5390204df7cbaa6bad56f",
+    "source_fingerprints": [
+      {
+        "blake2b_128": "33999f172fc79c239559cc77c3320301",
+        "modified_time_ns": 1788648015499108357,
+        "path": "/home/causal/he/CausalOfflineToOnline/experiments/hopper_logger_mixture_drift/phase8j_fvi_stability.py",
+        "size_bytes": 70542
+      },
+      {
+        "blake2b_128": "ffe1bb7a2940df46aa1f8b9df92c5f9b",
+        "modified_time_ns": 1788500258524606240,
+        "path": "/home/causal/he/CausalOfflineToOnline/aamas_hopper_adapter.py",
+        "size_bytes": 24873
+      },
+      {
+        "blake2b_128": "d472bcef8317f665d67e41dcfc9bafc5",
+        "modified_time_ns": 1788577719897991690,
+        "path": "/home/causal/he/CausalOfflineToOnline/experiments/hopper_logger_mixture_drift/phase8h_compute_matched_online_quick.py",
+        "size_bytes": 90493
+      },
+      {
+        "blake2b_128": "d0ed2ff2834b8b5719629048cf40a3fc",
+        "modified_time_ns": 1788603262503323473,
+        "path": "/home/causal/he/CausalOfflineToOnline/experiments/hopper_logger_mixture_drift/phase8j_potential_clamp_fix_quick.py",
+        "size_bytes": 71503
+      }
+    ],
+    "stage": "Phase 8J-FVI-Q",
+    "status_labels": [
+      "IMPLEMENTATION_VALID",
+      "TRAINABLE_ON_FIXED_TARGET"
+    ],
+    "target_critic": "same single readout; frozen/Polyak behavior varies by arm",
+    "target_tau": 0.005,
+    "target_update_interval_batches": 3,
+    "twin_critics": "not present in potential model; SAC is not run",
+    "variants": [
+      "matched_moving_target",
+      "frozen_outer_target"
+    ],
+    "weight_decay": 1e-05
+  },
+  "source_fvi_manifest": {
+    "blake2b_128": "78cab604babc7c499850c74b9b2107f3",
+    "modified_time_ns": 1788648022019142141,
+    "path": "/home/causal/he/CausalOfflineToOnline/artifacts/hopper_logger_mixture_drift/phase8j_fvi_stability_diagnostic/manifest.json",
+    "size_bytes": 4848
+  },
+  "stage": "Phase 8J-BI-Q",
+  "state_normalization": "same frozen train-row mean/std as Phase 8J-FVI",
+  "target_refresh": "outer boundary only for bootstrap variants",
+  "total_epochs": 200,
+  "variants": [
+    "reward_only",
+    "real_transition_bootstrap",
+    "full_aamas_frozen"
+  ],
+  "weight_decay": 1e-05
+}
