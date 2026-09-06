@@ -57,6 +57,9 @@ INNER_EPOCHS = 5
 TOTAL_EPOCHS = 200
 WEIGHT_DECAY = 1e-5
 RECORD_EPOCHS = (0, 10, 20, 30, 40, 50, 60, 80, 100, 120, 140, 160, 180, 200)
+# Retain the exact network states needed by the downstream read-only
+# Bellman mean-error audit. ``latest.pt`` remains the resumable checkpoint.
+BME_CHECKPOINT_EPOCHS = (10, 20, 40, 60, 80, 100, 120, 150, 180, 200)
 DEFAULT_FVI_ROOT = Path(
     "artifacts/hopper_logger_mixture_drift/phase8j_fvi_stability_diagnostic"
 )
@@ -943,6 +946,20 @@ def _train_variant(
                 initial_fingerprint, context, previous_outer_prediction,
                 previous_outer_target,
             )
+            if epoch in BME_CHECKPOINT_EPOCHS:
+                _save_checkpoint(
+                    directory / f"epoch_{epoch}.pt",
+                    variant,
+                    epoch,
+                    outer + 1,
+                    current,
+                    target,
+                    optimizer,
+                    initial_fingerprint,
+                    context,
+                    previous_outer_prediction,
+                    previous_outer_target,
+                )
             if epoch == 1 or epoch % 10 == 0 or epoch == TOTAL_EPOCHS:
                 print(
                     f"{variant}: epoch {epoch}/{TOTAL_EPOCHS} "

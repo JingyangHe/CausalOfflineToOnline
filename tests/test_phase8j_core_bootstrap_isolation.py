@@ -31,6 +31,7 @@ def test_frozen_contract_and_cli() -> None:
     )
     assert (bi.MODEL_SEED, bi.SAMPLES_PER_ANCHOR_SOURCE, bi.COMPONENT_UPDATES) == (0, 128, 4000)
     assert (bi.OUTER_ITERATIONS, bi.INNER_EPOCHS, bi.TOTAL_EPOCHS) == (40, 5, 200)
+    assert bi.BME_CHECKPOINT_EPOCHS == (10, 20, 40, 60, 80, 100, 120, 150, 180, 200)
     assert bi.GAMMA == 0.99
     args = parse_arguments([
         "--phase", "train", "--variants", *bi.VARIANTS,
